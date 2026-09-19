@@ -40,7 +40,7 @@ export default function OperationalSuite({onDemo,initialReplay=false}:{onDemo:()
  useEffect(()=>{setReplayOpen(pathname==='/replay');setSatelliteOpen(pathname==='/satellite');},[pathname]);
  const [mapFocus,setMapFocus]=useState(0);
  const focusMap=()=>setMapFocus(n=>n+1);
- const changeReplay=(open:boolean)=>{setReplayOpen(open);window.history.pushState(null,'',open?'/replay':'/');};
+ const changeReplay=(open:boolean)=>{setReplayOpen(open);window.history.pushState(null,'',open?'/replay':'/prevention');};
  useEffect(()=>{const sync=()=>setReplayOpen(window.location.pathname==='/replay');window.addEventListener('popstate',sync);return()=>window.removeEventListener('popstate',sync);},[]);
  const [workspaceSummary,setWorkspaceSummary]=useState('');
  const [preparedArea,setPreparedArea]=useState<PreparedArea|null>(null);

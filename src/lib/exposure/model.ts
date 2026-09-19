@@ -86,3 +86,5 @@ export function unavailableExposure(radiusM: number, hazardActive: boolean, stat
 export function exposureReason(exposure: ExposureSummary) {
   return exposure.uplift > 0 ? `Nearby people and infrastructure: +${exposure.uplift}/40 exposure priority (${exposure.total} mapped features; ${exposure.status} inventory). Occupancy unknown.` : null;
 }
+
+export function highReceptivityTrigger(score:number|null,stale:boolean){return !stale&&score!==null&&Number.isFinite(score)&&score>=65&&score<=100;}

@@ -6,9 +6,11 @@ import {getMonitor} from './monitor';
 import {prepareArea,prepareAISummary,type PreparedArea,type PreparedWorkspace} from './prepared-workspace';
 const state=globalThis as typeof globalThis & {gingerRefreshTimer?:ReturnType<typeof setTimeout>;gingerAIPending?:boolean};
 /** Run before any client connects; publish deterministic results before AI completes. */
-export async function refreshWorkspace(){
+export async function refreshWorkspace({includeAI=true}:{includeAI?:boolean}={}){
  const areas=await watchAreaStore.list();
  const [monitor,detections]=await Promise.all([getMonitor(),readRegionalSnapshot('catalonia').catch(()=>null)]);
+ // Publish fresh zone evidence before slower local GIS assessments finish.
+ await writePrepared('workspace-v1',{generatedAt:new Date().toISOString(),areas,monitor,detections,priorities:[],summary:`${monitor.zones.length} watch areas checked. Local intervention plans are refreshing.`} satisfies PreparedWorkspace);
  const prepared:PreparedArea[]=[];
  let cursor=0;
  await Promise.all(Array.from({length:Math.min(2,areas.length)},async()=>{
@@ -19,14 +21,15 @@ export async function refreshWorkspace(){
  const workspace:PreparedWorkspace={generatedAt:new Date().toISOString(),areas,monitor,detections,priorities,summary:`${prepared.length}/${areas.length} areas assessed. ${review} require review. ${monitor.deltas.length} recent changes recorded. These are review triggers, not confirmed fires.`};
  await writePrepared('workspace-v1',workspace);
  await pruneSnapshots();
- if(!state.gingerAIPending){state.gingerAIPending=true;void (async()=>{for(const p of prepared)await prepareAISummary(p);})().catch(()=>console.warn('Background summaries interrupted.')).finally(()=>{state.gingerAIPending=false;});}
+ if(includeAI&&!state.gingerAIPending){state.gingerAIPending=true;void (async()=>{for(const p of prepared)await prepareAISummary(p);})().catch(()=>console.warn('Background summaries interrupted.')).finally(()=>{state.gingerAIPending=false;});}
 }
-export function startBackendRefresh(){
- startReceptivityRefresh();
+/** Independent schedule: slow GIS preparation must not delay receptivity refreshes. */
+export function startPreventionRefresh(){
  if(state.gingerRefreshTimer)return;
  async function tick(){
-  try{await refreshWorkspace();}catch{console.warn('Backend refresh interrupted; will retry next cycle.');}
+  try{await refreshWorkspace({includeAI:false});}catch{console.warn('Backend refresh interrupted; will retry next cycle.');}
   finally{state.gingerRefreshTimer=setTimeout(tick,60000);state.gingerRefreshTimer.unref();}
  }
  state.gingerRefreshTimer=setTimeout(tick,1000);state.gingerRefreshTimer.unref();
 }
+export function startBackendRefresh(){startReceptivityRefresh();startPreventionRefresh();}

@@ -1,6 +1,7 @@
 import assert from 'node:assert/strict';
-import {ExposureIndex, distanceToGeometry, emptyCounts, unavailableExposure} from '../src/lib/exposure/model';
+import {ExposureIndex, distanceToGeometry, emptyCounts, unavailableExposure, highReceptivityTrigger} from '../src/lib/exposure/model';
 import type {ExposureDataset, ExposureFeature, ExposureCategory, ExposureGeometry} from '../src/lib/exposure/types';
+assert.equal(highReceptivityTrigger(65,false),true);assert.equal(highReceptivityTrigger(64.9,false),false);assert.equal(highReceptivityTrigger(95,true),false);assert.equal(highReceptivityTrigger(null,false),false);assert.equal(highReceptivityTrigger(NaN,false),false);
 const now=Date.parse('2026-09-19T12:00:00Z');
 const feature=(id:string, category:ExposureCategory, geometry:ExposureGeometry):ExposureFeature=>({type:'Feature',geometry,properties:{id,name:id,category,kind:category,source:'Fixture',sourceUrl:'https://example.com',occupancy:null}});
 const square=(d:number):number[][]=>[[2-d,41-d],[2+d,41-d],[2+d,41+d],[2-d,41+d],[2-d,41-d]];

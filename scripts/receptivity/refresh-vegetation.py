@@ -52,6 +52,7 @@ for c,(x,y) in zip(grid['cells'],coords):
  if valid.mean()>=.5:
   c['fuel'].update(ndvi=round(float(np.median(a[valid])),3),ndmi=round(float(np.median(b[valid])),3),satelliteCoverage=round(float(valid.mean()),2),satelliteAt=min(scene_dates[i-1] for i in np.unique(d[valid]) if i));count+=1
 if count:
+ grid['vegetationUpdatedAt']=now.isoformat()
  grid['sources']=[s for s in grid['sources'] if s['name']!='Copernicus Sentinel-2']
  grid['sources'].append({'name':'Copernicus Sentinel-2','url':'https://earth-search.aws.element84.com/v1/collections/sentinel-2-l2a','detail':f'{count} cells with >=50% clear pixels. Median NDVI/NDMI from surface reflectance at 20 m. SCL excludes cloud/shadow/water/snow. Spectral indices are context, not measured live fuel moisture. Dates: {", ".join(sorted(set(scene_dates)))}'})
  tmp=path.with_suffix('.satellite.tmp');tmp.write_text(json.dumps(grid,separators=(',',':'),allow_nan=False));tmp.replace(path)

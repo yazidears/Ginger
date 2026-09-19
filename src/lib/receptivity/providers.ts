@@ -57,9 +57,15 @@ export function parseXema(rows:XemaRow[],now:number):{weather:Weather[];history:
 }
 export async function loadXema(station:Station,now:number){
  return diskCache(`xema-history-30d-v2:${station.id}`,25*60000,async()=>{
-  const from=new Date(now-31*86400000).toISOString().slice(0,19);
-  const rows=await fetchJSON<XemaRow[]>(soda('nzvn-apee',{'$where':`codi_estacio='${station.id}' AND data_lectura >= '${from}' AND codi_variable in ('30','31','32','33','35','36','50')`,'$order':'data_lectura ASC,codi_variable ASC','$limit':'15000'}),{},60000);
-  if(!Array.isArray(rows)||rows.length>=15000)throw Error('Incomplete or truncated XEMA history');
+  const archive=join(DATA_DIR,`xema-raw-${station.id}.json`);
+  let saved:XemaRow[]=[];try{saved=JSON.parse(await readFile(archive,'utf8'));}catch{}
+  const cutoff=now-31*86400000;
+  const latest=saved.at(-1)?.data_lectura;const lastTime=latest?Date.parse(latest.endsWith('Z')?latest:latest+'Z'):NaN;
+  const from=new Date(Number.isFinite(lastTime)?Math.max(cutoff,lastTime-2*HOUR):cutoff).toISOString().slice(0,19);
+  const fresh=await fetchJSON<XemaRow[]>(soda('nzvn-apee',{'$where':`codi_estacio='${station.id}' AND data_lectura >= '${from}' AND codi_variable in ('30','31','32','33','35','36','50')`,'$order':'data_lectura ASC,codi_variable ASC','$limit':'15000'}),{},60000);
+  if(!Array.isArray(fresh)||fresh.length>=15000)throw Error('Incomplete or truncated XEMA history');
+  const rows=[...new Map([...saved,...fresh].map(r=>[r.id,r])).values()].filter(r=>Date.parse(r.data_lectura.endsWith('Z')?r.data_lectura:r.data_lectura+'Z')>=cutoff).sort((a,b)=>a.data_lectura.localeCompare(b.data_lectura)||a.codi_variable.localeCompare(b.codi_variable));
+  await atomicJSON(archive,rows);
   return parseXema(rows,now);
  });
 }

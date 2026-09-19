@@ -45,3 +45,9 @@ Inventory status distinguishes missing data, outside extract coverage, extract-e
 ## Validation
 
 `npm run test:exposure` checks crossing roads, footprints, courtyard holes, distance decay, category caps, hazard gating, stale/missing/edge coverage and independence of score from display limits. Existing assessment, monitor and intelligence tests check that the hazard rules continue to work.
+
+## Receptivity home map
+
+The home map uses the same regional inventory and category filters. Selecting a 200 m cell queries `/api/exposure/cell?cell=<id>&horizon=<hours>`. The server resolves the actual cell and forecast horizon from its saved receptivity snapshot; callers cannot supply their own hazard score. Its enclosing 142 m circle plus 1 km buffer is used for nearby geometry. A fresh receptivity index of at least 65/100 activates the exposure contribution. Stale snapshots, unknown scores and lower receptivity do not activate it. This consequence-oriented review contribution is shown separately from the FFMC-derived receptivity and ISI-derived spread scores; it does not alter those physical-condition indices or their ranking.
+
+The existing watch-area workspace instead uses its weather/thermal review triggers, with the same exposure weights and category caps. The two trigger methods are labelled in their respective views.

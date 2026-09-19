@@ -13,7 +13,14 @@ if [[ -f "$SOURCE_DIR/.ginger-data/exposure/catalonia.geojson" ]]; then
   cp "$SOURCE_DIR/.ginger-data/exposure/catalonia.geojson" "$SERVER_DIR/.ginger-data/exposure/catalonia.geojson.tmp"
   mv "$SERVER_DIR/.ginger-data/exposure/catalonia.geojson.tmp" "$SERVER_DIR/.ginger-data/exposure/catalonia.geojson"
 fi
-# Preserve the server's watch areas, tasks, credentials and prepared snapshots.
+# Receptivity runtime and dated geographic artifacts; preserve other stored data.
+rsync -a "$SOURCE_DIR/scripts/receptivity" "$SERVER_DIR/scripts/"
+rsync -a "$SOURCE_DIR/data/receptivity" "$SERVER_DIR/data/"
+rsync -a "$SOURCE_DIR/requirements-receptivity.txt" "$SERVER_DIR/"
+if [[ -d "$SOURCE_DIR/.venv-receptivity" && ! -e "$SERVER_DIR/.venv-receptivity" ]]; then
+  ln -s "$SOURCE_DIR/.venv-receptivity" "$SERVER_DIR/.venv-receptivity"
+fi
+# Restart only after every runtime dependency has been synchronized.
 launchctl kickstart -k "gui/$(id -u)/local.ginger.web"
 launchctl kickstart -k "gui/$(id -u)/local.ginger.worker"
 printf 'Ginger updated: http://localhost:3002\n'

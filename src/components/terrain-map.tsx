@@ -272,7 +272,7 @@ export default function TerrainMap({ exposureEnabled = false, opportunities = EM
         if(!r.ok)throw Error();
         const data=await r.json() as ExposureDataset & {status:string;truncated:boolean;total:number};
         if(current.signal.aborted)return;
-        (m.getSource('exposure') as GeoJSONSource).setData(data);
+        await (m.getSource('exposure') as GeoJSONSource).setData(data);if(current.signal.aborted)return;
         setExposureStatus(`${data.features.length.toLocaleString()} mapped features · ${data.status} · source ${data.metadata.sourceDate.slice(0,10)}${data.truncated?' · Zoom in to see more; map display capped.':''}`);
       }catch{if(!current.signal.aborted){(m.getSource('exposure') as GeoJSONSource).setData(EMPTY);setExposureStatus('Exposure inventory unavailable. Server import required; blank does not mean no assets.');}}
     };

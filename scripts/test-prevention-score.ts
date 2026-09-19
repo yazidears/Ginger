@@ -3,7 +3,9 @@ import {activityContext, connectedFuelAreas, PREVENTION_METHOD, REFERENCE_TEAM, 
 import {ExposureIndex} from '../src/lib/exposure/model';
 import type {ExposureDataset} from '../src/lib/exposure/types';
 import type {CellResult, GridCell, Snapshot} from '../src/lib/receptivity/types';
-import {POST} from '../src/app/api/receptivity/prevention/route';
+import {mkdtemp, writeFile, utimes, rm} from 'node:fs/promises';
+import {tmpdir} from 'node:os';
+import {join} from 'node:path';
 
 const conditions = {receptivity: [90, null], spread: [80, null]};
 const context: PreventionContext = {humanActivity: 80, humanActivitySource: 'scenario', connectedFuelHa: 2000};
@@ -65,14 +67,25 @@ async function routes() {
     confidenceLabel: 'limited', velocity: null, ...conditions, prevention: score()};
   const snapshot = {generatedAt: now, observationRange: {oldest: now, newest: now}, horizons: [0, 1], cells: [mapped],
     stations: [{station: {id: 'station'}, frames: [{horizon: 0, timestamp: now}]}], preventionMethod: PREVENTION_METHOD} as Snapshot;
-  const state = globalThis as typeof globalThis & {receptivitySnapshot?: Snapshot; receptivityPending?: Promise<Snapshot>};
-  const previous = state.receptivitySnapshot, pending = state.receptivityPending;
-  state.receptivitySnapshot = snapshot;
-  // Cache migration may request refresh; keep this endpoint test fully offline.
-  state.receptivityPending = Promise.resolve(snapshot);
+  const directory = await mkdtemp(join(tmpdir(), 'ginger-prevention-test-'));
+  const previousDirectory = process.env.GINGER_RECEPTIVITY_DIR;
+  const previousWorker = process.env.GINGER_EXTERNAL_WORKER;
+  process.env.GINGER_RECEPTIVITY_DIR = directory;
+  process.env.GINGER_EXTERNAL_WORKER = '1';
+  let revision = 0;
+  const save = async (value: Snapshot) => {
+    const file = join(directory, 'latest.json');
+    await writeFile(file, JSON.stringify(value));
+    // Guarantee distinct revisions even on filesystems with coarse timestamp precision.
+    const modified = new Date(Date.now() + ++revision * 1000);
+    await utimes(file, modified, modified);
+  };
   const body = {cellId: mapped.id, team: REFERENCE_TEAM};
+  let POST: typeof import('../src/app/api/receptivity/prevention/route')['POST'];
   const post = (v: unknown) => POST(new Request('http://localhost/api/receptivity/prevention', {method: 'POST', headers: {'Content-Type': 'application/json'}, body: JSON.stringify(v)}));
   try {
+    await save(snapshot);
+    ({POST} = await import('../src/app/api/receptivity/prevention/route'));
     const result = await post(body), data = await result.json();
     assert.equal(result.status, 200); assert.equal(data.score.preventionScore, 23.76);
     assert.equal(data.method.team.coverage, 1); assert.equal(data.validAt, now);
@@ -86,10 +99,19 @@ async function routes() {
     assert.equal((await POST(new Request('http://localhost', {method: 'POST', body: '{}'}))).status, 415);
     assert.equal((await POST(new Request('http://localhost', {method: 'POST', headers: {'Content-Type': 'application/json'}, body: '{'}))).status, 400);
     assert.equal((await post({...body, padding: 'a'.repeat(4100)})).status, 413);
-    state.receptivitySnapshot = {...snapshot, observationRange: {oldest: '2000-01-01', newest: now}};
+    await save({...snapshot, observationRange: {oldest: '2000-01-01', newest: now}});
     assert.equal((await post(body)).status, 503);
-    state.receptivitySnapshot = {...snapshot, preventionMethod: undefined};
+    await save({...snapshot, preventionMethod: undefined});
     assert.equal((await post(body)).status, 503);
-  } finally {state.receptivitySnapshot = previous; state.receptivityPending = pending;}
+    // Recover from an old snapshot after the external worker publishes a new file.
+    await save(snapshot);
+    assert.equal((await post(body)).status, 200);
+  } finally {
+    if (previousDirectory === undefined) delete process.env.GINGER_RECEPTIVITY_DIR;
+    else process.env.GINGER_RECEPTIVITY_DIR = previousDirectory;
+    if (previousWorker === undefined) delete process.env.GINGER_EXTERNAL_WORKER;
+    else process.env.GINGER_EXTERNAL_WORKER = previousWorker;
+    await rm(directory, {recursive: true, force: true});
+  }
 }
 routes().then(() => console.log('Prevention score: model, missing data, connectivity, activity and API checks passed.')).catch(e => {console.error(e); process.exitCode = 1;});
