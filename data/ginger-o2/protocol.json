@@ -1,0 +1,11 @@
+{
+  "version": "GingerO2-grass-1",
+  "frozenBeforeEvaluation": true,
+  "family": "log ROS = intercept + nonnegative wind coefficient * log1p(midflame km/h) + nonpositive moisture coefficient * dead moisture / 10",
+  "objective": "equal-burn-day mean squared log error, intercept unpenalized",
+  "ridgeCandidates": [0, 0.001, 0.01, 0.1, 1, 10],
+  "selection": "inner leave-one-burn-day-out equal-day MAE; outer leave-one-burn-day-out evaluation",
+  "deploymentGuard": "fuel 1 only; finite inputs inside training wind and moisture ranges; explicit experimental opt-in",
+  "target": "observed plot-average ROS, m/min",
+  "limitations": "Previously inspected single-site Australian data; nested resampling is retrospective internal evaluation, not new external validation. No post-evaluation family revision."
+}

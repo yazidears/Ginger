@@ -1,0 +1,24 @@
+import assert from 'node:assert/strict';
+import {readFileSync} from 'node:fs';
+import {createHash} from 'node:crypto';
+import {predictGingerO2Grass,gingerO2GrassFallbackReason,GINGER_O2_GRASS} from '../src/lib/sage/ginger-o2-grass';
+const input={fuelCode:'1',midflameWindKmh:10,deadMoisturePct:7};
+const prediction=predictGingerO2Grass(input)!;
+assert(prediction.headMMin>0 && Number.isFinite(prediction.headMMin));
+assert(predictGingerO2Grass({...input,midflameWindKmh:20})!.headMMin>prediction.headMMin);
+assert(predictGingerO2Grass({...input,deadMoisturePct:10})!.headMMin<prediction.headMMin);
+for(const fuelCode of ['2','4','8','urban','unknown'])assert.equal(predictGingerO2Grass({...input,fuelCode}),null);
+for(const value of [NaN,Infinity,-Infinity])assert.equal(gingerO2GrassFallbackReason({...input,midflameWindKmh:value}),'invalid-input');
+assert.equal(predictGingerO2Grass({...input,midflameWindKmh:0}),null);
+assert.equal(predictGingerO2Grass({...input,midflameWindKmh:26}),null);
+assert.equal(predictGingerO2Grass({...input,deadMoisturePct:13}),null);
+for(const midflameWindKmh of GINGER_O2_GRASS.support.windKmh)for(const deadMoisturePct of GINGER_O2_GRASS.support.moisturePct)assert(predictGingerO2Grass({...input,midflameWindKmh,deadMoisturePct}));
+const report=JSON.parse(readFileSync('reports/ginger-o2/grass-training.json','utf8'));
+const seen=new Set<string>();
+assert.equal(report.folds.length,14);
+for(const fold of report.folds){assert(!fold.trainingDays.includes(fold.day));assert.equal(fold.innerFolds,13);assert.equal(fold.trainingDays.length,13);for(const p of fold.predictions){assert.equal(p.day,fold.day);assert(!seen.has(p.id));seen.add(p.id);}assert(fold.fitted.coefficients[1]>=0);assert(fold.fitted.coefficients[2]<=0);}
+assert.equal(seen.size,120);
+const hash=(p:string)=>createHash('sha256').update(readFileSync(p)).digest('hex');
+assert.equal(hash('data/ginger-o2/grass-model.json'),report.artifactSha256);
+for(const [file,digest] of Object.entries(report.codeHashes))assert.equal(hash(file),digest,`Re-run training after ${file} changes`);
+console.log('GingerO2 grass: monotonicity, support guards, grouped outer folds, unique fire count and artifact provenance passed.');

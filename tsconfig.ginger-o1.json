@@ -1,0 +1,13 @@
+{
+  "extends": "./tsconfig.json",
+  "compilerOptions": {"incremental": false},
+  "include": [
+    "src/**/*.d.ts",
+    "scripts/backtest-ginger-o1.ts",
+    "scripts/backtest-ginger-o1-perimeters.ts",
+    "scripts/benchmark-ginger-o1-grid.ts",
+    "scripts/benchmark-ginger-o1-runtime.ts",
+    "scripts/test-ginger-o1.ts"
+  ],
+  "exclude": ["node_modules"]
+}

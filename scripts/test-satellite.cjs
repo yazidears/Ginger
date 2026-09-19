@@ -1,0 +1,23 @@
+const fs=require('node:fs'),ts=require('typescript'),assert=require('node:assert/strict');
+require.extensions['.ts']=(mod,file)=>mod._compile(ts.transpileModule(fs.readFileSync(file,'utf8'),{compilerOptions:{module:ts.ModuleKind.CommonJS,target:ts.ScriptTarget.ES2022,esModuleInterop:true}}).outputText,file);
+const {locationHotspots,satelliteBounds}=require('../src/lib/providers/satellite.ts');
+const {DeepfireProvider}=require('../src/lib/providers/deepfire.ts');
+const {clearProviderCacheForTests}=require('../src/lib/providers/http.ts');
+const {deriveIntelligence}=require('../src/lib/intelligence.ts');
+const originalFetch=global.fetch;const originalToken=process.env.DEEPFIRE_TOKEN;
+let checks=0;const test=async(name,fn)=>{clearProviderCacheForTests();await fn();checks++;console.log('PASS',name)};
+const feature=(id,position=[1.86,41.3])=>({type:'Feature',id,geometry:{type:'Point',coordinates:position},properties:{observed_at:new Date().toISOString(),source:'VIIRS_NOAA20_NRT',confidence:'HIGH',active:true}});
+const collection=(features,extra={})=>({type:'FeatureCollection',features,...extra});
+const json=data=>new Response(JSON.stringify(data),{headers:{'Content-Type':'application/json'}});
+(async()=>{
+ process.env.DEEPFIRE_TOKEN='test-only-token';
+ await test('Deepfire reaches location assessment without double counting FIRMS',async()=>{let calls=0;global.fetch=async(url,init)=>{calls++;assert.match(String(url),/^https:\/\/api.deepfire.co\//);assert.equal(init.headers.Authorization,'Bearer test-only-token');return json(collection([feature('one'),feature('outside',[3,42])]));};const r=await locationHotspots(41.3,1.86);assert.equal(r.source,'Deepfire satellite detections');assert.equal(r.data.length,1);assert.equal(r.covered,true);assert.equal(calls,1);});
+ await test('Deepfire pagination remains on documented host even with untrusted next URL',async()=>{let calls=0;global.fetch=async(url)=>{assert.equal(new URL(url).origin,'https://api.deepfire.co');return json(++calls===1?collection([feature('one')],{links:[{rel:'next',href:'https://attacker.invalid/'}]}):collection([feature('two')]));};assert.equal((await new DeepfireProvider().hotspots()).data.length,2);assert.equal(calls,2);});
+ await test('Repeated pages fail rather than publish incomplete coverage',async()=>{global.fetch=async()=>json(collection([feature('one')],{links:[{rel:'next'}]}));await assert.rejects(()=>new DeepfireProvider().hotspots(),/repeated/);});
+ await test('Authentication failure falls back with explicit source and reason',async()=>{global.fetch=async(url)=>String(url).startsWith('https://api.deepfire.co')?new Response('',{status:401}):new Response(`latitude,longitude,acq_date,acq_time,frp,confidence\n41.3,1.86,${new Date().toISOString().slice(0,10)},0000,4,n`);const r=await locationHotspots(41.3,1.86);assert.match(r.source,/FIRMS/);assert.match(r.detail,/Deepfire request failed/);});
+ await test('Unavailable outside Europe is not zero detections with live status',async()=>{global.fetch=async()=>new Response('',{status:401});const r=await locationHotspots(-33,151);assert.equal(r.status,'unavailable');assert.equal(r.covered,false);});
+ await test('Global Deepfire coverage works outside FIRMS footprint',async()=>{global.fetch=async()=>json(collection([feature('au',[151,-33])]));const r=await locationHotspots(-33,151);assert.equal(r.status,'live');assert.equal(r.data.length,1);assert.equal(r.covered,true);});
+ await test('Bounds cover antimeridian and reject invalid radius',async()=>{const b=satelliteBounds(0,179.99,10);assert.equal(b[0],-180);assert.equal(b[2],180);assert.throws(()=>satelliteBounds(0,0,-1));});
+ await test('Intelligence recognizes Deepfire thermal evidence',async()=>{const now=new Date().toISOString(),empty={type:'FeatureCollection',features:[]};const a={generatedAt:now,location:{radiusM:1500},sources:[{source:'Deepfire satellite detections',status:'live',retrievedAt:now}],weather:{outlook:[]},satellite:{hotspots:[{id:'one',frpMw:4,provenance:{observedAt:now,source:'Deepfire / VIIRS'}}]},geography:{buildings:empty,roads:empty,assets:empty},completeness:{missing:[]},forecast:{reason:'Inputs required'}};const result=deriveIntelligence(a);assert.ok(result.actions.some(a=>a.id==='verify-thermal'));assert.match(result.evidence.find(e=>e.id==='THERMAL').source,/Deepfire/);});
+ console.log(`${checks} satellite integration checks passed`);
+})().catch(e=>{console.error(e);process.exitCode=1}).finally(()=>{global.fetch=originalFetch;if(originalToken===undefined)delete process.env.DEEPFIRE_TOKEN;else process.env.DEEPFIRE_TOKEN=originalToken;});

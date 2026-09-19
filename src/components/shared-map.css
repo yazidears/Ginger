@@ -1,0 +1,93 @@
+/* The geographic canvas never participates in tab layout or transitions. */
+.app-shell.shared-map-shell > .shared-map-surface {position:absolute;inset:0;z-index:auto}
+.app-shell.shared-map-shell > .workspace,
+.app-shell.shared-map-shell > .ginger-o2-workspace,
+.app-shell.shared-map-shell > .satellite-lab {pointer-events:none;background:transparent}
+.app-shell.shared-map-shell .map-stage {pointer-events:none}
+.app-shell.shared-map-shell .workspace-head,
+.app-shell.shared-map-shell .map-stage > :not(.map-loading),
+.app-shell.shared-map-shell .sage-config,
+.app-shell.shared-map-shell .sage-results,
+.app-shell.shared-map-shell .sage-lab-header,
+.app-shell.shared-map-shell .ginger-workspace-toolbar,
+.app-shell.shared-map-shell .sage-timeline {pointer-events:auto}
+.app-shell.shared-map-shell .sage-lab-body,
+.app-shell.shared-map-shell .sage-map-column,
+.app-shell.shared-map-shell .sage-map-wrap {pointer-events:none;background:transparent}
+.app-shell.shared-map-shell .shared-map-surface .layer-menu {top:100px;right:76px;max-height:calc(100dvh - 210px);overflow:auto;z-index:25;pointer-events:auto}
+.app-shell.shared-map-shell .shared-map-surface .map-controls {z-index:24;pointer-events:auto}
+.app-shell.shared-map-shell .shared-map-surface .map-warning {top:78px;left:20px;pointer-events:none}
+.app-shell.shared-map-shell .shared-map-surface .sage-wind-card {left:20px;bottom:190px;max-height:30dvh;overflow:auto;pointer-events:auto}
+.app-shell.shared-map-shell > .satellite-lab {position:absolute;inset:0;height:100%;padding:0;overflow:hidden;color:var(--text)}
+.app-shell.shared-map-shell .sl-header {position:absolute;top:25px;left:50%;transform:translateX(-50%);padding:0;border:0;background:none;pointer-events:auto}
+.app-shell.shared-map-shell .sl-header .sl-back {display:none}
+.app-shell.shared-map-shell .sl-controls {position:absolute;top:88px;left:20px;right:76px;pointer-events:auto}
+.app-shell.shared-map-shell .satellite-lab > nav {position:absolute;top:145px;left:20px;right:76px;pointer-events:auto}
+.app-shell.shared-map-shell .satellite-lab > main {position:absolute;top:202px;right:76px;bottom:108px;width:min(430px,calc(100vw - 96px));padding:0;pointer-events:none;overflow:visible}
+.app-shell.shared-map-shell .sl-content,.app-shell.shared-map-shell .sl-panel {max-height:100%;overflow:auto;background:#18251af5;border:1px solid #a7bd8f30;border-radius:16px;padding:20px;pointer-events:auto;color:#e5e8df}
+.app-shell.shared-map-shell .sl-split {display:block;height:100%;border:0}
+.app-shell.shared-map-shell .sl-map-section {position:static;background:none;border:0}
+.app-shell.shared-map-shell .sl-map {height:0;min-height:0;background:none}
+.app-shell.shared-map-shell .sl-map-label {position:fixed;left:20px;top:205px;bottom:auto;width:max-content;background:#18251af5;color:#e5e8df;pointer-events:none}
+.app-shell.shared-map-shell .sl-timeline {position:fixed;bottom:104px;left:20px;right:526px;background:#18251af5;border:1px solid #a7bd8f30;border-radius:16px;pointer-events:auto;color:#e5e8df}
+.app-shell.shared-map-shell .satellite-lab footer {display:none}
+.app-shell.shared-map-shell > .workspace.incident-workspace {inset:92px 76px 106px auto;width:min(440px,calc(100vw - 96px));border-radius:16px;background:#f3f5ef;overflow:auto;pointer-events:auto;z-index:3}
+.app-shell.shared-map-shell .replay-shell {padding:18px;min-height:100%;height:auto}
+.app-shell.shared-map-shell .replay-heading {position:static;transform:none;display:block;padding:0 0 16px}
+.app-shell.shared-map-shell .replay-heading > div:first-child {display:block}
+.app-shell.shared-map-shell .replay-layout {display:block}
+.app-shell.shared-map-shell .replay-sidebar {width:auto;border:0;padding:0 0 16px}
+.app-shell.shared-map-shell .replay-content {padding:0;overflow:visible}
+.app-shell.shared-map-shell .replay-map-toolbar {flex-wrap:wrap;gap:10px}
+.app-shell.shared-map-shell .replay-map-pair,.app-shell.shared-map-shell .replay-evaluation {grid-template-columns:1fr}
+.app-shell.shared-map-shell .replay-comparison summary {cursor:pointer;padding:12px 0}
+@media(max-width:700px){
+  .app-shell.shared-map-shell .sl-header {top:80px;left:20px;transform:none}
+  .app-shell.shared-map-shell .sl-controls {top:114px;left:12px;right:62px;flex-wrap:wrap}
+  .app-shell.shared-map-shell .satellite-lab > nav {top:200px;left:12px;right:12px;overflow:auto}
+  .app-shell.shared-map-shell .satellite-lab > main {top:auto;bottom:99px;right:62px;width:calc(100vw - 74px);height:40dvh}
+  .app-shell.shared-map-shell .sl-map-label {display:none}
+  .app-shell.shared-map-shell .sl-timeline {left:12px;right:62px;bottom:calc(40dvh + 107px)}
+  .app-shell.shared-map-shell > .workspace.incident-workspace {inset:auto 62px 99px 12px;width:auto;height:48dvh}
+  .app-shell.shared-map-shell .shared-map-surface .layer-menu {right:62px;width:min(270px,calc(100vw - 76px))}
+}
+
+.app-shell.shared-map-shell .sl-controls {background:#18251af5;border:1px solid #a7bd8f30;border-radius:16px;padding:10px 16px}
+.app-shell.shared-map-shell .sl-tabs {background:#18251af5;border:1px solid #a7bd8f30;border-radius:16px;padding:0 16px;width:max-content;max-width:calc(100% - 96px)}
+.app-shell.shared-map-shell .sl-imagery-controls {display:flex;flex-direction:column;align-items:stretch}
+.app-shell.shared-map-shell .sl-raster-grid {grid-template-columns:1fr}
+.app-shell.shared-map-shell .sl-content {min-height:0}
+.app-shell.shared-map-shell .replay-shell {background:#18251af5}
+.app-shell.shared-map-shell .replay-heading h1 {font-size:22px;letter-spacing:0}
+.app-shell.shared-map-shell .replay-heading-actions {margin-top:12px}
+.app-shell.shared-map-shell .replay-empty {min-height:240px;padding:16px 0}
+.app-shell.shared-map-shell .replay-content {min-width:0}
+.app-shell.shared-map-shell .sl-controls {right:auto;width:max-content;max-width:calc(100vw - 96px);gap:14px;align-items:end}
+.app-shell.shared-map-shell .satellite-lab > nav {top:174px}
+.app-shell.shared-map-shell .satellite-lab > main {top:234px}
+.app-shell.shared-map-shell .sl-map-label {top:235px}
+@media(max-width:700px){
+ .app-shell.shared-map-shell .sl-controls {left:12px;right:62px;width:auto;max-width:none;padding:8px 12px;gap:8px}
+ .app-shell.shared-map-shell .sl-controls form {width:auto;flex:1;min-width:0}
+ .app-shell.shared-map-shell .sl-controls input {width:100%;min-width:0}
+ .app-shell.shared-map-shell .sl-controls form>div {display:flex;gap:6px}
+ .app-shell.shared-map-shell .sl-controls form button {white-space:nowrap;padding:8px}
+ .app-shell.shared-map-shell .sl-controls>label {max-width:85px}
+ .app-shell.shared-map-shell .sl-controls>.icon-button {display:none}
+ .app-shell.shared-map-shell .satellite-lab > nav {top:214px;max-width:calc(100vw - 24px);gap:14px}
+ .app-shell.shared-map-shell .sl-tabs button {white-space:nowrap;font-size:11px;padding:12px 0}
+ .app-shell.shared-map-shell .satellite-lab > main {top:auto}
+}
+
+.app-shell.shared-map-shell .replay-shell {--rp-ink:#e5e8df;--rp-muted:#b9c9ae;--rp-paper:#18251a;--rp-line:#a7bd8f30;--rp-green:#c2d6a5;color:var(--rp-ink)}
+.app-shell.shared-map-shell .replay-heading-actions button,.app-shell.shared-map-shell .replay-heading-actions a {background:#263624;color:#e5e8df;border-color:#a7bd8f30}
+.app-shell.shared-map-shell .replay-protocol {margin-top:20px;padding-top:20px}
+.app-shell.shared-map-shell .replay-shell h1,.app-shell.shared-map-shell .replay-shell h2,.app-shell.shared-map-shell .replay-shell h3 {color:#e5e8df}
+.app-shell.shared-map-shell .replay-content {padding:16px 0}
+.app-shell.shared-map-shell.simulation-mode > .ginger-o2-workspace {background:transparent}
+.app-shell.shared-map-shell .simulation-preparation {background:none}
+.app-shell.shared-map-shell .mapping-grid,.app-shell.shared-map-shell .mapping-sweep,.app-shell.shared-map-shell .mapping-target {display:none}
+
+@media(max-width:700px){
+ .app-shell.shared-map-shell .satellite-lab > nav {right:62px;width:auto;max-width:none}
+}

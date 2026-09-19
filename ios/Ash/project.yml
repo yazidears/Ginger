@@ -1,0 +1,46 @@
+name: Ash
+options:
+  bundleIdPrefix: ai.ginger
+  deploymentTarget:
+    iOS: '18.0'
+settings:
+  base:
+    SWIFT_VERSION: '5.0'
+    TARGETED_DEVICE_FAMILY: '1'
+targets:
+  Ash:
+    type: application
+    platform: iOS
+    sources: [Sources]
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: ai.ginger.ash
+        TARGETED_DEVICE_FAMILY: '1'
+        MARKETING_VERSION: 0.1.0
+        CURRENT_PROJECT_VERSION: 1
+        GENERATE_INFOPLIST_FILE: YES
+        INFOPLIST_KEY_CFBundleDisplayName: Ash
+        INFOPLIST_KEY_UILaunchScreen_Generation: YES
+        INFOPLIST_KEY_NSMicrophoneUsageDescription: Speak to Ash and record voice messages for your connected crew.
+        INFOPLIST_KEY_NSLocationWhenInUseUsageDescription: Use your current GPS position to retrieve nearby Ginger observations and conditions.
+        INFOPLIST_KEY_NSLocalNetworkUsageDescription: Connect to your Ginger server and discover nearby Ash crew members.
+    info:
+      path: Info.plist
+      properties:
+        UIBackgroundModes: [audio, location]
+        NSBonjourServices: [_ash-field._tcp, _ash-field._udp]
+        NSAppTransportSecurity:
+          NSAllowsLocalNetworking: true
+  AshTests:
+    type: bundle.unit-test
+    platform: iOS
+    sources: [Tests]
+    dependencies:
+      - target: Ash
+schemes:
+  Ash:
+    build:
+      targets:
+        Ash: all
+    test:
+      targets: [AshTests]

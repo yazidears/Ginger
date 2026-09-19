@@ -1,0 +1,425 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 77;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		0064374DAD50679BB85B2BB7 /* CrewRadio.swift in Sources */ = {isa = PBXBuildFile; fileRef = A52161AF4526685A158DD74C /* CrewRadio.swift */; };
+		2B1753014A215A21D152E6F0 /* AshStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5865A84B652D0EFA1B9B6FF5 /* AshStore.swift */; };
+		39653C2AE32BB6103BB70F11 /* AudioSegmenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8234BFE495B61F5E96093F9 /* AudioSegmenter.swift */; };
+		5912C0405AA8F7219A057B19 /* AshCredentials.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01D2DA988CCA55E451D31D28 /* AshCredentials.swift */; };
+		62F8175296C3F29DBAD122C2 /* AshTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C998F12CBE6E51AF178AE751 /* AshTests.swift */; };
+		6617CB847B93A1CA8673E40D /* AshViews.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1627C3E944DE21BC223FDC9F /* AshViews.swift */; };
+		CEA2A7E19940608D45766E57 /* AshModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24BCCED079B0545B6EE33426 /* AshModels.swift */; };
+		D4CD3FE3AED9AB28C08296DA /* FieldLocation.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCE9D5A0D705CBEAC41F7E66 /* FieldLocation.swift */; };
+		EC72353159B6C0EFFFBAB274 /* VoiceController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7023EF5597DE6ACEFBE68EA /* VoiceController.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		142EB3799E0D0C34A9157D5A /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = E73718B5C062D97E5FE5C60C /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = B6D0097588F159D6946D26B8;
+			remoteInfo = Ash;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		01D2DA988CCA55E451D31D28 /* AshCredentials.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AshCredentials.swift; sourceTree = "<group>"; };
+		1627C3E944DE21BC223FDC9F /* AshViews.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AshViews.swift; sourceTree = "<group>"; };
+		24BCCED079B0545B6EE33426 /* AshModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AshModels.swift; sourceTree = "<group>"; };
+		3AB78CF39B839A1A29594A98 /* Ash.app */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.application; path = Ash.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		5865A84B652D0EFA1B9B6FF5 /* AshStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AshStore.swift; sourceTree = "<group>"; };
+		A52161AF4526685A158DD74C /* CrewRadio.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CrewRadio.swift; sourceTree = "<group>"; };
+		A8234BFE495B61F5E96093F9 /* AudioSegmenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioSegmenter.swift; sourceTree = "<group>"; };
+		C63DF63C36380FB496DE9015 /* AshTests.xctest */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.cfbundle; path = AshTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		C998F12CBE6E51AF178AE751 /* AshTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AshTests.swift; sourceTree = "<group>"; };
+		D7023EF5597DE6ACEFBE68EA /* VoiceController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VoiceController.swift; sourceTree = "<group>"; };
+		FCE9D5A0D705CBEAC41F7E66 /* FieldLocation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FieldLocation.swift; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXGroup section */
+		4B9E1C8CA13988AF850477FA /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				3AB78CF39B839A1A29594A98 /* Ash.app */,
+				C63DF63C36380FB496DE9015 /* AshTests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		4BC5EA0A18D16586BEAF83FD /* Tests */ = {
+			isa = PBXGroup;
+			children = (
+				C998F12CBE6E51AF178AE751 /* AshTests.swift */,
+			);
+			path = Tests;
+			sourceTree = "<group>";
+		};
+		BCCD687997857BC8514B0CF8 = {
+			isa = PBXGroup;
+			children = (
+				E6F23088B825151773006770 /* Sources */,
+				4BC5EA0A18D16586BEAF83FD /* Tests */,
+				4B9E1C8CA13988AF850477FA /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		E6F23088B825151773006770 /* Sources */ = {
+			isa = PBXGroup;
+			children = (
+				01D2DA988CCA55E451D31D28 /* AshCredentials.swift */,
+				24BCCED079B0545B6EE33426 /* AshModels.swift */,
+				5865A84B652D0EFA1B9B6FF5 /* AshStore.swift */,
+				1627C3E944DE21BC223FDC9F /* AshViews.swift */,
+				A8234BFE495B61F5E96093F9 /* AudioSegmenter.swift */,
+				A52161AF4526685A158DD74C /* CrewRadio.swift */,
+				FCE9D5A0D705CBEAC41F7E66 /* FieldLocation.swift */,
+				D7023EF5597DE6ACEFBE68EA /* VoiceController.swift */,
+			);
+			path = Sources;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		3AD99B1278C0B779763B0DD3 /* AshTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = F3D9AC873E5ECB452DFB4207 /* Build configuration list for PBXNativeTarget "AshTests" */;
+			buildPhases = (
+				3AD183EA7162DF4AE1DE869B /* Sources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				3B376722D9E4C4EFC13C872F /* PBXTargetDependency */,
+			);
+			name = AshTests;
+			packageProductDependencies = (
+			);
+			productName = AshTests;
+			productReference = C63DF63C36380FB496DE9015 /* AshTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		B6D0097588F159D6946D26B8 /* Ash */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = BEC079AB9D0EDAFCFCD06B37 /* Build configuration list for PBXNativeTarget "Ash" */;
+			buildPhases = (
+				C295CEB58C6FE315F7D96CE9 /* Sources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = Ash;
+			packageProductDependencies = (
+			);
+			productName = Ash;
+			productReference = 3AB78CF39B839A1A29594A98 /* Ash.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		E73718B5C062D97E5FE5C60C /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = YES;
+				LastUpgradeCheck = 1430;
+				TargetAttributes = {
+				};
+			};
+			buildConfigurationList = 0DC67D2CD6CF489100209BB1 /* Build configuration list for PBXProject "Ash" */;
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				Base,
+				en,
+			);
+			mainGroup = BCCD687997857BC8514B0CF8;
+			minimizedProjectReferenceProxies = 1;
+			preferredProjectObjectVersion = 77;
+			productRefGroup = 4B9E1C8CA13988AF850477FA /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				B6D0097588F159D6946D26B8 /* Ash */,
+				3AD99B1278C0B779763B0DD3 /* AshTests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXSourcesBuildPhase section */
+		3AD183EA7162DF4AE1DE869B /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				62F8175296C3F29DBAD122C2 /* AshTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		C295CEB58C6FE315F7D96CE9 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				5912C0405AA8F7219A057B19 /* AshCredentials.swift in Sources */,
+				CEA2A7E19940608D45766E57 /* AshModels.swift in Sources */,
+				2B1753014A215A21D152E6F0 /* AshStore.swift in Sources */,
+				6617CB847B93A1CA8673E40D /* AshViews.swift in Sources */,
+				39653C2AE32BB6103BB70F11 /* AudioSegmenter.swift in Sources */,
+				0064374DAD50679BB85B2BB7 /* CrewRadio.swift in Sources */,
+				D4CD3FE3AED9AB28C08296DA /* FieldLocation.swift in Sources */,
+				EC72353159B6C0EFFFBAB274 /* VoiceController.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		3B376722D9E4C4EFC13C872F /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = B6D0097588F159D6946D26B8 /* Ash */;
+			targetProxy = 142EB3799E0D0C34A9157D5A /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin XCBuildConfiguration section */
+		08E540A83C9823792B77D4C7 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = Ash;
+				INFOPLIST_KEY_NSLocalNetworkUsageDescription = "Connect to your Ginger server and discover nearby Ash crew members.";
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "Use your current GPS position to retrieve nearby Ginger observations and conditions.";
+				INFOPLIST_KEY_NSMicrophoneUsageDescription = "Speak to Ash and record voice messages for your connected crew.";
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 0.1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = ai.ginger.ash;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = 1;
+			};
+			name = Debug;
+		};
+		2ED12953A6A863BE9618E8FA /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 18.0;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 1;
+			};
+			name = Release;
+		};
+		6DB23228C413BEEAA7E04877 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					"DEBUG=1",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 18.0;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 1;
+			};
+			name = Debug;
+		};
+		BA1CED8B010ED6272F8B8C18 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = Ash;
+				INFOPLIST_KEY_NSLocalNetworkUsageDescription = "Connect to your Ginger server and discover nearby Ash crew members.";
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "Use your current GPS position to retrieve nearby Ginger observations and conditions.";
+				INFOPLIST_KEY_NSMicrophoneUsageDescription = "Speak to Ash and record voice messages for your connected crew.";
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 0.1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = ai.ginger.ash;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = 1;
+			};
+			name = Release;
+		};
+		BFDDCBEA3107C44B33AE1203 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = ai.ginger.AshTests;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Ash.app/Ash";
+			};
+			name = Debug;
+		};
+		EFF08511804B38D968BB486D /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = ai.ginger.AshTests;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Ash.app/Ash";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		0DC67D2CD6CF489100209BB1 /* Build configuration list for PBXProject "Ash" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				6DB23228C413BEEAA7E04877 /* Debug */,
+				2ED12953A6A863BE9618E8FA /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+		BEC079AB9D0EDAFCFCD06B37 /* Build configuration list for PBXNativeTarget "Ash" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				08E540A83C9823792B77D4C7 /* Debug */,
+				BA1CED8B010ED6272F8B8C18 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+		F3D9AC873E5ECB452DFB4207 /* Build configuration list for PBXNativeTarget "AshTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				BFDDCBEA3107C44B33AE1203 /* Debug */,
+				EFF08511804B38D968BB486D /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = E73718B5C062D97E5FE5C60C /* Project object */;
+}

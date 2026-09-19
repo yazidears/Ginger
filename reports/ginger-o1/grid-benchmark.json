@@ -1,0 +1,1241 @@
+{
+  "status": "passed",
+  "generatedAt": "2026-09-19T14:24:05.931Z",
+  "kind": "synthetic analytical numerical verification, not historical validation",
+  "cases": 72,
+  "scoredCases": 68,
+  "unscoredCases": 4,
+  "fullEnsembleRuns": 144,
+  "memberRuns": 1296,
+  "meanCaseRelativeTimingError": {
+    "legacy8": 0.1365064981402476,
+    "ginger16": 0.03450824792376918
+  },
+  "relativeReduction": 0.747204357346306,
+  "details": [
+    {
+      "fuel": "1",
+      "cellM": 12.5,
+      "windKmh": 0,
+      "windFromDegrees": 0,
+      "exactReach": 268,
+      "comparedCells": 268,
+      "status": "scored",
+      "legacy": {
+        "meanRelativeError": 0.05375313381887134,
+        "missed": 0
+      },
+      "ginger": {
+        "meanRelativeError": 0.013691099604666931,
+        "missed": 0
+      }
+    },
+    {
+      "fuel": "1",
+      "cellM": 12.5,
+      "windKmh": 0,
+      "windFromDegrees": 22.5,
+      "exactReach": 268,
+      "comparedCells": 268,
+      "status": "scored",
+      "legacy": {
+        "meanRelativeError": 0.05375313381887134,
+        "missed": 0
+      },
+      "ginger": {
+        "meanRelativeError": 0.013691099604666931,
+        "missed": 0
+      }
+    },
+    {
+      "fuel": "1",
+      "cellM": 12.5,
+      "windKmh": 0,
+      "windFromDegrees": 45,
+      "exactReach": 268,
+      "comparedCells": 268,
+      "status": "scored",
+      "legacy": {
+        "meanRelativeError": 0.05375313381887134,
+        "missed": 0
+      },
+      "ginger": {
+        "meanRelativeError": 0.013691099604666931,
+        "missed": 0
+      }
+    },
+    {
+      "fuel": "1",
+      "cellM": 12.5,
+      "windKmh": 0,
+      "windFromDegrees": 67.5,
+      "exactReach": 268,
+      "comparedCells": 268,
+      "status": "scored",
+      "legacy": {
+        "meanRelativeError": 0.05375313381887134,
+        "missed": 0
+      },
+      "ginger": {
+        "meanRelativeError": 0.013691099604666931,
+        "missed": 0
+      }
+    },
+    {
+      "fuel": "1",
+      "cellM": 12.5,
+      "windKmh": 15,
+      "windFromDegrees": 0,
+      "exactReach": 268,
+      "comparedCells": 268,
+      "status": "scored",
+      "legacy": {
+        "meanRelativeError": 0.09682423378178727,
+        "missed": 0
+      },
+      "ginger": {
+        "meanRelativeError": 0.0255129867839838,
+        "missed": 0
+      }
+    },
+    {
+      "fuel": "1",
+      "cellM": 12.5,
+      "windKmh": 15,
+      "windFromDegrees": 22.5,
+      "exactReach": 268,
+      "comparedCells": 268,
+      "status": "scored",
+      "legacy": {
+        "meanRelativeError": 0.09801556743069655,
+        "missed": 0
+      },
+      "ginger": {
+        "meanRelativeError": 0.024950546966052405,
+        "missed": 0
+      }
+    },
+    {
+      "fuel": "1",
+      "cellM": 12.5,
+      "windKmh": 15,
+      "windFromDegrees": 45,
+      "exactReach": 268,
+      "comparedCells": 268,
+      "status": "scored",
+      "legacy": {
+        "meanRelativeError": 0.09709774202988664,
+        "missed": 0
+      },
+      "ginger": {
+        "meanRelativeError": 0.024201836777668448,
+        "missed": 0
+      }
+    },
+    {
+      "fuel": "1",
+      "cellM": 12.5,
+      "windKmh": 15,
+      "windFromDegrees": 67.5,
+      "exactReach": 268,
+      "comparedCells": 268,
+      "status": "scored",
+      "legacy": {
+        "meanRelativeError": 0.09801556743069645,
+        "missed": 0
+      },
+      "ginger": {
+        "meanRelativeError": 0.02495054696605238,
+        "missed": 0
+      }
+    },
+    {
+      "fuel": "1",
+      "cellM": 12.5,
+      "windKmh": 30,
+      "windFromDegrees": 0,
+      "exactReach": 268,
+      "comparedCells": 268,
+      "status": "scored",
+      "legacy": {
+        "meanRelativeError": 0.13702423966513586,
+        "missed": 0
+      },
+      "ginger": {
+        "meanRelativeError": 0.03901306953987669,
+        "missed": 0
+      }
+    },
+    {
+      "fuel": "1",
+      "cellM": 12.5,
+      "windKmh": 30,
+      "windFromDegrees": 22.5,
+      "exactReach": 268,
+      "comparedCells": 268,
+      "status": "scored",
+      "legacy": {
+        "meanRelativeError": 0.14560306250958693,
+        "missed": 0
+      },
+      "ginger": {
+        "meanRelativeError": 0.037102950421823655,
+        "missed": 0
+      }
+    },
+    {
+      "fuel": "1",
+      "cellM": 12.5,
+      "windKmh": 30,
+      "windFromDegrees": 45,
+      "exactReach": 268,
+      "comparedCells": 268,
+      "status": "scored",
+      "legacy": {
+        "meanRelativeError": 0.13754515848666066,
+        "missed": 0
+      },
+      "ginger": {
+        "meanRelativeError": 0.03382944033489914,
+        "missed": 0
+      }
+    },
+    {
+      "fuel": "1",
+      "cellM": 12.5,
+      "windKmh": 30,
+      "windFromDegrees": 67.5,
+      "exactReach": 268,
+      "comparedCells": 268,
+      "status": "scored",
+      "legacy": {
+        "meanRelativeError": 0.1456030625095872,
+        "missed": 0
+      },
+      "ginger": {
+        "meanRelativeError": 0.0371029504218238,
+        "missed": 0
+      }
+    },
+    {
+      "fuel": "1",
+      "cellM": 25,
+      "windKmh": 0,
+      "windFromDegrees": 0,
+      "exactReach": 268,
+      "comparedCells": 268,
+      "status": "scored",
+      "legacy": {
+        "meanRelativeError": 0.05353584377527666,
+        "missed": 0
+      },
+      "ginger": {
+        "meanRelativeError": 0.013588263320684713,
+        "missed": 0
+      }
+    },
+    {
+      "fuel": "1",
+      "cellM": 25,
+      "windKmh": 0,
+      "windFromDegrees": 22.5,
+      "exactReach": 268,
+      "comparedCells": 268,
+      "status": "scored",
+      "legacy": {
+        "meanRelativeError": 0.05353584377527666,
+        "missed": 0
+      },
+      "ginger": {
+        "meanRelativeError": 0.013588263320684713,
+        "missed": 0
+      }
+    },
+    {
+      "fuel": "1",
+      "cellM": 25,
+      "windKmh": 0,
+      "windFromDegrees": 45,
+      "exactReach": 268,
+      "comparedCells": 268,
+      "status": "scored",
+      "legacy": {
+        "meanRelativeError": 0.05353584377527666,
+        "missed": 0
+      },
+      "ginger": {
+        "meanRelativeError": 0.013588263320684713,
+        "missed": 0
+      }
+    },
+    {
+      "fuel": "1",
+      "cellM": 25,
+      "windKmh": 0,
+      "windFromDegrees": 67.5,
+      "exactReach": 268,
+      "comparedCells": 268,
+      "status": "scored",
+      "legacy": {
+        "meanRelativeError": 0.05353584377527666,
+        "missed": 0
+      },
+      "ginger": {
+        "meanRelativeError": 0.013588263320684713,
+        "missed": 0
+      }
+    },
+    {
+      "fuel": "1",
+      "cellM": 25,
+      "windKmh": 15,
+      "windFromDegrees": 0,
+      "exactReach": 268,
+      "comparedCells": 268,
+      "status": "scored",
+      "legacy": {
+        "meanRelativeError": 0.09685991964855008,
+        "missed": 0
+      },
+      "ginger": {
+        "meanRelativeError": 0.02560884327092155,
+        "missed": 0
+      }
+    },
+    {
+      "fuel": "1",
+      "cellM": 25,
+      "windKmh": 15,
+      "windFromDegrees": 22.5,
+      "exactReach": 268,
+      "comparedCells": 268,
+      "status": "scored",
+      "legacy": {
+        "meanRelativeError": 0.09797019909863991,
+        "missed": 0
+      },
+      "ginger": {
+        "meanRelativeError": 0.02485138025786707,
+        "missed": 0
+      }
+    },
+    {
+      "fuel": "1",
+      "cellM": 25,
+      "windKmh": 15,
+      "windFromDegrees": 45,
+      "exactReach": 268,
+      "comparedCells": 268,
+      "status": "scored",
+      "legacy": {
+        "meanRelativeError": 0.09707457127532283,
+        "missed": 0
+      },
+      "ginger": {
+        "meanRelativeError": 0.023779404592642224,
+        "missed": 0
+      }
+    },
+    {
+      "fuel": "1",
+      "cellM": 25,
+      "windKmh": 15,
+      "windFromDegrees": 67.5,
+      "exactReach": 268,
+      "comparedCells": 268,
+      "status": "scored",
+      "legacy": {
+        "meanRelativeError": 0.09797019909863998,
+        "missed": 0
+      },
+      "ginger": {
+        "meanRelativeError": 0.02485138025786705,
+        "missed": 0
+      }
+    },
+    {
+      "fuel": "1",
+      "cellM": 25,
+      "windKmh": 30,
+      "windFromDegrees": 0,
+      "exactReach": 268,
+      "comparedCells": 268,
+      "status": "scored",
+      "legacy": {
+        "meanRelativeError": 0.13630179461014932,
+        "missed": 0
+      },
+      "ginger": {
+        "meanRelativeError": 0.037809227592898016,
+        "missed": 0
+      }
+    },
+    {
+      "fuel": "1",
+      "cellM": 25,
+      "windKmh": 30,
+      "windFromDegrees": 22.5,
+      "exactReach": 268,
+      "comparedCells": 268,
+      "status": "scored",
+      "legacy": {
+        "meanRelativeError": 0.14535779702363713,
+        "missed": 0
+      },
+      "ginger": {
+        "meanRelativeError": 0.03660565173766566,
+        "missed": 0
+      }
+    },
+    {
+      "fuel": "1",
+      "cellM": 25,
+      "windKmh": 30,
+      "windFromDegrees": 45,
+      "exactReach": 268,
+      "comparedCells": 268,
+      "status": "scored",
+      "legacy": {
+        "meanRelativeError": 0.1377302635244218,
+        "missed": 0
+      },
+      "ginger": {
+        "meanRelativeError": 0.032511060807716555,
+        "missed": 0
+      }
+    },
+    {
+      "fuel": "1",
+      "cellM": 25,
+      "windKmh": 30,
+      "windFromDegrees": 67.5,
+      "exactReach": 268,
+      "comparedCells": 268,
+      "status": "scored",
+      "legacy": {
+        "meanRelativeError": 0.14535779702363738,
+        "missed": 0
+      },
+      "ginger": {
+        "meanRelativeError": 0.03660565173766583,
+        "missed": 0
+      }
+    },
+    {
+      "fuel": "6",
+      "cellM": 12.5,
+      "windKmh": 0,
+      "windFromDegrees": 0,
+      "exactReach": 268,
+      "comparedCells": 268,
+      "status": "scored",
+      "legacy": {
+        "meanRelativeError": 0.053634247984614955,
+        "missed": 0
+      },
+      "ginger": {
+        "meanRelativeError": 0.013519936429226019,
+        "missed": 0
+      }
+    },
+    {
+      "fuel": "6",
+      "cellM": 12.5,
+      "windKmh": 0,
+      "windFromDegrees": 22.5,
+      "exactReach": 268,
+      "comparedCells": 268,
+      "status": "scored",
+      "legacy": {
+        "meanRelativeError": 0.053634247984614955,
+        "missed": 0
+      },
+      "ginger": {
+        "meanRelativeError": 0.013519936429226019,
+        "missed": 0
+      }
+    },
+    {
+      "fuel": "6",
+      "cellM": 12.5,
+      "windKmh": 0,
+      "windFromDegrees": 45,
+      "exactReach": 268,
+      "comparedCells": 268,
+      "status": "scored",
+      "legacy": {
+        "meanRelativeError": 0.053634247984614955,
+        "missed": 0
+      },
+      "ginger": {
+        "meanRelativeError": 0.013519936429226019,
+        "missed": 0
+      }
+    },
+    {
+      "fuel": "6",
+      "cellM": 12.5,
+      "windKmh": 0,
+      "windFromDegrees": 67.5,
+      "exactReach": 268,
+      "comparedCells": 268,
+      "status": "scored",
+      "legacy": {
+        "meanRelativeError": 0.053634247984614955,
+        "missed": 0
+      },
+      "ginger": {
+        "meanRelativeError": 0.013519936429226019,
+        "missed": 0
+      }
+    },
+    {
+      "fuel": "6",
+      "cellM": 12.5,
+      "windKmh": 15,
+      "windFromDegrees": 0,
+      "exactReach": 268,
+      "comparedCells": 268,
+      "status": "scored",
+      "legacy": {
+        "meanRelativeError": 0.09677392374725233,
+        "missed": 0
+      },
+      "ginger": {
+        "meanRelativeError": 0.025530305492115456,
+        "missed": 0
+      }
+    },
+    {
+      "fuel": "6",
+      "cellM": 12.5,
+      "windKmh": 15,
+      "windFromDegrees": 22.5,
+      "exactReach": 268,
+      "comparedCells": 268,
+      "status": "scored",
+      "legacy": {
+        "meanRelativeError": 0.0979288166883604,
+        "missed": 0
+      },
+      "ginger": {
+        "meanRelativeError": 0.02477740684717379,
+        "missed": 0
+      }
+    },
+    {
+      "fuel": "6",
+      "cellM": 12.5,
+      "windKmh": 15,
+      "windFromDegrees": 45,
+      "exactReach": 268,
+      "comparedCells": 268,
+      "status": "scored",
+      "legacy": {
+        "meanRelativeError": 0.0970349773261036,
+        "missed": 0
+      },
+      "ginger": {
+        "meanRelativeError": 0.023835393091836684,
+        "missed": 0
+      }
+    },
+    {
+      "fuel": "6",
+      "cellM": 12.5,
+      "windKmh": 15,
+      "windFromDegrees": 67.5,
+      "exactReach": 268,
+      "comparedCells": 268,
+      "status": "scored",
+      "legacy": {
+        "meanRelativeError": 0.09792881668836029,
+        "missed": 0
+      },
+      "ginger": {
+        "meanRelativeError": 0.02477740684717374,
+        "missed": 0
+      }
+    },
+    {
+      "fuel": "6",
+      "cellM": 12.5,
+      "windKmh": 30,
+      "windFromDegrees": 0,
+      "exactReach": 268,
+      "comparedCells": 268,
+      "status": "scored",
+      "legacy": {
+        "meanRelativeError": 0.13651419742750406,
+        "missed": 0
+      },
+      "ginger": {
+        "meanRelativeError": 0.038196448464499246,
+        "missed": 0
+      }
+    },
+    {
+      "fuel": "6",
+      "cellM": 12.5,
+      "windKmh": 30,
+      "windFromDegrees": 22.5,
+      "exactReach": 268,
+      "comparedCells": 268,
+      "status": "scored",
+      "legacy": {
+        "meanRelativeError": 0.1453294040240614,
+        "missed": 0
+      },
+      "ginger": {
+        "meanRelativeError": 0.03623849271035897,
+        "missed": 0
+      }
+    },
+    {
+      "fuel": "6",
+      "cellM": 12.5,
+      "windKmh": 30,
+      "windFromDegrees": 45,
+      "exactReach": 268,
+      "comparedCells": 268,
+      "status": "scored",
+      "legacy": {
+        "meanRelativeError": 0.1374013709957902,
+        "missed": 0
+      },
+      "ginger": {
+        "meanRelativeError": 0.032495889119866346,
+        "missed": 0
+      }
+    },
+    {
+      "fuel": "6",
+      "cellM": 12.5,
+      "windKmh": 30,
+      "windFromDegrees": 67.5,
+      "exactReach": 268,
+      "comparedCells": 268,
+      "status": "scored",
+      "legacy": {
+        "meanRelativeError": 0.14532940402406133,
+        "missed": 0
+      },
+      "ginger": {
+        "meanRelativeError": 0.036238492710358894,
+        "missed": 0
+      }
+    },
+    {
+      "fuel": "6",
+      "cellM": 25,
+      "windKmh": 0,
+      "windFromDegrees": 0,
+      "exactReach": 64,
+      "comparedCells": 48,
+      "status": "scored",
+      "legacy": {
+        "meanRelativeError": 0.048697648878719725,
+        "missed": 16
+      },
+      "ginger": {
+        "meanRelativeError": 0.010586269859380786,
+        "missed": 8
+      }
+    },
+    {
+      "fuel": "6",
+      "cellM": 25,
+      "windKmh": 0,
+      "windFromDegrees": 22.5,
+      "exactReach": 64,
+      "comparedCells": 48,
+      "status": "scored",
+      "legacy": {
+        "meanRelativeError": 0.048697648878719725,
+        "missed": 16
+      },
+      "ginger": {
+        "meanRelativeError": 0.010586269859380786,
+        "missed": 8
+      }
+    },
+    {
+      "fuel": "6",
+      "cellM": 25,
+      "windKmh": 0,
+      "windFromDegrees": 45,
+      "exactReach": 64,
+      "comparedCells": 48,
+      "status": "scored",
+      "legacy": {
+        "meanRelativeError": 0.048697648878719725,
+        "missed": 16
+      },
+      "ginger": {
+        "meanRelativeError": 0.010586269859380786,
+        "missed": 8
+      }
+    },
+    {
+      "fuel": "6",
+      "cellM": 25,
+      "windKmh": 0,
+      "windFromDegrees": 67.5,
+      "exactReach": 64,
+      "comparedCells": 48,
+      "status": "scored",
+      "legacy": {
+        "meanRelativeError": 0.048697648878719725,
+        "missed": 16
+      },
+      "ginger": {
+        "meanRelativeError": 0.010586269859380786,
+        "missed": 8
+      }
+    },
+    {
+      "fuel": "6",
+      "cellM": 25,
+      "windKmh": 15,
+      "windFromDegrees": 0,
+      "exactReach": 192,
+      "comparedCells": 188,
+      "status": "scored",
+      "legacy": {
+        "meanRelativeError": 0.12264330423787156,
+        "missed": 4
+      },
+      "ginger": {
+        "meanRelativeError": 0.03245025543229792,
+        "missed": 0
+      }
+    },
+    {
+      "fuel": "6",
+      "cellM": 25,
+      "windKmh": 15,
+      "windFromDegrees": 22.5,
+      "exactReach": 193,
+      "comparedCells": 188,
+      "status": "scored",
+      "legacy": {
+        "meanRelativeError": 0.1248607859567771,
+        "missed": 5
+      },
+      "ginger": {
+        "meanRelativeError": 0.031513946977952706,
+        "missed": 2
+      }
+    },
+    {
+      "fuel": "6",
+      "cellM": 25,
+      "windKmh": 15,
+      "windFromDegrees": 45,
+      "exactReach": 195,
+      "comparedCells": 187,
+      "status": "scored",
+      "legacy": {
+        "meanRelativeError": 0.12341860653415214,
+        "missed": 8
+      },
+      "ginger": {
+        "meanRelativeError": 0.0299014940225938,
+        "missed": 6
+      }
+    },
+    {
+      "fuel": "6",
+      "cellM": 25,
+      "windKmh": 15,
+      "windFromDegrees": 67.5,
+      "exactReach": 193,
+      "comparedCells": 188,
+      "status": "scored",
+      "legacy": {
+        "meanRelativeError": 0.12486078595677702,
+        "missed": 5
+      },
+      "ginger": {
+        "meanRelativeError": 0.03151394697795261,
+        "missed": 2
+      }
+    },
+    {
+      "fuel": "6",
+      "cellM": 25,
+      "windKmh": 30,
+      "windFromDegrees": 0,
+      "exactReach": 200,
+      "comparedCells": 196,
+      "status": "scored",
+      "legacy": {
+        "meanRelativeError": 0.17396368137529616,
+        "missed": 4
+      },
+      "ginger": {
+        "meanRelativeError": 0.04901098568238783,
+        "missed": 0
+      }
+    },
+    {
+      "fuel": "6",
+      "cellM": 25,
+      "windKmh": 30,
+      "windFromDegrees": 22.5,
+      "exactReach": 199,
+      "comparedCells": 194,
+      "status": "scored",
+      "legacy": {
+        "meanRelativeError": 0.18819065942396876,
+        "missed": 5
+      },
+      "ginger": {
+        "meanRelativeError": 0.046835290873251306,
+        "missed": 1
+      }
+    },
+    {
+      "fuel": "6",
+      "cellM": 25,
+      "windKmh": 30,
+      "windFromDegrees": 45,
+      "exactReach": 201,
+      "comparedCells": 195,
+      "status": "scored",
+      "legacy": {
+        "meanRelativeError": 0.17631572332386664,
+        "missed": 6
+      },
+      "ginger": {
+        "meanRelativeError": 0.041144398571179665,
+        "missed": 4
+      }
+    },
+    {
+      "fuel": "6",
+      "cellM": 25,
+      "windKmh": 30,
+      "windFromDegrees": 67.5,
+      "exactReach": 199,
+      "comparedCells": 194,
+      "status": "scored",
+      "legacy": {
+        "meanRelativeError": 0.1881906594239686,
+        "missed": 5
+      },
+      "ginger": {
+        "meanRelativeError": 0.046835290873251216,
+        "missed": 1
+      }
+    },
+    {
+      "fuel": "9",
+      "cellM": 12.5,
+      "windKmh": 0,
+      "windFromDegrees": 0,
+      "exactReach": 44,
+      "comparedCells": 44,
+      "status": "scored",
+      "legacy": {
+        "meanRelativeError": 0.05315891521946114,
+        "missed": 0
+      },
+      "ginger": {
+        "meanRelativeError": 0.01153605061667598,
+        "missed": 0
+      }
+    },
+    {
+      "fuel": "9",
+      "cellM": 12.5,
+      "windKmh": 0,
+      "windFromDegrees": 22.5,
+      "exactReach": 44,
+      "comparedCells": 44,
+      "status": "scored",
+      "legacy": {
+        "meanRelativeError": 0.05315891521946114,
+        "missed": 0
+      },
+      "ginger": {
+        "meanRelativeError": 0.01153605061667598,
+        "missed": 0
+      }
+    },
+    {
+      "fuel": "9",
+      "cellM": 12.5,
+      "windKmh": 0,
+      "windFromDegrees": 45,
+      "exactReach": 44,
+      "comparedCells": 44,
+      "status": "scored",
+      "legacy": {
+        "meanRelativeError": 0.05315891521946114,
+        "missed": 0
+      },
+      "ginger": {
+        "meanRelativeError": 0.01153605061667598,
+        "missed": 0
+      }
+    },
+    {
+      "fuel": "9",
+      "cellM": 12.5,
+      "windKmh": 0,
+      "windFromDegrees": 67.5,
+      "exactReach": 44,
+      "comparedCells": 44,
+      "status": "scored",
+      "legacy": {
+        "meanRelativeError": 0.05315891521946114,
+        "missed": 0
+      },
+      "ginger": {
+        "meanRelativeError": 0.01153605061667598,
+        "missed": 0
+      }
+    },
+    {
+      "fuel": "9",
+      "cellM": 12.5,
+      "windKmh": 15,
+      "windFromDegrees": 0,
+      "exactReach": 105,
+      "comparedCells": 99,
+      "status": "scored",
+      "legacy": {
+        "meanRelativeError": 0.18199049976873824,
+        "missed": 6
+      },
+      "ginger": {
+        "meanRelativeError": 0.04858208064546681,
+        "missed": 0
+      }
+    },
+    {
+      "fuel": "9",
+      "cellM": 12.5,
+      "windKmh": 15,
+      "windFromDegrees": 22.5,
+      "exactReach": 103,
+      "comparedCells": 99,
+      "status": "scored",
+      "legacy": {
+        "meanRelativeError": 0.18910444097517953,
+        "missed": 4
+      },
+      "ginger": {
+        "meanRelativeError": 0.04719157125179171,
+        "missed": 0
+      }
+    },
+    {
+      "fuel": "9",
+      "cellM": 12.5,
+      "windKmh": 15,
+      "windFromDegrees": 45,
+      "exactReach": 106,
+      "comparedCells": 98,
+      "status": "scored",
+      "legacy": {
+        "meanRelativeError": 0.18444493921119035,
+        "missed": 8
+      },
+      "ginger": {
+        "meanRelativeError": 0.044979326702580834,
+        "missed": 0
+      }
+    },
+    {
+      "fuel": "9",
+      "cellM": 12.5,
+      "windKmh": 15,
+      "windFromDegrees": 67.5,
+      "exactReach": 103,
+      "comparedCells": 99,
+      "status": "scored",
+      "legacy": {
+        "meanRelativeError": 0.18910444097517964,
+        "missed": 4
+      },
+      "ginger": {
+        "meanRelativeError": 0.04719157125179178,
+        "missed": 0
+      }
+    },
+    {
+      "fuel": "9",
+      "cellM": 12.5,
+      "windKmh": 30,
+      "windFromDegrees": 0,
+      "exactReach": 130,
+      "comparedCells": 124,
+      "status": "scored",
+      "legacy": {
+        "meanRelativeError": 0.2491277607301619,
+        "missed": 6
+      },
+      "ginger": {
+        "meanRelativeError": 0.06927801060133117,
+        "missed": 2
+      }
+    },
+    {
+      "fuel": "9",
+      "cellM": 12.5,
+      "windKmh": 30,
+      "windFromDegrees": 22.5,
+      "exactReach": 132,
+      "comparedCells": 130,
+      "status": "scored",
+      "legacy": {
+        "meanRelativeError": 0.2572538845621036,
+        "missed": 2
+      },
+      "ginger": {
+        "meanRelativeError": 0.06394208147518939,
+        "missed": 2
+      }
+    },
+    {
+      "fuel": "9",
+      "cellM": 12.5,
+      "windKmh": 30,
+      "windFromDegrees": 45,
+      "exactReach": 134,
+      "comparedCells": 122,
+      "status": "scored",
+      "legacy": {
+        "meanRelativeError": 0.2528507584510611,
+        "missed": 12
+      },
+      "ginger": {
+        "meanRelativeError": 0.05938639212602101,
+        "missed": 2
+      }
+    },
+    {
+      "fuel": "9",
+      "cellM": 12.5,
+      "windKmh": 30,
+      "windFromDegrees": 67.5,
+      "exactReach": 132,
+      "comparedCells": 130,
+      "status": "scored",
+      "legacy": {
+        "meanRelativeError": 0.2572538845621037,
+        "missed": 2
+      },
+      "ginger": {
+        "meanRelativeError": 0.0639420814751894,
+        "missed": 2
+      }
+    },
+    {
+      "fuel": "9",
+      "cellM": 25,
+      "windKmh": 0,
+      "windFromDegrees": 0,
+      "exactReach": 0,
+      "comparedCells": 0,
+      "status": "no analytical reach beyond three cells within horizon",
+      "legacy": {
+        "meanRelativeError": null,
+        "missed": 0
+      },
+      "ginger": {
+        "meanRelativeError": null,
+        "missed": 0
+      }
+    },
+    {
+      "fuel": "9",
+      "cellM": 25,
+      "windKmh": 0,
+      "windFromDegrees": 22.5,
+      "exactReach": 0,
+      "comparedCells": 0,
+      "status": "no analytical reach beyond three cells within horizon",
+      "legacy": {
+        "meanRelativeError": null,
+        "missed": 0
+      },
+      "ginger": {
+        "meanRelativeError": null,
+        "missed": 0
+      }
+    },
+    {
+      "fuel": "9",
+      "cellM": 25,
+      "windKmh": 0,
+      "windFromDegrees": 45,
+      "exactReach": 0,
+      "comparedCells": 0,
+      "status": "no analytical reach beyond three cells within horizon",
+      "legacy": {
+        "meanRelativeError": null,
+        "missed": 0
+      },
+      "ginger": {
+        "meanRelativeError": null,
+        "missed": 0
+      }
+    },
+    {
+      "fuel": "9",
+      "cellM": 25,
+      "windKmh": 0,
+      "windFromDegrees": 67.5,
+      "exactReach": 0,
+      "comparedCells": 0,
+      "status": "no analytical reach beyond three cells within horizon",
+      "legacy": {
+        "meanRelativeError": null,
+        "missed": 0
+      },
+      "ginger": {
+        "meanRelativeError": null,
+        "missed": 0
+      }
+    },
+    {
+      "fuel": "9",
+      "cellM": 25,
+      "windKmh": 15,
+      "windFromDegrees": 0,
+      "exactReach": 59,
+      "comparedCells": 43,
+      "status": "scored",
+      "legacy": {
+        "meanRelativeError": 0.23308818886846522,
+        "missed": 16
+      },
+      "ginger": {
+        "meanRelativeError": 0.0707900909370355,
+        "missed": 4
+      }
+    },
+    {
+      "fuel": "9",
+      "cellM": 25,
+      "windKmh": 15,
+      "windFromDegrees": 22.5,
+      "exactReach": 59,
+      "comparedCells": 48,
+      "status": "scored",
+      "legacy": {
+        "meanRelativeError": 0.23354241628472458,
+        "missed": 11
+      },
+      "ginger": {
+        "meanRelativeError": 0.05961136837377948,
+        "missed": 3
+      }
+    },
+    {
+      "fuel": "9",
+      "cellM": 25,
+      "windKmh": 15,
+      "windFromDegrees": 45,
+      "exactReach": 56,
+      "comparedCells": 46,
+      "status": "scored",
+      "legacy": {
+        "meanRelativeError": 0.2223923020241088,
+        "missed": 10
+      },
+      "ginger": {
+        "meanRelativeError": 0.04855816606665926,
+        "missed": 0
+      }
+    },
+    {
+      "fuel": "9",
+      "cellM": 25,
+      "windKmh": 15,
+      "windFromDegrees": 67.5,
+      "exactReach": 59,
+      "comparedCells": 48,
+      "status": "scored",
+      "legacy": {
+        "meanRelativeError": 0.2335424162847246,
+        "missed": 11
+      },
+      "ginger": {
+        "meanRelativeError": 0.05961136837377947,
+        "missed": 3
+      }
+    },
+    {
+      "fuel": "9",
+      "cellM": 25,
+      "windKmh": 30,
+      "windFromDegrees": 0,
+      "exactReach": 81,
+      "comparedCells": 79,
+      "status": "scored",
+      "legacy": {
+        "meanRelativeError": 0.3420397599498596,
+        "missed": 2
+      },
+      "ginger": {
+        "meanRelativeError": 0.09800084368300187,
+        "missed": 0
+      }
+    },
+    {
+      "fuel": "9",
+      "cellM": 25,
+      "windKmh": 30,
+      "windFromDegrees": 22.5,
+      "exactReach": 83,
+      "comparedCells": 73,
+      "status": "scored",
+      "legacy": {
+        "meanRelativeError": 0.3847594690462293,
+        "missed": 10
+      },
+      "ginger": {
+        "meanRelativeError": 0.09682627134337947,
+        "missed": 3
+      }
+    },
+    {
+      "fuel": "9",
+      "cellM": 25,
+      "windKmh": 30,
+      "windFromDegrees": 45,
+      "exactReach": 82,
+      "comparedCells": 78,
+      "status": "scored",
+      "legacy": {
+        "meanRelativeError": 0.3490317917877949,
+        "missed": 4
+      },
+      "ginger": {
+        "meanRelativeError": 0.07957451068171532,
+        "missed": 2
+      }
+    },
+    {
+      "fuel": "9",
+      "cellM": 25,
+      "windKmh": 30,
+      "windFromDegrees": 67.5,
+      "exactReach": 83,
+      "comparedCells": 73,
+      "status": "scored",
+      "legacy": {
+        "meanRelativeError": 0.3847594690462292,
+        "missed": 10
+      },
+      "ginger": {
+        "meanRelativeError": 0.09682627134337944,
+        "missed": 3
+      }
+    }
+  ]
+}

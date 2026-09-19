@@ -1,0 +1,3 @@
+import {NextRequest,NextResponse} from 'next/server';
+import {buildScenario} from '@/lib/simulation';
+export async function GET(request:NextRequest){const minute=Number(request.nextUrl.searchParams.get('minute')??30);const horizon=Number(request.nextUrl.searchParams.get('horizon')??60);if(!Number.isFinite(minute)||minute<0||minute>45||!Number.isFinite(horizon)||horizon<0||horizon>240)return NextResponse.json({error:'minute must be 0..45 and horizon 0..240'},{status:400});return NextResponse.json({mode:'demo',scenario:buildScenario(minute,horizon)},{headers:{'Cache-Control':'public, max-age=30'}});}

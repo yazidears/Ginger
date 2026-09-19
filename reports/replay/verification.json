@@ -1,0 +1,23 @@
+{
+  "checkedAt": "2026-09-19T15:12:22.332Z",
+  "checks": [
+    "8 replay checks passed",
+    "5 existing GingerO2 engine checks passed",
+    "Existing GingerO2 smoke checks passed",
+    "Full TypeScript check passed; final replay-specific TypeScript check passed",
+    "HTTP import, concurrency, validation, oversize, missing-ID and exports checked",
+    "Desktop 1440 px and mobile 390 px checked without horizontal overflow or console errors",
+    "Offline failed-case retention and cross-split event rejection checked"
+  ],
+  "example": {
+    "kind": "synthetic",
+    "baselineOverlap": 0.23887240356083086,
+    "updatedOverlap": 0.3994708994708995,
+    "baselineBoundaryM": 226.70076489603372,
+    "updatedBoundaryM": 116.28781028493816
+  },
+  "limitations": [
+    "No independent historical incident package added",
+    "Uncalibrated evidence weighting of frozen trajectories"
+  ]
+}

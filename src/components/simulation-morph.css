@@ -1,0 +1,46 @@
+/* Simulation occupies the same geographic workspace and floating surfaces. */
+.map-first.simulation-mode > .workspace{visibility:hidden}
+.map-first > .topbar{view-transition-name:workspace-brand}
+.map-first > .navrail{view-transition-name:workspace-navigation}
+.map-first:not(.simulation-mode) .suite-left{view-transition-name:scenario-panel}
+.map-first:not(.simulation-mode) .suite-right{view-transition-name:insight-panel}
+.map-first.simulation-mode > .ginger-o2-workspace{position:absolute;inset:0;min-height:0;height:100%;background:#142217;--o2-panel:#18251af5;--o2-base:#142217;--o2-line:#a7bd8f30;--o2-text:#e5e8df;--o2-muted:#b9c9ae}
+.map-first .ginger-o2-workspace .sage-lab-header{position:absolute;z-index:12;top:24px;left:50%;transform:translateX(-50%);padding:0;border:0;background:none;gap:10px}
+.map-first .ginger-o2-workspace .sage-lab-header h1{font-size:13px;letter-spacing:0;margin:0}
+.map-first .ginger-o2-workspace .sage-lab-header .eyebrow{font-size:9px;color:#bdcda9;margin-bottom:4px}
+.map-first .ginger-o2-workspace .sage-lab-header>.evidence-badge{display:none}
+.map-first .ginger-o2-workspace .secondary-button,.map-first .ginger-setup-toggle{background:#142217ed;border:1px solid #a7bd8f30;border-radius:30px;color:#e0e9d3}
+.map-first .ginger-workspace-toolbar{position:absolute;z-index:12;left:20px;top:91px;padding:0;background:none;border:0}
+.map-first .ginger-evidence-inline{display:none}
+.map-first .ginger-o2-workspace .sage-lab-body{display:block;position:absolute;inset:0}
+.map-first .ginger-o2-workspace .sage-map-column,.map-first .ginger-o2-workspace .sage-map-wrap{position:absolute;inset:0;height:100%;min-height:0}
+.map-first .ginger-o2-workspace .sage-config{top:144px;left:20px;bottom:178px;width:290px;border-radius:16px;border-color:var(--o2-line);view-transition-name:scenario-panel}
+.map-first .ginger-o2-workspace .sage-results{position:absolute;z-index:8;right:76px;top:91px;bottom:178px;width:350px;border:1px solid var(--o2-line);border-radius:16px;box-shadow:0 12px 45px #0005;view-transition-name:insight-panel}
+.map-first .ginger-o2-workspace .sage-results>.panel-tabs,.map-first .ginger-o2-workspace .sage-timeline{background:#18251af5}
+.map-first .ginger-o2-workspace .sage-timeline{position:absolute;z-index:9;left:330px;right:446px;bottom:100px;border:1px solid var(--o2-line);border-radius:16px;padding:12px 18px}
+.map-first .ginger-o2-workspace .sage-map-intro{left:20px;bottom:190px;background:#142217ed;border-color:#c2d6a5;border-radius:16px}
+.map-first .ginger-o2-workspace .sage-map-stats{top:auto;bottom:245px;left:330px;right:446px}
+.map-first .ginger-o2-workspace .primary-button{background:#c2d6a5;color:#1c2b19}
+.map-first .ginger-o2-workspace .sage-config input:not([type=checkbox]),.map-first .ginger-o2-workspace .sage-config select{background:#142217;border-color:#485640}
+.map-first .ginger-o2-workspace.is-preparing .sage-results{display:flex}
+.map-first .ginger-o2-workspace .mapping-status{bottom:110px;background:#18251af5;border-color:var(--o2-line)}
+::view-transition-group(workspace-brand),::view-transition-group(workspace-navigation),::view-transition-group(scenario-panel),::view-transition-group(insight-panel){animation-duration:280ms;animation-timing-function:cubic-bezier(.77,0,.175,1)}
+@media(max-width:1100px){.map-first .ginger-o2-workspace .sage-timeline{left:20px;right:446px}.map-first .ginger-o2-workspace .sage-map-stats{left:20px}}
+@media(max-width:700px){.map-first .ginger-o2-workspace .sage-lab-header{top:78px;left:14px;transform:none}.map-first .ginger-o2-workspace .sage-lab-header>div,.map-first .ginger-o2-workspace .sage-lab-header>button:last-child:not(:first-child){display:none}.map-first .ginger-workspace-toolbar{top:78px;left:auto;right:14px}.map-first .ginger-setup-toggle>span{display:none}.map-first .ginger-o2-workspace .sage-results{top:auto;bottom:180px;left:12px;right:62px;width:auto;height:34dvh}.map-first .ginger-o2-workspace .sage-timeline{left:12px;right:12px;bottom:96px;padding:8px 12px}.map-first .ginger-o2-workspace .sage-timeline>p{display:none}.map-first .ginger-o2-workspace .sage-config{left:12px;right:62px;top:126px;bottom:180px;width:auto;max-height:none}.map-first .ginger-o2-workspace .sage-map-intro,.map-first .ginger-o2-workspace .sage-map-stats{display:none}.map-first .ginger-o2-workspace.is-preparing .sage-results{visibility:hidden}.map-first .ginger-o2-workspace .mapping-status{bottom:110px}}
+@media(prefers-reduced-motion:reduce){::view-transition-group(*){animation-duration:0s}}
+.map-first .ginger-o2-workspace .investigation-tabs{background:transparent}
+.map-first .ginger-o2-workspace .investigation-tabs button{background:#223020;border-color:#a7bd8f30;color:#c1cdb9}
+.map-first .ginger-o2-workspace .investigation-tabs button[aria-pressed=true]{background:#c2d6a5;border-color:#c2d6a5;color:#1c2b19}
+.map-first .ginger-o2-workspace .investigation input,.map-first .ginger-o2-workspace .investigation select{background:#142217;border-color:#485640;color:#e5e8df}
+
+.map-first.simulation-mode > .ginger-o2-workspace{z-index:1;overflow:hidden}
+.map-first .ginger-o2-workspace .mapping-caption{top:146px;left:20px}
+.map-first .ginger-o2-workspace .mapping-status{left:20px;transform:none;width:min(390px,calc(100% - 466px));bottom:110px}
+.map-first .ginger-o2-workspace .sage-result-scroll{min-height:0;overflow:auto}
+.map-first .ginger-o2-workspace .investigation-next,.map-first .ginger-o2-workspace .investigation-example,.map-first .ginger-o2-workspace .sage-explanation{background:#243322;border-color:#485640}
+@media(max-width:700px){.map-first .ginger-o2-workspace .mapping-caption{top:130px;left:12px}.map-first .ginger-o2-workspace .mapping-status{left:12px;right:12px;width:auto}}
+
+.map-first .ginger-o2-workspace .sage-wind-card{left:20px;right:auto;bottom:190px;width:272px;max-height:calc(100dvh - 340px);overflow:auto}
+.map-first .ginger-o2-workspace.setup-open .sage-wind-card{visibility:hidden}
+@media(max-width:1100px){.map-first .ginger-o2-workspace .sage-wind-card{bottom:250px}}
+@media(max-width:700px){.map-first .ginger-o2-workspace .sage-wind-card{left:12px;bottom:auto;top:132px;width:220px;max-height:110px}}

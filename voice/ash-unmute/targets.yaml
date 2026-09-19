@@ -1,0 +1,4 @@
+targets:
+  pipecat:
+    provider: pipecat
+    version: "1.10.0"

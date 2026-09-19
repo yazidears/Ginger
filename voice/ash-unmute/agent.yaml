@@ -1,0 +1,53 @@
+version: 1
+name: ash
+entry_agent: ash
+agents:
+  ash:
+    instructions: instructions.md
+    think: reasoning
+    speak: voice
+    tools: [ginger_situation]
+secrets: [OPENAI_API_KEY, SLNG_API_KEY, GINGER_API_URL, ASH_ACCESS_TOKEN]
+models:
+  think:
+    reasoning:
+      provider: openai
+      model: gpt-4.1-mini
+  listen:
+    transcriber:
+      provider: slng
+      model: "deepgram/nova:3"
+      params:
+        world_part: eu-north
+  speak:
+    voice:
+      provider: slng
+      model: "deepgram/aura:2"
+      voice: aura-2-thalia-en
+      params:
+        world_part: eu-north
+  turn:
+    detector:
+      provider: local
+      model: silero
+variables:
+  latitude:
+    type: float
+    source: call_start
+    description: Latitude supplied by the client for the selected sector or device position.
+  longitude:
+    type: float
+    source: call_start
+    description: Longitude supplied by the client for the selected sector or device position.
+tools: [ginger_situation]
+conversation:
+  greeting:
+    speaks_first: agent
+    text: "Ash here. What do you need from Ginger?"
+channels:
+  web:
+    kind: realtime_audio
+capacity:
+  peak_sessions: 1
+  max_sessions: 2
+  avg_session_duration: 5m

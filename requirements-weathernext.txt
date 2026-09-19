@@ -1,0 +1,3 @@
+# Optional offline job only; not needed to run the Next.js application.
+earthengine-api>=1.5,<2
+google-auth>=2.29,<3

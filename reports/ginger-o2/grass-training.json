@@ -1,0 +1,2291 @@
+{
+  "protocol": {
+    "version": "GingerO2-grass-1",
+    "frozenBeforeEvaluation": true,
+    "family": "log ROS = intercept + nonnegative wind coefficient * log1p(midflame km/h) + nonpositive moisture coefficient * dead moisture / 10",
+    "objective": "equal-burn-day mean squared log error, intercept unpenalized",
+    "ridgeCandidates": [
+      0,
+      0.001,
+      0.01,
+      0.1,
+      1,
+      10
+    ],
+    "selection": "inner leave-one-burn-day-out equal-day MAE; outer leave-one-burn-day-out evaluation",
+    "deploymentGuard": "fuel 1 only; finite inputs inside training wind and moisture ranges; explicit experimental opt-in",
+    "target": "observed plot-average ROS, m/min",
+    "limitations": "Previously inspected single-site Australian data; nested resampling is retrospective internal evaluation, not new external validation. No post-evaluation family revision."
+  },
+  "source": {
+    "collection": "https://data.csiro.au/collection/csiro:60062",
+    "version": 3,
+    "archive": "https://data.csiro.au/dap/ws/v2/collections/60062/data/70770839",
+    "archiveBytes": 584131942,
+    "retrievedAt": "2026-09-19T14:14:28.211484+00:00",
+    "license": "Creative Commons Attribution 4.0 International Licence",
+    "attribution": "Gould, Jim; Gomes Da Cruz, Miguel; & Sullivan, Andrew (2023): 1986 Annaburroo Experimental Grassland Fire Data. v3. CSIRO. Data Collection. https://doi.org/10.25919/ycd3-w209",
+    "files": [
+      {
+        "file": "Plot_Average_Data.csv",
+        "archiveMember": "Plot_Average_Data.csv",
+        "bytes": 8669,
+        "sha256": "4425d11fe970e263d400b7a9d089b8eea70bda4de4a1e29cbeedea28bc727934"
+      },
+      {
+        "file": "Burn_Period_Data.csv",
+        "archiveMember": "Burn_Period_Data.csv",
+        "bytes": 84062,
+        "sha256": "bdd5bc1354b7b9e72e17616aa733b5bc869fa3b86686ea102dcb73846761ca0d"
+      }
+    ],
+    "metadataEndpoint": "https://data.csiro.au/dap/ws/v2/collections/60062"
+  },
+  "codeHashes": {
+    "scripts/train-ginger-o2.ts": "6bed8fbc049c1ee7fdb2f1c3d571cdec614d858eb05075676855d199fa11640a",
+    "src/lib/sage/physics.ts": "dda9a3df803c5d9e9765f5c3a321949bf0cdf9f1b13d93520f3d6c21ce7285fd",
+    "src/lib/sage/backtest.ts": "7f506e2bc3263b02ebd86c4465a2eec28cfb663e9848ff0633184fbe4760d508",
+    "package-lock.json": "aceb3f4fc76e8e917cc2da3e3420d95e03086f99bdbe5c29e2d755881dc43376"
+  },
+  "inputRows": {
+    "plots": 121,
+    "intervals": 699,
+    "eligible": 120,
+    "excluded": [
+      {
+        "id": "F011",
+        "reason": "Missing/invalid wind, moisture, observed ROS or unique day"
+      }
+    ]
+  },
+  "evaluation": {
+    "baseline": {
+      "n": 120,
+      "mae": 25.15173797833961,
+      "rmse": 35.14230901965784,
+      "bias": -9.927062091918502,
+      "p90AbsoluteError": 43.842034381146235,
+      "withinFactorTwo": 0.75
+    },
+    "candidate": {
+      "n": 120,
+      "mae": 17.0365411253479,
+      "rmse": 21.282978912828153,
+      "bias": -7.631006435266399,
+      "p90AbsoluteError": 32.35340579112477,
+      "withinFactorTwo": 0.975
+    },
+    "guarded": {
+      "n": 120,
+      "mae": 20.40754836326039,
+      "rmse": 30.087797121741193,
+      "bias": -8.416183370183969,
+      "p90AbsoluteError": 37.68655784006353,
+      "withinFactorTwo": 0.925
+    },
+    "dayMAE": {
+      "baseline": 24.703019054937577,
+      "candidate": 16.418215272639493,
+      "guarded": 19.120126627502398
+    },
+    "candidateBootstrap": {
+      "repetitions": 2000,
+      "clusters": 14,
+      "lower": 1.4160075219329153,
+      "upper": 14.229303832286968,
+      "units": "m/min MAE reduction"
+    },
+    "guardedBootstrap": {
+      "repetitions": 2000,
+      "clusters": 14,
+      "lower": -0.46247171314151836,
+      "upper": 9.900687307779885,
+      "units": "m/min MAE reduction"
+    },
+    "outsideTrainingSupport": 7
+  },
+  "folds": [
+    {
+      "day": "860730",
+      "trainingDays": [
+        "860731",
+        "860801",
+        "860804",
+        "860805",
+        "860806",
+        "860814",
+        "860815",
+        "860816",
+        "860817",
+        "860818",
+        "860819",
+        "860820",
+        "860821"
+      ],
+      "innerFolds": 13,
+      "selection": {
+        "selected": 0.001,
+        "scores": [
+          {
+            "lambda": 0.001,
+            "dayMAE": 16.710324119335038
+          },
+          {
+            "lambda": 0,
+            "dayMAE": 16.71121152532622
+          },
+          {
+            "lambda": 0.01,
+            "dayMAE": 16.715102222681445
+          },
+          {
+            "lambda": 0.1,
+            "dayMAE": 17.75792392632545
+          },
+          {
+            "lambda": 1,
+            "dayMAE": 21.12486280387391
+          },
+          {
+            "lambda": 10,
+            "dayMAE": 22.15506123535689
+          }
+        ]
+      },
+      "fitted": {
+        "coefficients": [
+          2.181174997887041,
+          0.8109160702368564,
+          -0.23428089514748543
+        ],
+        "lambda": 0.001,
+        "support": {
+          "windKmh": [
+            2.16,
+            25.2
+          ],
+          "moisturePct": [
+            0.7,
+            12.1
+          ]
+        }
+      },
+      "predictions": [
+        {
+          "id": "A061",
+          "day": "860730",
+          "wind": 9.360000000000001,
+          "moisture": 8.8,
+          "observed": 24.66,
+          "baseline": 32.870528233208226,
+          "candidate": 47.98511460657029,
+          "inSupport": true
+        },
+        {
+          "id": "A066",
+          "day": "860730",
+          "wind": 14.4,
+          "moisture": 7,
+          "observed": 64.14,
+          "baseline": 81.15975589732004,
+          "candidate": 69.02860104462219,
+          "inSupport": true
+        },
+        {
+          "id": "A012",
+          "day": "860730",
+          "wind": 18,
+          "moisture": 9.1,
+          "observed": 72,
+          "baseline": 43.11843449287682,
+          "candidate": 77.91919041590609,
+          "inSupport": true
+        },
+        {
+          "id": "A022",
+          "day": "860730",
+          "wind": 11.879999999999999,
+          "moisture": 7.8,
+          "observed": 39,
+          "baseline": 60.68443432119062,
+          "candidate": 58.60818788852589,
+          "inSupport": true
+        },
+        {
+          "id": "A053",
+          "day": "860730",
+          "wind": 8.28,
+          "moisture": 7.9,
+          "observed": 52.14,
+          "baseline": 29.081844493219545,
+          "candidate": 44.82212240763538,
+          "inSupport": true
+        },
+        {
+          "id": "A052",
+          "day": "860730",
+          "wind": 9,
+          "moisture": 8.3,
+          "observed": 44.339999999999996,
+          "baseline": 32.75941725935912,
+          "candidate": 47.17787864295499,
+          "inSupport": true
+        }
+      ]
+    },
+    {
+      "day": "860731",
+      "trainingDays": [
+        "860730",
+        "860801",
+        "860804",
+        "860805",
+        "860806",
+        "860814",
+        "860815",
+        "860816",
+        "860817",
+        "860818",
+        "860819",
+        "860820",
+        "860821"
+      ],
+      "innerFolds": 13,
+      "selection": {
+        "selected": 0.01,
+        "scores": [
+          {
+            "lambda": 0.01,
+            "dayMAE": 16.729510426662042
+          },
+          {
+            "lambda": 0.001,
+            "dayMAE": 16.75028449020081
+          },
+          {
+            "lambda": 0,
+            "dayMAE": 16.75134581140981
+          },
+          {
+            "lambda": 0.1,
+            "dayMAE": 17.446984474319926
+          },
+          {
+            "lambda": 1,
+            "dayMAE": 20.23394249966007
+          },
+          {
+            "lambda": 10,
+            "dayMAE": 20.973829781281687
+          }
+        ]
+      },
+      "fitted": {
+        "coefficients": [
+          2.335794316339588,
+          0.7374370185328858,
+          -0.2203067278116866
+        ],
+        "lambda": 0.01,
+        "support": {
+          "windKmh": [
+            2.16,
+            25.2
+          ],
+          "moisturePct": [
+            0.7,
+            12.1
+          ]
+        }
+      },
+      "predictions": [
+        {
+          "id": "A023",
+          "day": "860731",
+          "wind": 16.56,
+          "moisture": 7.4,
+          "observed": 99,
+          "baseline": 76.14619551488666,
+          "candidate": 72.6740411642693,
+          "inSupport": true
+        },
+        {
+          "id": "A031",
+          "day": "860731",
+          "wind": 7.2,
+          "moisture": 9.4,
+          "observed": 34.14,
+          "baseline": 17.27135613527233,
+          "candidate": 39.661161516551935,
+          "inSupport": true
+        },
+        {
+          "id": "A034",
+          "day": "860731",
+          "wind": 3.9600000000000004,
+          "moisture": 7.3,
+          "observed": 29.34,
+          "baseline": 7.678589726338361,
+          "candidate": 28.671576894860767,
+          "inSupport": true
+        }
+      ]
+    },
+    {
+      "day": "860801",
+      "trainingDays": [
+        "860730",
+        "860731",
+        "860804",
+        "860805",
+        "860806",
+        "860814",
+        "860815",
+        "860816",
+        "860817",
+        "860818",
+        "860819",
+        "860820",
+        "860821"
+      ],
+      "innerFolds": 13,
+      "selection": {
+        "selected": 0,
+        "scores": [
+          {
+            "lambda": 0,
+            "dayMAE": 17.23868341534653
+          },
+          {
+            "lambda": 0.001,
+            "dayMAE": 17.241823308635006
+          },
+          {
+            "lambda": 0.01,
+            "dayMAE": 17.27654705964508
+          },
+          {
+            "lambda": 0.1,
+            "dayMAE": 18.350913101228926
+          },
+          {
+            "lambda": 1,
+            "dayMAE": 22.001871532942364
+          },
+          {
+            "lambda": 10,
+            "dayMAE": 23.054788302886035
+          }
+        ]
+      },
+      "fitted": {
+        "coefficients": [
+          2.1791531801453794,
+          0.8193995800588638,
+          -0.2743252800501061
+        ],
+        "lambda": 0,
+        "support": {
+          "windKmh": [
+            2.16,
+            25.2
+          ],
+          "moisturePct": [
+            0.7,
+            12.1
+          ]
+        }
+      },
+      "predictions": [
+        {
+          "id": "A121",
+          "day": "860801",
+          "wind": 12.96,
+          "moisture": 7.6,
+          "observed": 58.86,
+          "baseline": 73.25476130513916,
+          "candidate": 62.225441435803994,
+          "inSupport": true
+        }
+      ]
+    },
+    {
+      "day": "860804",
+      "trainingDays": [
+        "860730",
+        "860731",
+        "860801",
+        "860805",
+        "860806",
+        "860814",
+        "860815",
+        "860816",
+        "860817",
+        "860818",
+        "860819",
+        "860820",
+        "860821"
+      ],
+      "innerFolds": 13,
+      "selection": {
+        "selected": 0.01,
+        "scores": [
+          {
+            "lambda": 0.01,
+            "dayMAE": 16.376097803354096
+          },
+          {
+            "lambda": 0.001,
+            "dayMAE": 16.426058570506765
+          },
+          {
+            "lambda": 0,
+            "dayMAE": 16.43224948446205
+          },
+          {
+            "lambda": 0.1,
+            "dayMAE": 17.21259337185471
+          },
+          {
+            "lambda": 1,
+            "dayMAE": 20.777996641543766
+          },
+          {
+            "lambda": 10,
+            "dayMAE": 21.74539344385666
+          }
+        ]
+      },
+      "fitted": {
+        "coefficients": [
+          2.2511049250427124,
+          0.7695984172488453,
+          -0.22331712935861459
+        ],
+        "lambda": 0.01,
+        "support": {
+          "windKmh": [
+            2.16,
+            25.2
+          ],
+          "moisturePct": [
+            2.7,
+            12.1
+          ]
+        }
+      },
+      "predictions": [
+        {
+          "id": "A071",
+          "day": "860804",
+          "wind": 14.4,
+          "moisture": 6.4,
+          "observed": 60.66,
+          "baseline": 87.15507439318824,
+          "candidate": 67.52830678024948,
+          "inSupport": true
+        },
+        {
+          "id": "A074",
+          "day": "860804",
+          "wind": 17.64,
+          "moisture": 6.4,
+          "observed": 64.14,
+          "baseline": 87.15507439318824,
+          "candidate": 78.21768410378976,
+          "inSupport": true
+        },
+        {
+          "id": "A082",
+          "day": "860804",
+          "wind": 15.48,
+          "moisture": 6.6,
+          "observed": 85.86,
+          "baseline": 85.31600938539924,
+          "candidate": 70.82725748993286,
+          "inSupport": true
+        },
+        {
+          "id": "A091",
+          "day": "860804",
+          "wind": 14.4,
+          "moisture": 6.6,
+          "observed": 68.34,
+          "baseline": 85.31600938539924,
+          "candidate": 67.2273747608389,
+          "inSupport": true
+        },
+        {
+          "id": "A142",
+          "day": "860804",
+          "wind": 19.08,
+          "moisture": 7.2,
+          "observed": 108,
+          "baseline": 78.7742057524737,
+          "candidate": 81.36129441887584,
+          "inSupport": true
+        },
+        {
+          "id": "A144",
+          "day": "860804",
+          "wind": 15.120000000000001,
+          "moisture": 7.2,
+          "observed": 102.66000000000001,
+          "baseline": 78.7742057524737,
+          "candidate": 68.70671477673046,
+          "inSupport": true
+        },
+        {
+          "id": "A154",
+          "day": "860804",
+          "wind": 21.96,
+          "moisture": 7.4,
+          "observed": 103.14,
+          "baseline": 76.14619551488666,
+          "candidate": 89.79973622600451,
+          "inSupport": true
+        },
+        {
+          "id": "A033",
+          "day": "860804",
+          "wind": 12.24,
+          "moisture": 7.5,
+          "observed": 66.66,
+          "baseline": 66.29725799605166,
+          "candidate": 58.65521311204196,
+          "inSupport": true
+        },
+        {
+          "id": "A072",
+          "day": "860804",
+          "wind": 19.08,
+          "moisture": 6.8,
+          "observed": 63.66,
+          "baseline": 83.32970067711516,
+          "candidate": 82.09132495952792,
+          "inSupport": true
+        },
+        {
+          "id": "A081",
+          "day": "860804",
+          "wind": 18,
+          "moisture": 0.7,
+          "observed": 99.66,
+          "baseline": 294.09851064277984,
+          "candidate": 90.15300694845807,
+          "inSupport": false
+        },
+        {
+          "id": "A083",
+          "day": "860804",
+          "wind": 11.16,
+          "moisture": 6.8,
+          "observed": 69.66,
+          "baseline": 57.893018220345375,
+          "candidate": 55.80274196344117,
+          "inSupport": true
+        },
+        {
+          "id": "A151",
+          "day": "860804",
+          "wind": 10.8,
+          "moisture": 7.4,
+          "observed": 71.34,
+          "baseline": 51.88255333074824,
+          "candidate": 53.80119841818069,
+          "inSupport": true
+        },
+        {
+          "id": "A032",
+          "day": "860804",
+          "wind": 14.04,
+          "moisture": 7.3,
+          "observed": 70.86,
+          "baseline": 77.49196601342412,
+          "candidate": 64.99069463336092,
+          "inSupport": true
+        },
+        {
+          "id": "A041",
+          "day": "860804",
+          "wind": 6.84,
+          "moisture": 6.4,
+          "observed": 59.339999999999996,
+          "baseline": 22.38790003899153,
+          "candidate": 40.16391316145344,
+          "inSupport": true
+        },
+        {
+          "id": "A073",
+          "day": "860804",
+          "wind": 13.32,
+          "moisture": 8.5,
+          "observed": 55.86,
+          "baseline": 56.78913620394469,
+          "candidate": 60.92797957044632,
+          "inSupport": true
+        },
+        {
+          "id": "A084",
+          "day": "860804",
+          "wind": 10.44,
+          "moisture": 8,
+          "observed": 79.14,
+          "baseline": 45.7513280641878,
+          "candidate": 51.834286248419424,
+          "inSupport": true
+        },
+        {
+          "id": "A092",
+          "day": "860804",
+          "wind": 6.48,
+          "moisture": 8,
+          "observed": 63.66,
+          "baseline": 17.797962905205637,
+          "candidate": 37.3772560864001,
+          "inSupport": true
+        },
+        {
+          "id": "A141",
+          "day": "860804",
+          "wind": 10.44,
+          "moisture": 2.7,
+          "observed": 76.86,
+          "baseline": 70.25838529140076,
+          "candidate": 58.34711447850511,
+          "inSupport": true
+        },
+        {
+          "id": "A143",
+          "day": "860804",
+          "wind": 8.28,
+          "moisture": 7.2,
+          "observed": 54,
+          "baseline": 30.94874441415613,
+          "candidate": 44.91964883027324,
+          "inSupport": true
+        }
+      ]
+    },
+    {
+      "day": "860805",
+      "trainingDays": [
+        "860730",
+        "860731",
+        "860801",
+        "860804",
+        "860806",
+        "860814",
+        "860815",
+        "860816",
+        "860817",
+        "860818",
+        "860819",
+        "860820",
+        "860821"
+      ],
+      "innerFolds": 13,
+      "selection": {
+        "selected": 0.001,
+        "scores": [
+          {
+            "lambda": 0.001,
+            "dayMAE": 16.44071247486398
+          },
+          {
+            "lambda": 0,
+            "dayMAE": 16.4413129346265
+          },
+          {
+            "lambda": 0.01,
+            "dayMAE": 16.45596107248415
+          },
+          {
+            "lambda": 0.1,
+            "dayMAE": 17.54081724550366
+          },
+          {
+            "lambda": 1,
+            "dayMAE": 21.210019781231082
+          },
+          {
+            "lambda": 10,
+            "dayMAE": 22.164480983424383
+          }
+        ]
+      },
+      "fitted": {
+        "coefficients": [
+          2.1839000524094203,
+          0.8222254694568244,
+          -0.29957208660442874
+        ],
+        "lambda": 0.001,
+        "support": {
+          "windKmh": [
+            2.16,
+            21.96
+          ],
+          "moisturePct": [
+            0.7,
+            10.8
+          ]
+        }
+      },
+      "predictions": [
+        {
+          "id": "A152",
+          "day": "860805",
+          "wind": 15.840000000000002,
+          "moisture": 8.4,
+          "observed": 58.14,
+          "baseline": 58.88866799022303,
+          "candidate": 70.38811527990119,
+          "inSupport": true
+        },
+        {
+          "id": "A153",
+          "day": "860805",
+          "wind": 16.56,
+          "moisture": 8.4,
+          "observed": 88.86,
+          "baseline": 58.88866799022303,
+          "candidate": 72.85332692569423,
+          "inSupport": true
+        },
+        {
+          "id": "B043",
+          "day": "860805",
+          "wind": 25.2,
+          "moisture": 9,
+          "observed": 79.14,
+          "baseline": 45.49685583153557,
+          "candidate": 99.4321735759296,
+          "inSupport": false
+        },
+        {
+          "id": "B032",
+          "day": "860805",
+          "wind": 19.08,
+          "moisture": 12.1,
+          "observed": 57.66,
+          "baseline": 0,
+          "candidate": 72.81103651333703,
+          "inSupport": false
+        },
+        {
+          "id": "B033",
+          "day": "860805",
+          "wind": 10.44,
+          "moisture": 12.1,
+          "observed": 42,
+          "baseline": 0,
+          "candidate": 45.84548237381803,
+          "inSupport": false
+        },
+        {
+          "id": "B042",
+          "day": "860805",
+          "wind": 10.8,
+          "moisture": 9,
+          "observed": 62.339999999999996,
+          "baseline": 42.26626312577115,
+          "candidate": 51.60504661884058,
+          "inSupport": true
+        },
+        {
+          "id": "B041",
+          "day": "860805",
+          "wind": 11.16,
+          "moisture": 12.1,
+          "observed": 68.34,
+          "baseline": 0,
+          "candidate": 48.20496032550031,
+          "inSupport": false
+        },
+        {
+          "id": "B044",
+          "day": "860805",
+          "wind": 15.48,
+          "moisture": 12.1,
+          "observed": 80.34,
+          "baseline": 0,
+          "candidate": 61.89348299926447,
+          "inSupport": false
+        }
+      ]
+    },
+    {
+      "day": "860806",
+      "trainingDays": [
+        "860730",
+        "860731",
+        "860801",
+        "860804",
+        "860805",
+        "860814",
+        "860815",
+        "860816",
+        "860817",
+        "860818",
+        "860819",
+        "860820",
+        "860821"
+      ],
+      "innerFolds": 13,
+      "selection": {
+        "selected": 0,
+        "scores": [
+          {
+            "lambda": 0,
+            "dayMAE": 16.172820249192913
+          },
+          {
+            "lambda": 0.001,
+            "dayMAE": 16.182730806385457
+          },
+          {
+            "lambda": 0.01,
+            "dayMAE": 16.25176157497477
+          },
+          {
+            "lambda": 0.1,
+            "dayMAE": 17.37220632618842
+          },
+          {
+            "lambda": 1,
+            "dayMAE": 21.0728780409602
+          },
+          {
+            "lambda": 10,
+            "dayMAE": 22.120803112087092
+          }
+        ]
+      },
+      "fitted": {
+        "coefficients": [
+          2.208362750525922,
+          0.8191138871109057,
+          -0.33108240331891414
+        ],
+        "lambda": 0,
+        "support": {
+          "windKmh": [
+            2.16,
+            25.2
+          ],
+          "moisturePct": [
+            0.7,
+            12.1
+          ]
+        }
+      },
+      "predictions": [
+        {
+          "id": "B091",
+          "day": "860806",
+          "wind": 15.48,
+          "moisture": 9.2,
+          "observed": 48.660000000000004,
+          "baseline": 40.71608721427983,
+          "candidate": 66.62266870029521,
+          "inSupport": true
+        },
+        {
+          "id": "B104",
+          "day": "860806",
+          "wind": 12.96,
+          "moisture": 10.8,
+          "observed": 75,
+          "baseline": 6.928570126669474,
+          "candidate": 55.15451375534279,
+          "inSupport": true
+        },
+        {
+          "id": "B092",
+          "day": "860806",
+          "wind": 11.16,
+          "moisture": 9.2,
+          "observed": 39,
+          "baseline": 40.71608721427983,
+          "candidate": 51.937331776855785,
+          "inSupport": true
+        },
+        {
+          "id": "B093",
+          "day": "860806",
+          "wind": 10.8,
+          "moisture": 9.2,
+          "observed": 52.14,
+          "baseline": 40.568951270765915,
+          "candidate": 50.67443488238105,
+          "inSupport": true
+        },
+        {
+          "id": "B101",
+          "day": "860806",
+          "wind": 14.76,
+          "moisture": 10.8,
+          "observed": 117,
+          "baseline": 6.928570126669474,
+          "candidate": 60.91502681197679,
+          "inSupport": true
+        },
+        {
+          "id": "B102",
+          "day": "860806",
+          "wind": 12.96,
+          "moisture": 10.8,
+          "observed": 50.339999999999996,
+          "baseline": 6.928570126669474,
+          "candidate": 55.15451375534279,
+          "inSupport": true
+        },
+        {
+          "id": "B103",
+          "day": "860806",
+          "wind": 10.8,
+          "moisture": 10.8,
+          "observed": 55.86,
+          "baseline": 6.928570126669474,
+          "candidate": 48.059909918030165,
+          "inSupport": true
+        },
+        {
+          "id": "B094",
+          "day": "860806",
+          "wind": 10.44,
+          "moisture": 9.2,
+          "observed": 72,
+          "baseline": 37.88605458983178,
+          "candidate": 49.40454816461608,
+          "inSupport": true
+        },
+        {
+          "id": "B111",
+          "day": "860806",
+          "wind": 6.12,
+          "moisture": 7,
+          "observed": 42.66,
+          "baseline": 17.402618968229312,
+          "candidate": 36.0335354534289,
+          "inSupport": true
+        },
+        {
+          "id": "B114",
+          "day": "860806",
+          "wind": 5.4,
+          "moisture": 7,
+          "observed": 37.86,
+          "baseline": 13.730589492852612,
+          "candidate": 33.02036626763935,
+          "inSupport": true
+        }
+      ]
+    },
+    {
+      "day": "860814",
+      "trainingDays": [
+        "860730",
+        "860731",
+        "860801",
+        "860804",
+        "860805",
+        "860806",
+        "860815",
+        "860816",
+        "860817",
+        "860818",
+        "860819",
+        "860820",
+        "860821"
+      ],
+      "innerFolds": 13,
+      "selection": {
+        "selected": 0,
+        "scores": [
+          {
+            "lambda": 0,
+            "dayMAE": 15.296284353822072
+          },
+          {
+            "lambda": 0.001,
+            "dayMAE": 15.309174197188858
+          },
+          {
+            "lambda": 0.01,
+            "dayMAE": 15.405968922162602
+          },
+          {
+            "lambda": 0.1,
+            "dayMAE": 16.630114391033096
+          },
+          {
+            "lambda": 1,
+            "dayMAE": 20.523785798044262
+          },
+          {
+            "lambda": 10,
+            "dayMAE": 21.74400550955414
+          }
+        ]
+      },
+      "fitted": {
+        "coefficients": [
+          2.236661842199749,
+          0.8328472107797273,
+          -0.35889028518401334
+        ],
+        "lambda": 0,
+        "support": {
+          "windKmh": [
+            2.16,
+            25.2
+          ],
+          "moisturePct": [
+            0.7,
+            12.1
+          ]
+        }
+      },
+      "predictions": [
+        {
+          "id": "E14",
+          "day": "860814",
+          "wind": 11.879999999999999,
+          "moisture": 6.1,
+          "observed": 39,
+          "baseline": 68.43569547831432,
+          "candidate": 63.19506191603054,
+          "inSupport": true
+        }
+      ]
+    },
+    {
+      "day": "860815",
+      "trainingDays": [
+        "860730",
+        "860731",
+        "860801",
+        "860804",
+        "860805",
+        "860806",
+        "860814",
+        "860816",
+        "860817",
+        "860818",
+        "860819",
+        "860820",
+        "860821"
+      ],
+      "innerFolds": 13,
+      "selection": {
+        "selected": 0,
+        "scores": [
+          {
+            "lambda": 0,
+            "dayMAE": 16.716838131740296
+          },
+          {
+            "lambda": 0.001,
+            "dayMAE": 16.720487176304804
+          },
+          {
+            "lambda": 0.01,
+            "dayMAE": 16.750059376866908
+          },
+          {
+            "lambda": 0.1,
+            "dayMAE": 17.66248344171282
+          },
+          {
+            "lambda": 1,
+            "dayMAE": 20.876602719731117
+          },
+          {
+            "lambda": 10,
+            "dayMAE": 21.831284818880025
+          }
+        ]
+      },
+      "fitted": {
+        "coefficients": [
+          2.2697853574111053,
+          0.8010724878057511,
+          -0.3236839875120074
+        ],
+        "lambda": 0,
+        "support": {
+          "windKmh": [
+            2.16,
+            25.2
+          ],
+          "moisturePct": [
+            0.7,
+            12.1
+          ]
+        }
+      },
+      "predictions": [
+        {
+          "id": "B173",
+          "day": "860815",
+          "wind": 5.4,
+          "moisture": 6,
+          "observed": 36.66,
+          "baseline": 14.568998930650892,
+          "candidate": 35.25488898161238,
+          "inSupport": true
+        },
+        {
+          "id": "B184",
+          "day": "860815",
+          "wind": 9,
+          "moisture": 6,
+          "observed": 30.66,
+          "baseline": 39.32929860227063,
+          "candidate": 50.406116847408725,
+          "inSupport": true
+        },
+        {
+          "id": "B214",
+          "day": "860815",
+          "wind": 8.28,
+          "moisture": 5.5,
+          "observed": 40.86,
+          "baseline": 34.22081782356995,
+          "candidate": 48.252023081672746,
+          "inSupport": true
+        },
+        {
+          "id": "B202",
+          "day": "860815",
+          "wind": 10.08,
+          "moisture": 5.5,
+          "observed": 36,
+          "baseline": 50.70716824884294,
+          "candidate": 55.614946910788206,
+          "inSupport": true
+        },
+        {
+          "id": "B211",
+          "day": "860815",
+          "wind": 6.48,
+          "moisture": 5.5,
+          "observed": 39.660000000000004,
+          "baseline": 21.170686024031006,
+          "candidate": 40.59737839618616,
+          "inSupport": true
+        },
+        {
+          "id": "B201",
+          "day": "860815",
+          "wind": 10.8,
+          "moisture": 5.5,
+          "observed": 54,
+          "baseline": 58.275061386749385,
+          "candidate": 58.49175453053398,
+          "inSupport": true
+        }
+      ]
+    },
+    {
+      "day": "860816",
+      "trainingDays": [
+        "860730",
+        "860731",
+        "860801",
+        "860804",
+        "860805",
+        "860806",
+        "860814",
+        "860815",
+        "860817",
+        "860818",
+        "860819",
+        "860820",
+        "860821"
+      ],
+      "innerFolds": 13,
+      "selection": {
+        "selected": 0.001,
+        "scores": [
+          {
+            "lambda": 0.001,
+            "dayMAE": 16.467374580610343
+          },
+          {
+            "lambda": 0,
+            "dayMAE": 16.470775990561933
+          },
+          {
+            "lambda": 0.01,
+            "dayMAE": 16.51935219194089
+          },
+          {
+            "lambda": 0.1,
+            "dayMAE": 17.673543851457858
+          },
+          {
+            "lambda": 1,
+            "dayMAE": 20.195592413105338
+          },
+          {
+            "lambda": 10,
+            "dayMAE": 20.80672138284404
+          }
+        ]
+      },
+      "fitted": {
+        "coefficients": [
+          2.257576977206509,
+          0.8080403529782663,
+          -0.3288020397623893
+        ],
+        "lambda": 0.001,
+        "support": {
+          "windKmh": [
+            3.9600000000000004,
+            25.2
+          ],
+          "moisturePct": [
+            0.7,
+            12.1
+          ]
+        }
+      },
+      "predictions": [
+        {
+          "id": "E04",
+          "day": "860816",
+          "wind": 2.16,
+          "moisture": 9.4,
+          "observed": 30,
+          "baseline": 2.3059882262471274,
+          "candidate": 17.782444154363397,
+          "inSupport": false
+        },
+        {
+          "id": "E10",
+          "day": "860816",
+          "wind": 11.879999999999999,
+          "moisture": 9.5,
+          "observed": 46.14,
+          "baseline": 33.449900584988626,
+          "candidate": 55.1636460828863,
+          "inSupport": true
+        },
+        {
+          "id": "B213",
+          "day": "860816",
+          "wind": 10.08,
+          "moisture": 5.3,
+          "observed": 26.34,
+          "baseline": 51.27484458203696,
+          "candidate": 56.07911318828516,
+          "inSupport": true
+        },
+        {
+          "id": "B224",
+          "day": "860816",
+          "wind": 5.04,
+          "moisture": 7.4,
+          "observed": 24.66,
+          "baseline": 11.720712637881867,
+          "candidate": 32.0547853269119,
+          "inSupport": true
+        },
+        {
+          "id": "B212",
+          "day": "860816",
+          "wind": 5.04,
+          "moisture": 5.3,
+          "observed": 31.14,
+          "baseline": 13.31221770886615,
+          "candidate": 34.346320971111574,
+          "inSupport": true
+        },
+        {
+          "id": "B221",
+          "day": "860816",
+          "wind": 4.32,
+          "moisture": 7.4,
+          "observed": 17.34,
+          "baseline": 8.86797569626502,
+          "candidate": 28.930064422259306,
+          "inSupport": true
+        }
+      ]
+    },
+    {
+      "day": "860817",
+      "trainingDays": [
+        "860730",
+        "860731",
+        "860801",
+        "860804",
+        "860805",
+        "860806",
+        "860814",
+        "860815",
+        "860816",
+        "860818",
+        "860819",
+        "860820",
+        "860821"
+      ],
+      "innerFolds": 13,
+      "selection": {
+        "selected": 0,
+        "scores": [
+          {
+            "lambda": 0,
+            "dayMAE": 16.010699593495
+          },
+          {
+            "lambda": 0.001,
+            "dayMAE": 16.019773963489264
+          },
+          {
+            "lambda": 0.01,
+            "dayMAE": 16.078017386264058
+          },
+          {
+            "lambda": 0.1,
+            "dayMAE": 17.135394680520996
+          },
+          {
+            "lambda": 1,
+            "dayMAE": 20.972487064529393
+          },
+          {
+            "lambda": 10,
+            "dayMAE": 22.02692706063361
+          }
+        ]
+      },
+      "fitted": {
+        "coefficients": [
+          2.2061883703499396,
+          0.8181938450632267,
+          -0.3301669357093169
+        ],
+        "lambda": 0,
+        "support": {
+          "windKmh": [
+            2.16,
+            25.2
+          ],
+          "moisturePct": [
+            0.7,
+            12.1
+          ]
+        }
+      },
+      "predictions": [
+        {
+          "id": "E03",
+          "day": "860817",
+          "wind": 16.2,
+          "moisture": 10,
+          "observed": 90,
+          "baseline": 21.725269606236683,
+          "candidate": 66.93411532638096,
+          "inSupport": true
+        },
+        {
+          "id": "E09",
+          "day": "860817",
+          "wind": 18.36,
+          "moisture": 9.3,
+          "observed": 82.14,
+          "baseline": 38.297965618853766,
+          "candidate": 75.4607423797318,
+          "inSupport": true
+        },
+        {
+          "id": "E11",
+          "day": "860817",
+          "wind": 16.92,
+          "moisture": 10.2,
+          "observed": 46.86,
+          "baseline": 17.41954170094862,
+          "candidate": 68.76245997614272,
+          "inSupport": true
+        },
+        {
+          "id": "E15",
+          "day": "860817",
+          "wind": 9.360000000000001,
+          "moisture": 9.3,
+          "observed": 79.14,
+          "baseline": 29.746607788982935,
+          "candidate": 45.24224391981662,
+          "inSupport": true
+        },
+        {
+          "id": "E16",
+          "day": "860817",
+          "wind": 10.8,
+          "moisture": 9.3,
+          "observed": 55.14,
+          "baseline": 38.297965618853766,
+          "candidate": 50.32575459219096,
+          "inSupport": true
+        },
+        {
+          "id": "E17",
+          "day": "860817",
+          "wind": 14.4,
+          "moisture": 9.3,
+          "observed": 81.66,
+          "baseline": 38.297965618853766,
+          "candidate": 62.575622572435115,
+          "inSupport": true
+        },
+        {
+          "id": "E18",
+          "day": "860817",
+          "wind": 10.08,
+          "moisture": 8.9,
+          "observed": 68.34,
+          "baseline": 37.47403816577354,
+          "candidate": 48.43447810845241,
+          "inSupport": true
+        },
+        {
+          "id": "E22",
+          "day": "860817",
+          "wind": 10.08,
+          "moisture": 9.1,
+          "observed": 51.66,
+          "baseline": 36.05307393814259,
+          "candidate": 48.115702494060926,
+          "inSupport": true
+        }
+      ]
+    },
+    {
+      "day": "860818",
+      "trainingDays": [
+        "860730",
+        "860731",
+        "860801",
+        "860804",
+        "860805",
+        "860806",
+        "860814",
+        "860815",
+        "860816",
+        "860817",
+        "860819",
+        "860820",
+        "860821"
+      ],
+      "innerFolds": 13,
+      "selection": {
+        "selected": 0,
+        "scores": [
+          {
+            "lambda": 0,
+            "dayMAE": 16.37130944756366
+          },
+          {
+            "lambda": 0.001,
+            "dayMAE": 16.37711344853438
+          },
+          {
+            "lambda": 0.01,
+            "dayMAE": 16.42790370323651
+          },
+          {
+            "lambda": 0.1,
+            "dayMAE": 17.547943754920176
+          },
+          {
+            "lambda": 1,
+            "dayMAE": 21.146776168527246
+          },
+          {
+            "lambda": 10,
+            "dayMAE": 22.177661058698195
+          }
+        ]
+      },
+      "fitted": {
+        "coefficients": [
+          2.1586126545844344,
+          0.8298260553066206,
+          -0.2814891637438957
+        ],
+        "lambda": 0,
+        "support": {
+          "windKmh": [
+            2.16,
+            25.2
+          ],
+          "moisturePct": [
+            0.7,
+            12.1
+          ]
+        }
+      },
+      "predictions": [
+        {
+          "id": "B244",
+          "day": "860818",
+          "wind": 15.48,
+          "moisture": 7.7,
+          "observed": 48.660000000000004,
+          "baseline": 71.7055240895625,
+          "candidate": 71.31887544468036,
+          "inSupport": true
+        },
+        {
+          "id": "C013",
+          "day": "860818",
+          "wind": 8.64,
+          "moisture": 6.5,
+          "observed": 19.14,
+          "baseline": 35.26276035547964,
+          "candidate": 47.274218021736516,
+          "inSupport": true
+        },
+        {
+          "id": "C014",
+          "day": "860818",
+          "wind": 9,
+          "moisture": 6.5,
+          "observed": 58.14,
+          "baseline": 38.25351693349309,
+          "candidate": 48.734626939330845,
+          "inSupport": true
+        },
+        {
+          "id": "C062",
+          "day": "860818",
+          "wind": 7.920000000000001,
+          "moisture": 6.2,
+          "observed": 61.13999999999999,
+          "baseline": 30.178484492724735,
+          "candidate": 44.700932659474574,
+          "inSupport": true
+        },
+        {
+          "id": "B242",
+          "day": "860818",
+          "wind": 10.44,
+          "moisture": 7.7,
+          "observed": 37.14,
+          "baseline": 47.183885295993356,
+          "candidate": 52.680656743186645,
+          "inSupport": true
+        },
+        {
+          "id": "B302",
+          "day": "860818",
+          "wind": 5.760000000000001,
+          "moisture": 6.9,
+          "observed": 39.660000000000004,
+          "baseline": 15.610276747646529,
+          "candidate": 34.82034067065751,
+          "inSupport": true
+        },
+        {
+          "id": "C064",
+          "day": "860818",
+          "wind": 8.64,
+          "moisture": 6.2,
+          "observed": 71.34,
+          "baseline": 35.86398244241973,
+          "candidate": 47.67512380169071,
+          "inSupport": true
+        },
+        {
+          "id": "B241",
+          "day": "860818",
+          "wind": 12.96,
+          "moisture": 7.7,
+          "observed": 53.34,
+          "baseline": 71.7055240895625,
+          "candidate": 62.14374734154996,
+          "inSupport": true
+        },
+        {
+          "id": "B243",
+          "day": "860818",
+          "wind": 6.48,
+          "moisture": 7.7,
+          "observed": 53.34,
+          "baseline": 18.35524947042814,
+          "candidate": 37.027808026215986,
+          "inSupport": true
+        },
+        {
+          "id": "B303",
+          "day": "860818",
+          "wind": 6.84,
+          "moisture": 6.9,
+          "observed": 46.86,
+          "baseline": 21.71465892570038,
+          "candidate": 39.37752296734613,
+          "inSupport": true
+        },
+        {
+          "id": "C061",
+          "day": "860818",
+          "wind": 19.44,
+          "moisture": 6.2,
+          "observed": 77.33999999999999,
+          "baseline": 88.88712847505562,
+          "candidate": 88.95088124554088,
+          "inSupport": true
+        },
+        {
+          "id": "B301",
+          "day": "860818",
+          "wind": 18.36,
+          "moisture": 6.9,
+          "observed": 73.86,
+          "baseline": 82.2697921694255,
+          "candidate": 83.37372694053572,
+          "inSupport": true
+        },
+        {
+          "id": "C011",
+          "day": "860818",
+          "wind": 12.96,
+          "moisture": 6.5,
+          "observed": 76.86,
+          "baseline": 79.86972396458795,
+          "candidate": 64.27873792261745,
+          "inSupport": true
+        },
+        {
+          "id": "C112",
+          "day": "860818",
+          "wind": 8.28,
+          "moisture": 6.2,
+          "observed": 24.66,
+          "baseline": 32.95503440457427,
+          "candidate": 46.19293813631573,
+          "inSupport": true
+        },
+        {
+          "id": "B304",
+          "day": "860818",
+          "wind": 9.360000000000001,
+          "moisture": 6.9,
+          "observed": 61.85999999999999,
+          "baseline": 40.36262939595343,
+          "candidate": 49.62420971719219,
+          "inSupport": true
+        },
+        {
+          "id": "C012",
+          "day": "860818",
+          "wind": 6.12,
+          "moisture": 6.5,
+          "observed": 45.660000000000004,
+          "baseline": 17.960164399124128,
+          "candidate": 36.763910567062425,
+          "inSupport": true
+        },
+        {
+          "id": "C111",
+          "day": "860818",
+          "wind": 9.360000000000001,
+          "moisture": 6.2,
+          "observed": 30.66,
+          "baseline": 42.08066616560405,
+          "candidate": 50.611714190856794,
+          "inSupport": true
+        }
+      ]
+    },
+    {
+      "day": "860819",
+      "trainingDays": [
+        "860730",
+        "860731",
+        "860801",
+        "860804",
+        "860805",
+        "860806",
+        "860814",
+        "860815",
+        "860816",
+        "860817",
+        "860818",
+        "860820",
+        "860821"
+      ],
+      "innerFolds": 13,
+      "selection": {
+        "selected": 0.01,
+        "scores": [
+          {
+            "lambda": 0.01,
+            "dayMAE": 16.500114784128595
+          },
+          {
+            "lambda": 0.001,
+            "dayMAE": 16.513833102840717
+          },
+          {
+            "lambda": 0,
+            "dayMAE": 16.515425322911007
+          },
+          {
+            "lambda": 0.1,
+            "dayMAE": 17.350570126942735
+          },
+          {
+            "lambda": 1,
+            "dayMAE": 21.08481911135989
+          },
+          {
+            "lambda": 10,
+            "dayMAE": 22.12131907957206
+          }
+        ]
+      },
+      "fitted": {
+        "coefficients": [
+          2.2700910334403828,
+          0.7626452994644451,
+          -0.2220265276975802
+        ],
+        "lambda": 0.01,
+        "support": {
+          "windKmh": [
+            2.16,
+            25.2
+          ],
+          "moisturePct": [
+            0.7,
+            12.1
+          ]
+        }
+      },
+      "predictions": [
+        {
+          "id": "C071",
+          "day": "860819",
+          "wind": 14.4,
+          "moisture": 5.7,
+          "observed": 96,
+          "baseline": 93.04288826948901,
+          "candidate": 68.64089133326668,
+          "inSupport": true
+        },
+        {
+          "id": "E12",
+          "day": "860819",
+          "wind": 11.16,
+          "moisture": 6.8,
+          "observed": 81,
+          "baseline": 57.893018220345375,
+          "candidate": 55.94207501095872,
+          "inSupport": true
+        },
+        {
+          "id": "F11",
+          "day": "860819",
+          "wind": 13.68,
+          "moisture": 6,
+          "observed": 101.34,
+          "baseline": 90.5557914368957,
+          "candidate": 65.74022918619683,
+          "inSupport": true
+        },
+        {
+          "id": "F221",
+          "day": "860819",
+          "wind": 11.16,
+          "moisture": 6.6,
+          "observed": 79.14,
+          "baseline": 58.613268656741326,
+          "candidate": 56.191039863215906,
+          "inSupport": true
+        },
+        {
+          "id": "F222",
+          "day": "860819",
+          "wind": 8.28,
+          "moisture": 6.6,
+          "observed": 60,
+          "baseline": 32.21175553289984,
+          "candidate": 45.723923984810014,
+          "inSupport": true
+        },
+        {
+          "id": "C021",
+          "day": "860819",
+          "wind": 9.72,
+          "moisture": 5.7,
+          "observed": 43.14,
+          "baseline": 46.62520756155736,
+          "candidate": 52.07137300694319,
+          "inSupport": true
+        },
+        {
+          "id": "C022",
+          "day": "860819",
+          "wind": 8.64,
+          "moisture": 5.7,
+          "observed": 53.34,
+          "baseline": 36.84063710599091,
+          "candidate": 48.02059565855657,
+          "inSupport": true
+        },
+        {
+          "id": "C024",
+          "day": "860819",
+          "wind": 13.32,
+          "moisture": 5.7,
+          "observed": 66,
+          "baseline": 88.2326601244572,
+          "candidate": 64.93821216190578,
+          "inSupport": true
+        },
+        {
+          "id": "C031",
+          "day": "860819",
+          "wind": 15.48,
+          "moisture": 5.4,
+          "observed": 71.34,
+          "baseline": 95.66315742917824,
+          "candidate": 72.76545667966764,
+          "inSupport": true
+        },
+        {
+          "id": "C081",
+          "day": "860819",
+          "wind": 14.4,
+          "moisture": 5.7,
+          "observed": 58.14,
+          "baseline": 93.04288826948901,
+          "candidate": 68.64089133326668,
+          "inSupport": true
+        },
+        {
+          "id": "E061",
+          "day": "860819",
+          "wind": 11.16,
+          "moisture": 6.5,
+          "observed": 84.66,
+          "baseline": 58.960493315957585,
+          "candidate": 56.31593747951399,
+          "inSupport": true
+        },
+        {
+          "id": "F02",
+          "day": "860819",
+          "wind": 7.2,
+          "moisture": 6.1,
+          "observed": 34.14,
+          "baseline": 25.15744216518302,
+          "candidate": 42.07117697263959,
+          "inSupport": true
+        },
+        {
+          "id": "F061",
+          "day": "860819",
+          "wind": 8.28,
+          "moisture": 6.4,
+          "observed": 51.66,
+          "baseline": 32.5895947589578,
+          "candidate": 45.92741393360558,
+          "inSupport": true
+        },
+        {
+          "id": "F16",
+          "day": "860819",
+          "wind": 9.360000000000001,
+          "moisture": 6.7,
+          "observed": 46.14,
+          "baseline": 40.882157361678665,
+          "candidate": 49.61839062180136,
+          "inSupport": true
+        },
+        {
+          "id": "F211",
+          "day": "860819",
+          "wind": 7.920000000000001,
+          "moisture": 6.5,
+          "observed": 66.66,
+          "baseline": 29.67257382157895,
+          "candidate": 44.46344575712578,
+          "inSupport": true
+        },
+        {
+          "id": "F212",
+          "day": "860819",
+          "wind": 8.28,
+          "moisture": 6.5,
+          "observed": 50.339999999999996,
+          "baseline": 32.40257778345833,
+          "candidate": 45.82555600883731,
+          "inSupport": true
+        },
+        {
+          "id": "C034",
+          "day": "860819",
+          "wind": 9.72,
+          "moisture": 5.4,
+          "observed": 43.86,
+          "baseline": 47.393264102361925,
+          "candidate": 52.41936746459646,
+          "inSupport": true
+        }
+      ]
+    },
+    {
+      "day": "860820",
+      "trainingDays": [
+        "860730",
+        "860731",
+        "860801",
+        "860804",
+        "860805",
+        "860806",
+        "860814",
+        "860815",
+        "860816",
+        "860817",
+        "860818",
+        "860819",
+        "860821"
+      ],
+      "innerFolds": 13,
+      "selection": {
+        "selected": 0.01,
+        "scores": [
+          {
+            "lambda": 0.01,
+            "dayMAE": 14.967581177994987
+          },
+          {
+            "lambda": 0.001,
+            "dayMAE": 15.054060230498347
+          },
+          {
+            "lambda": 0,
+            "dayMAE": 15.0658840038751
+          },
+          {
+            "lambda": 0.1,
+            "dayMAE": 15.914027246760977
+          },
+          {
+            "lambda": 1,
+            "dayMAE": 18.957356441508797
+          },
+          {
+            "lambda": 10,
+            "dayMAE": 19.77069927693233
+          }
+        ]
+      },
+      "fitted": {
+        "coefficients": [
+          2.3405748486406366,
+          0.7086068281564191,
+          -0.1562897030655538
+        ],
+        "lambda": 0.01,
+        "support": {
+          "windKmh": [
+            2.16,
+            25.2
+          ],
+          "moisturePct": [
+            0.7,
+            12.1
+          ]
+        }
+      },
+      "predictions": [
+        {
+          "id": "F03",
+          "day": "860820",
+          "wind": 14.4,
+          "moisture": 5.6,
+          "observed": 92.33999999999999,
+          "baseline": 93.89268295316027,
+          "candidate": 66.06533012244535,
+          "inSupport": true
+        },
+        {
+          "id": "F04",
+          "day": "860820",
+          "wind": 15.120000000000001,
+          "moisture": 5.2,
+          "observed": 117,
+          "baseline": 97.57499217536316,
+          "candidate": 68.66737695205425,
+          "inSupport": true
+        },
+        {
+          "id": "F081",
+          "day": "860820",
+          "wind": 16.56,
+          "moisture": 5.6,
+          "observed": 117,
+          "baseline": 93.89268295316027,
+          "candidate": 72.50482101826609,
+          "inSupport": true
+        },
+        {
+          "id": "F091",
+          "day": "860820",
+          "wind": 15.840000000000002,
+          "moisture": 5.6,
+          "observed": 99,
+          "baseline": 93.89268295316027,
+          "candidate": 70.38541809829638,
+          "inSupport": true
+        },
+        {
+          "id": "F13",
+          "day": "860820",
+          "wind": 12.24,
+          "moisture": 5.6,
+          "observed": 87,
+          "baseline": 74.68741218700235,
+          "candidate": 59.35616108378588,
+          "inSupport": true
+        },
+        {
+          "id": "F14",
+          "day": "860820",
+          "wind": 18.36,
+          "moisture": 5.8,
+          "observed": 115.14,
+          "baseline": 92.20776375260463,
+          "candidate": 77.45344215993647,
+          "inSupport": true
+        },
+        {
+          "id": "F18",
+          "day": "860820",
+          "wind": 13.68,
+          "moisture": 5.5,
+          "observed": 82.86,
+          "baseline": 94.1761062790231,
+          "candidate": 63.961276895185456,
+          "inSupport": true
+        },
+        {
+          "id": "F19",
+          "day": "860820",
+          "wind": 15.840000000000002,
+          "moisture": 5.8,
+          "observed": 103.86,
+          "baseline": 92.20776375260463,
+          "candidate": 70.16575127188867,
+          "inSupport": true
+        },
+        {
+          "id": "F231",
+          "day": "860820",
+          "wind": 15.840000000000002,
+          "moisture": 5.3,
+          "observed": 112.86,
+          "baseline": 96.59778173658304,
+          "candidate": 70.71620846205126,
+          "inSupport": true
+        },
+        {
+          "id": "F232",
+          "day": "860820",
+          "wind": 15.840000000000002,
+          "moisture": 5.3,
+          "observed": 69,
+          "baseline": 96.59778173658304,
+          "candidate": 70.71620846205126,
+          "inSupport": true
+        }
+      ]
+    },
+    {
+      "day": "860821",
+      "trainingDays": [
+        "860730",
+        "860731",
+        "860801",
+        "860804",
+        "860805",
+        "860806",
+        "860814",
+        "860815",
+        "860816",
+        "860817",
+        "860818",
+        "860819",
+        "860820"
+      ],
+      "innerFolds": 13,
+      "selection": {
+        "selected": 0.01,
+        "scores": [
+          {
+            "lambda": 0.01,
+            "dayMAE": 14.562927713517865
+          },
+          {
+            "lambda": 0.001,
+            "dayMAE": 14.642297554731565
+          },
+          {
+            "lambda": 0,
+            "dayMAE": 14.65295265146729
+          },
+          {
+            "lambda": 0.1,
+            "dayMAE": 15.45968952934864
+          },
+          {
+            "lambda": 1,
+            "dayMAE": 19.037909681872826
+          },
+          {
+            "lambda": 10,
+            "dayMAE": 20.02278184962373
+          }
+        ]
+      },
+      "fitted": {
+        "coefficients": [
+          2.165753296887313,
+          0.740298439174194,
+          -0.022380488226559775
+        ],
+        "lambda": 0.01,
+        "support": {
+          "windKmh": [
+            2.16,
+            25.2
+          ],
+          "moisturePct": [
+            0.7,
+            12.1
+          ]
+        }
+      },
+      "predictions": [
+        {
+          "id": "F05",
+          "day": "860821",
+          "wind": 14.4,
+          "moisture": 2.7,
+          "observed": 92.33999999999999,
+          "baseline": 135.0017993191291,
+          "candidate": 65.62512098021246,
+          "inSupport": true
+        },
+        {
+          "id": "F10",
+          "day": "860821",
+          "wind": 11.879999999999999,
+          "moisture": 2.8,
+          "observed": 124.14,
+          "baseline": 89.92871750646397,
+          "candidate": 57.48071540197082,
+          "inSupport": true
+        },
+        {
+          "id": "F12",
+          "day": "860821",
+          "wind": 14.04,
+          "moisture": 2.7,
+          "observed": 120.66000000000001,
+          "baseline": 128.1999287401879,
+          "candidate": 64.4859521409575,
+          "inSupport": true
+        },
+        {
+          "id": "F15",
+          "day": "860821",
+          "wind": 9.72,
+          "moisture": 3.1,
+          "observed": 69,
+          "baseline": 57.577338563317134,
+          "candidate": 50.14333135595153,
+          "inSupport": true
+        },
+        {
+          "id": "F17",
+          "day": "860821",
+          "wind": 15.48,
+          "moisture": 2.8,
+          "observed": 101.34,
+          "baseline": 154.2556818006819,
+          "candidate": 68.98659420887523,
+          "inSupport": true
+        },
+        {
+          "id": "C04",
+          "day": "860821",
+          "wind": 13.68,
+          "moisture": 2.8,
+          "observed": 109.86,
+          "baseline": 119.82615615875434,
+          "candidate": 63.32550496343429,
+          "inSupport": true
+        },
+        {
+          "id": "C09",
+          "day": "860821",
+          "wind": 15.48,
+          "moisture": 2.8,
+          "observed": 41.339999999999996,
+          "baseline": 154.2556818006819,
+          "candidate": 68.98659420887523,
+          "inSupport": true
+        },
+        {
+          "id": "C10",
+          "day": "860821",
+          "wind": 12.96,
+          "moisture": 2.8,
+          "observed": 93,
+          "baseline": 107.3257429315615,
+          "candidate": 61.01127092680824,
+          "inSupport": true
+        }
+      ]
+    }
+  ],
+  "finalSelection": {
+    "selected": 0,
+    "scores": [
+      {
+        "lambda": 0,
+        "dayMAE": 16.212829300813393
+      },
+      {
+        "lambda": 0.001,
+        "dayMAE": 16.21395265774347
+      },
+      {
+        "lambda": 0.01,
+        "dayMAE": 16.22304279524194
+      },
+      {
+        "lambda": 0.1,
+        "dayMAE": 17.147953068137294
+      },
+      {
+        "lambda": 1,
+        "dayMAE": 20.626849500456807
+      },
+      {
+        "lambda": 10,
+        "dayMAE": 21.604116965195335
+      }
+    ]
+  },
+  "artifactSha256": "919fa72962ceefca99ec5c843ad5982e8a678213ba61289bdfe66a2a3268d5df"
+}

@@ -1,0 +1,12 @@
+{
+  "kind": "synthetic runtime smoke test; excludes network and buildings, not a worst-case latency guarantee",
+  "engine": "GingerO1 0.1.0 · ginger16 · Rothermel / BehavePlus (@cbevins 0.7.4)",
+  "gridCells": 6400,
+  "horizonMinutes": 240,
+  "members": 9,
+  "solarDrying": true,
+  "runtimeMs": 11865,
+  "burnedHa": 305.875,
+  "workerComputeBudgetMs": 170000,
+  "withinBudget": true
+}

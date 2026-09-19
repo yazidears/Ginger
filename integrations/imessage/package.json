@@ -1,0 +1,27 @@
+{
+  "name": "ginger-imessage",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "start": "node --import tsx src/worker.ts",
+    "test": "node --import tsx --test src/*.test.ts",
+    "typecheck": "tsc --noEmit"
+  },
+  "engines": {
+    "node": ">=22.13.0"
+  },
+  "dependencies": {
+    "@mastra/core": "1.67.0",
+    "@mastra/libsql": "1.23.0",
+    "@mastra/memory": "1.30.0",
+    "@photon-ai/chat-adapter-imessage": "3.2.0",
+    "chat": "^4.14.0",
+    "dotenv": "^17.2.0",
+    "tsx": "^4.20.0",
+    "zod": "^4.0.0"
+  },
+  "devDependencies": {
+    "typescript": "^5.8.0",
+    "@types/node": "^22.0.0"
+  }
+}

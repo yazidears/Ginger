@@ -1,0 +1,21 @@
+description: Read Ginger's source-backed answer for the client-supplied location. Always call before answering about current conditions. Coordinates come from the client; never invent them.
+input:
+  type: object
+  properties:
+    question:
+      type: string
+      description: The user's question about current conditions, at most 500 characters.
+      maxLength: 500
+  required: [question]
+inject:
+  - lat: "{{latitude}}"
+  - lon: "{{longitude}}"
+webhook:
+  url_env: GINGER_API_URL
+  path: /api/ash
+  auth:
+    type: bearer
+    token_env: ASH_ACCESS_TOKEN
+announce: "Checking Ginger."
+effect: returns_data
+interruption: provider_default

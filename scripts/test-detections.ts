@@ -1,0 +1,11 @@
+import assert from 'node:assert/strict';
+import {regionalDetections} from '../src/lib/detections';
+import type {Hotspot} from '../src/lib/providers/types';
+const now=Date.parse('2026-09-19T12:00:00Z');
+const h=(id:string,position:[number,number],age:number):Hotspot=>({id,position,clusterId:null,frpMw:1,confidence:'nominal',provenance:{source:'fixture',mode:'live',observedAt:new Date(now-age).toISOString(),retrievedAt:new Date(now).toISOString()}});
+const input=[h('old',[2,41],86400001),h('future',[2,41],-1),h('local',[2,41],1000),h('spain',[-3,40],2000),h('europe',[20,50],3000),h('outside',[120,30],0),h('boundary',[.1,40.4],86400000)];
+assert.deepEqual(regionalDetections(input,'catalonia',now).map(h=>h.id),['local','boundary']);
+assert.deepEqual(regionalDetections(input,'iberia',now).map(h=>h.id),['local','spain','boundary']);
+assert.deepEqual(regionalDetections(input,'europe',now).map(h=>h.id),['local','spain','europe','boundary']);
+assert.deepEqual(regionalDetections([],'catalonia',now),[]);
+console.log('PASS regional bounds, rolling 24 hours, future observations, sorting and empty feed');

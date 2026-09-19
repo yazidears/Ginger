@@ -1,0 +1,20 @@
+{
+  "extends": "./tsconfig.json",
+  "compilerOptions": {
+    "incremental": false
+  },
+  "include": [
+    "next-env.d.ts",
+    "src/lib/replay/**/*.ts",
+    "src/components/replay-workspace.tsx",
+    "src/app/replay/**/*.tsx",
+    "src/app/api/replay/**/*.ts",
+    "scripts/test-replay.ts",
+    "scripts/replay-worker.ts",
+    "scripts/backtest-replay.ts",
+    "src/types/**/*.d.ts"
+  ],
+  "exclude": [
+    "node_modules"
+  ]
+}

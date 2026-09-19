@@ -1,0 +1,18 @@
+{
+  "extends": "./tsconfig.json",
+  "compilerOptions": {
+    "incremental": false
+  },
+  "include": [
+    "src/app/satellite/page.tsx",
+    "src/app/api/satellite/**/*.ts",
+    "src/components/satellite-lab.tsx",
+    "scripts/test-satellite-lab.ts",
+    "scripts/test-satellite-spread.ts"
+  ],
+  "exclude": [
+    "node_modules",
+    ".next*",
+    "Users"
+  ]
+}

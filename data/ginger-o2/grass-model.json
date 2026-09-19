@@ -1,0 +1,117 @@
+{
+  "version": "GingerO2-grass-1",
+  "status": "experimental Australian grass component",
+  "formula": "log ROS = intercept + nonnegative wind coefficient * log1p(midflame km/h) + nonpositive moisture coefficient * dead moisture / 10",
+  "coefficients": [
+    2.189364156344018,
+    0.8148869962933463,
+    -0.27849299617647566
+  ],
+  "lambda": 0,
+  "support": {
+    "windKmh": [
+      2.16,
+      25.2
+    ],
+    "moisturePct": [
+      0.7,
+      12.1
+    ]
+  },
+  "source": {
+    "collection": "https://data.csiro.au/collection/csiro:60062",
+    "version": 3,
+    "archive": "https://data.csiro.au/dap/ws/v2/collections/60062/data/70770839",
+    "archiveBytes": 584131942,
+    "retrievedAt": "2026-09-19T14:14:28.211484+00:00",
+    "license": "Creative Commons Attribution 4.0 International Licence",
+    "attribution": "Gould, Jim; Gomes Da Cruz, Miguel; & Sullivan, Andrew (2023): 1986 Annaburroo Experimental Grassland Fire Data. v3. CSIRO. Data Collection. https://doi.org/10.25919/ycd3-w209",
+    "files": [
+      {
+        "file": "Plot_Average_Data.csv",
+        "archiveMember": "Plot_Average_Data.csv",
+        "bytes": 8669,
+        "sha256": "4425d11fe970e263d400b7a9d089b8eea70bda4de4a1e29cbeedea28bc727934"
+      },
+      {
+        "file": "Burn_Period_Data.csv",
+        "archiveMember": "Burn_Period_Data.csv",
+        "bytes": 84062,
+        "sha256": "bdd5bc1354b7b9e72e17616aa733b5bc869fa3b86686ea102dcb73846761ca0d"
+      }
+    ],
+    "metadataEndpoint": "https://data.csiro.au/dap/ws/v2/collections/60062"
+  },
+  "protocolSha256": "0b84c8837e0a33e1e538390abb9284c2e5c18a77b85ddba34fcad27e79549abe",
+  "training": {
+    "fires": 120,
+    "days": [
+      "860730",
+      "860731",
+      "860801",
+      "860804",
+      "860805",
+      "860806",
+      "860814",
+      "860815",
+      "860816",
+      "860817",
+      "860818",
+      "860819",
+      "860820",
+      "860821"
+    ],
+    "excluded": [
+      {
+        "id": "F011",
+        "reason": "Missing/invalid wind, moisture, observed ROS or unique day"
+      }
+    ]
+  },
+  "evaluation": {
+    "baseline": {
+      "n": 120,
+      "mae": 25.15173797833961,
+      "rmse": 35.14230901965784,
+      "bias": -9.927062091918502,
+      "p90AbsoluteError": 43.842034381146235,
+      "withinFactorTwo": 0.75
+    },
+    "candidate": {
+      "n": 120,
+      "mae": 17.0365411253479,
+      "rmse": 21.282978912828153,
+      "bias": -7.631006435266399,
+      "p90AbsoluteError": 32.35340579112477,
+      "withinFactorTwo": 0.975
+    },
+    "guarded": {
+      "n": 120,
+      "mae": 20.40754836326039,
+      "rmse": 30.087797121741193,
+      "bias": -8.416183370183969,
+      "p90AbsoluteError": 37.68655784006353,
+      "withinFactorTwo": 0.925
+    },
+    "dayMAE": {
+      "baseline": 24.703019054937577,
+      "candidate": 16.418215272639493,
+      "guarded": 19.120126627502398
+    },
+    "candidateBootstrap": {
+      "repetitions": 2000,
+      "clusters": 14,
+      "lower": 1.4160075219329153,
+      "upper": 14.229303832286968,
+      "units": "m/min MAE reduction"
+    },
+    "guardedBootstrap": {
+      "repetitions": 2000,
+      "clusters": 14,
+      "lower": -0.46247171314151836,
+      "upper": 9.900687307779885,
+      "units": "m/min MAE reduction"
+    },
+    "outsideTrainingSupport": 7
+  }
+}

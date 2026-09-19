@@ -1,0 +1,11 @@
+import assert from 'node:assert/strict';
+import {explanationEvidence} from '../src/lib/sage/explanation';
+import type {RunResult} from '../src/lib/sage/types';
+const result={engine:'GingerO2',request:{lat:41.12345,lon:2.12345,confirmation:'PRIVATE INCIDENT',horizonMinutes:120,deadMoisturePct:7,liveMoisturePct:90,windAdjustment:.35,solarDrying:false,experiment:{windOffset:45,windFactor:1,windShiftMinutes:30,observation:{source:'PRIVATE REPORT'}}},stats:{reached:3},members:[],weather:[{windKmh:20,windFromDegrees:270,temperatureC:25,humidityPct:30,precipitationMm:0}],buildings:[{name:'PRIVATE BUILDING'}],warnings:['PRIVATE DETAIL']} as unknown as RunResult;
+const evidence=explanationEvidence(result),serialized=JSON.stringify(evidence);
+assert.equal(evidence.weather[0].windTowardDegrees,90);
+assert.equal(evidence.assumptions.experiment?.windOffset,45);
+assert.equal(evidence.outcomes.reached,3);
+for(const privateValue of ['41.12345','2.12345','PRIVATE INCIDENT','PRIVATE REPORT','PRIVATE BUILDING','PRIVATE DETAIL'])assert.ok(!serialized.includes(privateValue));
+assert.equal(evidence.assumptions.experiment?.hasObservedPerimeter,true);
+console.log('Sage explanation: grounding, wind convention and private-field exclusion passed');

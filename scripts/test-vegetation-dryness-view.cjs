@@ -1,0 +1,20 @@
+const fs=require('node:fs'),path=require('node:path'),ts=require('typescript'),assert=require('node:assert/strict'),Module=require('node:module');
+// Match Next's automatic JSX runtime; tsx otherwise preserves JSX for imported UI files.
+for(const ext of ['.ts','.tsx'])require.extensions[ext]=(mod,file)=>mod._compile(ts.transpileModule(fs.readFileSync(file,'utf8'),{compilerOptions:{module:ts.ModuleKind.CommonJS,target:ts.ScriptTarget.ES2022,jsx:ts.JsxEmit.ReactJSX,esModuleInterop:true}}).outputText,file);
+const resolve=Module._resolveFilename;
+Module._resolveFilename=function(name,...args){return resolve.call(this,name.startsWith('@/')?path.join(__dirname,'../src',name.slice(2)):name,...args);};
+const React=require('react');
+const {renderToStaticMarkup}=require('react-dom/server');
+const VegetationDrynessCard=require('../src/components/vegetation-dryness.tsx').default;
+const {estimateVegetationDryness}=require('../src/lib/vegetation-dryness.ts');
+const now=Date.now(),start=Math.floor(now/3600000)*3600000;
+const h=(i)=>({time:new Date(start+i*3600000).toISOString(),temperatureC:40,humidityPct:8,windKmh:20,windFromDegrees:180,precipitationMm:0});
+const history=Array.from({length:72},(_,i)=>h(i-71)),outlook=Array.from({length:24},(_,i)=>h(i));
+const assessment={vegetationDryness:estimateVegetationDryness(history,outlook,now),sources:[{source:'Open-Meteo',status:'live'}]};
+const render=(a,hour=0)=>renderToStaticMarkup(React.createElement(VegetationDrynessCard,{assessment:a,hour}));
+let html=render(assessment);assert.match(html,/Extremely dry/);assert.match(html,/Current estimate/);assert.match(html,/Live plant moisture is not measured/);
+html=render(assessment,12);assert.match(html,/Forecast \+12h/);assert.match(html,/estimated dead fine-fuel moisture/);
+const stale=structuredClone(assessment);stale.sources[0].status='stale';html=render(stale);assert.match(html,/stale/);assert.doesNotMatch(html,/Current estimate/);
+const unavailable=structuredClone(assessment);unavailable.vegetationDryness=estimateVegetationDryness([],[],now);html=render(unavailable);assert.match(html,/72 continuous hours/);assert.doesNotMatch(html,/Current estimate/);
+assert.match(render(null),/pending a fresh assessment/);
+console.log('5 vegetation dryness render checks passed (current, forecast, stale, unavailable, pending)');

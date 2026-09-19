@@ -1,0 +1,24 @@
+{
+  "collection": "https://data.csiro.au/collection/csiro:60062",
+  "version": 3,
+  "archive": "https://data.csiro.au/dap/ws/v2/collections/60062/data/70770839",
+  "archiveBytes": 584131942,
+  "retrievedAt": "2026-09-19T14:14:28.211484+00:00",
+  "license": "Creative Commons Attribution 4.0 International Licence",
+  "attribution": "Gould, Jim; Gomes Da Cruz, Miguel; & Sullivan, Andrew (2023): 1986 Annaburroo Experimental Grassland Fire Data. v3. CSIRO. Data Collection. https://doi.org/10.25919/ycd3-w209",
+  "files": [
+    {
+      "file": "Plot_Average_Data.csv",
+      "archiveMember": "Plot_Average_Data.csv",
+      "bytes": 8669,
+      "sha256": "4425d11fe970e263d400b7a9d089b8eea70bda4de4a1e29cbeedea28bc727934"
+    },
+    {
+      "file": "Burn_Period_Data.csv",
+      "archiveMember": "Burn_Period_Data.csv",
+      "bytes": 84062,
+      "sha256": "bdd5bc1354b7b9e72e17616aa733b5bc869fa3b86686ea102dcb73846761ca0d"
+    }
+  ],
+  "metadataEndpoint": "https://data.csiro.au/dap/ws/v2/collections/60062"
+}
