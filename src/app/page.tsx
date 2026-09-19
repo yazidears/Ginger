@@ -1,2 +1,2 @@
-import ReceptivityWorkspace from '@/components/receptivity/workspace';
-export default function Page(){return <ReceptivityWorkspace/>;}
+// The persistent workspace shell renders the home panels and map layers.
+export default function Page(){return null;}

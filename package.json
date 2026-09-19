@@ -20,7 +20,7 @@
     "test:ginger-o1": "tsx scripts/test-ginger-o1.ts",
     "typecheck:ginger-o1": "tsc --project tsconfig.ginger-o1.json",
     "benchmark:ginger-o1:runtime": "tsx scripts/benchmark-ginger-o1-runtime.ts",
-    "test:prevention": "tsx scripts/test-prevention-opportunity.ts && tsx scripts/test-deepfire-context.ts && NODE_OPTIONS=--conditions=react-server tsx scripts/test-prevention-workflow.ts",
+    "test:prevention": "node scripts/test-prevention-refresh.cjs && tsx scripts/test-prevention-opportunity.ts && tsx scripts/test-deepfire-context.ts && NODE_OPTIONS=--conditions=react-server tsx scripts/test-prevention-workflow.ts",
     "train:ginger-o2": "tsx scripts/train-ginger-o2.ts",
     "test:ginger-o2": "tsx scripts/test-ginger-o2-grass.ts && tsx scripts/test-ginger-o2-smoke.ts && tsx scripts/test-ginger-o2-engine.ts",
     "typecheck:ginger-o2": "tsc --project tsconfig.ginger-o2.json",

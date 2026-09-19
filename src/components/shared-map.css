@@ -91,3 +91,37 @@
 @media(max-width:700px){
  .app-shell.shared-map-shell .satellite-lab > nav {right:62px;width:auto;max-width:none}
 }
+
+/* One renderer sits above route boundaries; only the surrounding panels mount. */
+.workspace-map-host[hidden] {display:none}
+.workspace-map-host > .app-shell {background:transparent;pointer-events:none;isolation:auto}
+.workspace-map-host > .app-shell .navrail,
+.workspace-map-host > .app-shell .modal-backdrop,
+.workspace-map-host > .app-shell .monitor-announcement {pointer-events:auto}
+.workspace-map-host > .r-workspace {background:transparent;pointer-events:none}
+.workspace-map-host .r-header,
+.workspace-map-host .r-panel,
+.workspace-map-host .r-layer-anchor,
+.workspace-map-host .r-timeline,
+.workspace-map-host .r-mobile-nav,
+.workspace-map-host .r-footer,
+.workspace-map-host .modal-overlay {pointer-events:auto}
+.workspace-map-host.receptivity-map-host .shared-map-surface .map-controls {top:245px;left:355px;right:auto}
+.workspace-map-host.receptivity-map-host .shared-map-surface .layer-menu {top:245px;left:405px;right:auto}
+.workspace-map-host.receptivity-map-host .shared-map-surface .map-legend {display:none}
+.workspace-map-host.receptivity-map-host .shared-map-surface .map-warning {top:auto;bottom:160px;left:355px}
+.workspace-map-host.receptivity-map-host .maplibregl-ctrl-bottom-left {bottom:30px!important}
+@media(max-width:1250px){
+ .workspace-map-host.receptivity-map-host .shared-map-surface .map-controls {left:300px}
+ .workspace-map-host.receptivity-map-host .shared-map-surface .layer-menu {left:350px}
+}
+@media(max-width:1050px){
+ .workspace-map-host.receptivity-map-host .shared-map-surface .map-controls {left:270px}
+ .workspace-map-host.receptivity-map-host .shared-map-surface .layer-menu {left:315px}
+}
+@media(max-width:759px){
+ .workspace-map-host.receptivity-map-host .shared-map-surface .map-controls {top:240px;left:auto;right:17px}
+ .workspace-map-host.receptivity-map-host .shared-map-surface .layer-menu {top:240px;left:auto;right:62px;max-height:calc(100dvh - 400px)}
+ .workspace-map-host.receptivity-map-host .shared-map-surface .map-warning {left:17px;right:17px;bottom:180px}
+ .workspace-map-host.receptivity-map-host .maplibregl-ctrl-bottom-left {bottom:180px!important}
+}

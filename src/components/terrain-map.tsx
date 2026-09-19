@@ -11,10 +11,13 @@ import './terrain-map.css';
 import {fireScopeRegions} from '@/lib/wildfire-references';
 import WildfireReferences from './wildfire-references';
 import {compass, smokeIllustration} from '@/lib/sage/smoke';
+import {addReceptivityLayers,useReceptivityLayers,type ReceptivityMapProps} from './receptivity/map-layers';
 import {EvidenceBadge} from './evidence';
 import {exposureCategories, type ExposureCategory, type ExposureDataset} from '@/lib/exposure/types';
 
 export interface TerrainMapProps {
+  receptivity?: ReceptivityMapProps;
+  initialView?: {center:[number,number];zoom:number;satellite:boolean;threeD:boolean};
   exposureEnabled?: boolean;
   opportunities?: FeatureCollection;
   onSelectOpportunity?: (id: string) => void;
@@ -51,7 +54,8 @@ maplibregl.setWorkerUrl('/maplibre/maplibre-gl-worker.mjs');
 
 /** Real GIS terrain, not a photogrammetric mesh. Terrarium source documented at
  * https://github.com/tilezen/joerd/blob/master/docs/use-service.md */
-export default function TerrainMap({ exposureEnabled = false, opportunities = EMPTY, onSelectOpportunity, persistentCamera = false, simulation, investigationOverlay = EMPTY, minute = 240, selectedBuilding, center, hotspotKind = 'observed', hotspots, perimeters = EMPTY, perimeterKind = 'derived', staticHeatSources = EMPTY, buildings, landcover, assets, onSelectPoint, focusKey = 0, onSelectBuilding, initialZoom = 12, watchAreas = [], onSelectArea, selectedRadiusM = 1500 }: TerrainMapProps) {
+export default function TerrainMap({ initialView, receptivity, exposureEnabled = false, opportunities = EMPTY, onSelectOpportunity, persistentCamera = false, simulation, investigationOverlay = EMPTY, minute = 240, selectedBuilding, center, hotspotKind = 'observed', hotspots, perimeters = EMPTY, perimeterKind = 'derived', staticHeatSources = EMPTY, buildings, landcover, assets, onSelectPoint, focusKey = 0, onSelectBuilding, initialZoom = 12, watchAreas = [], onSelectArea, selectedRadiusM = 1500 }: TerrainMapProps) {
+  const receptivityActive=useRef(Boolean(receptivity));receptivityActive.current=Boolean(receptivity);
   const opportunityCallback = useRef(onSelectOpportunity);
   opportunityCallback.current = onSelectOpportunity;
   const hotspotKindRef = useRef(hotspotKind);
@@ -73,14 +77,16 @@ export default function TerrainMap({ exposureEnabled = false, opportunities = EM
   const [exposureStatus, setExposureStatus] = useState('Loading server inventory…');
   const [ready, setReady] = useState(false);
   const [error, setError] = useState('');
-  const [threeD, setThreeD] = useState(true);
+  const [threeD, setThreeD] = useState(initialView?.threeD??true);
   const [layerMenu, setLayerMenu] = useState(false);
   const [researchRisk,setResearchRisk]=useState(false);
   const [riskError,setRiskError]=useState('');
   const [showSmoke, setShowSmoke] = useState(false);
   const smoke = useMemo(() => simulation ? smokeIllustration(simulation, minute, showSmoke) : null, [simulation, minute, showSmoke]);
-  const [satellite, setSatellite] = useState(true);
+  const [satellite, setSatellite] = useState(initialView?.satellite??true);
   const [visible, setVisible] = useState({ buildings: true, landcover: true, hotspots: true, assets: true, perimeters: true, staticHeatSources: false });
+
+  useReceptivityLayers(map.current,ready,receptivity);
 
   useEffect(() => {
     if (!host.current) return;
@@ -88,14 +94,14 @@ export default function TerrainMap({ exposureEnabled = false, opportunities = EM
     let m: MapInstance;
     try {
       m = new maplibregl.Map({
-        container: host.current, center: currentCenter.current, zoom: initialZoomRef.current,
-        pitch: 45, bearing: -12, maxPitch: 75, minZoom: 4, maxZoom: 19,
+        container: host.current, center: initialView?.center??currentCenter.current, zoom: initialView?.zoom??initialZoomRef.current,
+        pitch: threeD?45:0, bearing: threeD?-12:0, maxPitch: 75, minZoom: 4, maxZoom: 19,
         attributionControl: false,
         style: {
           version: 8,
           sources: {
             satellite: { type: 'raster', tiles: ['https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}'], tileSize: 256, attribution: 'Imagery © Esri, Maxar, Earthstar Geographics' },
-            dark: { type: 'raster', tiles: ['https://basemaps.cartocdn.com/dark_all/{z}/{x}/{y}.png'], tileSize: 256, attribution: '© OpenStreetMap contributors © CARTO' },
+            dark: { type: 'raster', tiles: ['https://server.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Dark_Gray_Base/MapServer/tile/{z}/{y}/{x}'], tileSize: 256, attribution: '© OpenStreetMap contributors © CARTO' },
             labels: { type: 'raster', tiles: ['https://basemaps.cartocdn.com/dark_only_labels/{z}/{x}/{y}.png'], tileSize: 256, attribution: '© OpenStreetMap contributors © CARTO' },
             elevation: { type: 'raster-dem', tiles: ['https://s3.amazonaws.com/elevation-tiles-prod/terrarium/{z}/{x}/{y}.png'], encoding: 'terrarium', tileSize: 256, maxzoom: 15, attribution: 'Terrain: Mapzen / <a href="https://github.com/tilezen/joerd/blob/master/docs/attribution.md" target="_blank">DEM sources</a>' },
           },
@@ -156,12 +162,13 @@ export default function TerrainMap({ exposureEnabled = false, opportunities = EM
       m.addLayer({ id: 'selected-point', type: 'circle', source: 'selected-point', paint: { 'circle-radius': 9, 'circle-color': '#ffffff', 'circle-opacity': .1, 'circle-stroke-color': '#f6e7bb', 'circle-stroke-width': 2 } });
       m.addLayer({id:'opportunity-halo',type:'circle',source:'opportunities',paint:{'circle-radius':17,'circle-color':'#6ce2d2','circle-opacity':.18}});
       m.addLayer({id:'opportunity-point',type:'circle',source:'opportunities',paint:{'circle-radius':9,'circle-color':['case',['==',['get','score'],null],'#687d80','#6ce2d2'],'circle-stroke-color':'#e6fff9','circle-stroke-width':2}});
-      m.setTerrain({ source: 'elevation', exaggeration: 1 });
+      addReceptivityLayers(m);
+      m.setTerrain(threeD?{ source: 'elevation', exaggeration: 1 }:null);
       loaded.current = m;
       setReady(true);
     });
     m.on('click', event => {
-      if (loaded.current !== m) return;
+      if (loaded.current !== m || receptivityActive.current) return;
       const opportunity=m.queryRenderedFeatures(event.point,{layers:['opportunity-point']})[0];
       if(opportunity?.properties?.id&&opportunityCallback.current){popup.current?.remove();opportunityCallback.current(String(opportunity.properties.id));return;}
       if (buildingCallback.current && loaded.current === m) {
@@ -197,7 +204,7 @@ export default function TerrainMap({ exposureEnabled = false, opportunities = EM
       if (area?.properties?.id && areaCallback.current) { areaCallback.current(String(area.properties.id)); return; }
       popup.current?.remove(); pointCallback.current(lng, lat);
     });
-    m.on('mousemove', event => { if (loaded.current !== m) return; m.getCanvas().style.cursor = m.queryRenderedFeatures(event.point, { layers: ['opportunity-point', 'buildings-3d', 'buildings-flat', 'buildings-unknown', 'assets-dot', 'hotspots-dot', 'watch-area-fill', 'exposure-dot', 'exposure-line', 'exposure-fill'] }).length ? 'pointer' : 'crosshair'; });
+    m.on('mousemove', event => { if (loaded.current !== m || receptivityActive.current) return; m.getCanvas().style.cursor = m.queryRenderedFeatures(event.point, { layers: ['opportunity-point', 'buildings-3d', 'buildings-flat', 'buildings-unknown', 'assets-dot', 'hotspots-dot', 'watch-area-fill', 'exposure-dot', 'exposure-line', 'exposure-fill'] }).length ? 'pointer' : 'crosshair'; });
     const observer = new ResizeObserver(() => m.resize());
     observer.observe(host.current);
     return () => { observer.disconnect(); loaded.current = null; map.current = null; m.remove(); };
