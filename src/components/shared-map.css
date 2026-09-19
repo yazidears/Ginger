@@ -125,3 +125,4 @@
  .workspace-map-host.receptivity-map-host .shared-map-surface .map-warning {left:17px;right:17px;bottom:180px}
  .workspace-map-host.receptivity-map-host .maplibregl-ctrl-bottom-left {bottom:180px!important}
 }
+.workspace-map-host .modal {pointer-events:auto}
