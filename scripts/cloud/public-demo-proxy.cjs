@@ -3,7 +3,7 @@ const http = require('node:http');
 const {createGzip} = require('node:zlib');
 const readApi = /^\/api\/(receptivity(?:\/[^/]+)?|exposure(?:\/cell)?|sage\/(?:runs(?:\/[a-f0-9-]{36}(?:\/exposure)?)?|buildings)|scenarios\/[a-f0-9-]{36}|forest\/(?:status|trees|tiles|weather|runs\/[a-f0-9]{32}|jobs\/[a-f0-9]{32})|ash\/rooms(?:\/[a-f0-9-]{36})?|ash-connect(?:\/resident)?|firescope\/[a-z-]+\/[0-9]+\/[0-9]+\/[0-9]+|detections|satellite\/(?:scenes|history|raw|raster))$/;
 const writeApi = /^\/api\/(scenarios|sage\/runs|forest\/(?:process|runs)|ash\/rooms(?:\/[a-f0-9-]{36})?|home-search)$/;
-const pages = new Set(['/','/prevent','/sage','/ash','/forest','/demo','/satellite','/replay','/ash-connect','/icon.svg','/favicon.ico']);
+const pages = new Set(['/','/prevent','/sage','/ash','/forest','/demo','/satellite','/replay','/ash-connect','/icon.svg','/favicon.ico','/methodology','/ginger.svg','/ginger-symbol.svg','/maplibre/maplibre-gl-worker.mjs','/maplibre/maplibre-gl-shared.mjs']);
 const counts = new Map();
 http.createServer(async (req,res)=>{
  const pathname=(req.url||'').split('?')[0]; const read=['GET','HEAD'].includes(req.method);
@@ -28,7 +28,7 @@ http.createServer(async (req,res)=>{
   if(out['set-cookie'])out['set-cookie']=out['set-cookie'].map(c=>c.includes('; Secure')?c:c+'; Secure');
   const compress=read&&req.method!=='HEAD'&&!out['content-encoding']&&/gzip/.test(req.headers['accept-encoding']||'')&&/application\/json|text\/|javascript/.test(out['content-type']||'');
   if(compress){delete out['content-length'];out['content-encoding']='gzip';out.vary=out.vary?out.vary+', Accept-Encoding':'Accept-Encoding';}
-  res.writeHead(r.statusCode,out);if(compress)r.pipe(createGzip({level:1})).pipe(res);else r.pipe(res);
+  res.writeHead(r.statusCode,out);if(compress)r.pipe(createGzip({level:6})).pipe(res);else r.pipe(res);
  });
  upstream.on('error',()=>{if(!res.headersSent)fail(502,'The demo is reconnecting. Please reload shortly.');else res.end();});
  upstream.on('timeout',()=>upstream.destroy());res.on('close',()=>upstream.destroy());upstream.end(Buffer.concat(chunks));

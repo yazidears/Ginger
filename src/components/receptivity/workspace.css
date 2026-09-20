@@ -101,3 +101,5 @@
 .prevent-returned-forecast details p{overflow-wrap:anywhere}
 
 .prevent-zone-search{display:block;padding:0 18px 14px;font-size:12px;color:#cbd9c4}.prevent-zone-search input{display:block;width:100%;margin-top:8px;padding:10px;border:1px solid #6c856b;border-radius:6px;background:#14241c;color:#eef4e9;min-height:42px}.prevent-back-zones{padding:12px 18px;color:#d0dfc3;font-size:12px;min-height:40px}
+
+@media(max-width:759px){.prevent-drawer{top:auto;bottom:164px;max-height:45dvh}}

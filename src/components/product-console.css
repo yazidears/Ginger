@@ -33,3 +33,9 @@
 .specialist-product-host .topbar,.specialist-product-host .navrail{display:none!important}
 @media(max-width:700px){.product-nav{left:12px;top:12px;padding-left:12px;gap:9px;max-width:calc(100vw - 24px)}.product-brand,.product-brand span{width:75px}.product-nav-links a{padding:9px 11px;font-size:12px}.sage-context-bar{left:12px;top:70px;gap:5px}.sage-context-select span{max-width:100px}.sage-context-bar>button:last-child{padding-left:8px}.sage-context-bar .product-qualifier.warning{display:none}.sage-context-drawer{top:124px;left:12px;right:12px;bottom:18px;width:auto;max-width:none}.product-map-host .shared-map-surface .map-controls{top:124px;right:12px}.product-map-host .shared-map-surface .layer-menu{top:124px;right:60px}.sage-context-form input{font-size:16px}}
 @media(max-width:450px){.product-nav{gap:5px;padding-left:9px}.product-brand,.product-brand span{width:54px}.product-nav-links{gap:0}.product-nav-links a{padding:10px 8px;font-size:11px}}
+
+/* Reset all four edges: mobile top/right rules must not stretch Prevent controls over the map. */
+@media(max-width:700px){
+ .prevent-product-host .shared-map-surface .map-controls{inset:auto 12px 200px auto;width:max-content;height:auto}
+ .prevent-product-host .shared-map-surface .layer-menu{inset:auto 60px 200px auto}
+}
