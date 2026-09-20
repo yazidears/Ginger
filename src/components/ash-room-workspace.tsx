@@ -28,6 +28,7 @@ export default function AshRoomWorkspace(){
   const [room,setRoom]=useState<RoomView|null>(null),[phase,setPhase]=useState<VoicePhase>('disconnected'),[error,setError]=useState(''),[busy,setBusy]=useState(false);
   const [name,setName]=useState(''),[accessToken,setAccessToken]=useState(''),[roomId,setRoomId]=useState(''),[runId,setRunId]=useState(''),[minute,setMinute]=useState(0);
   const [catalog,setCatalog]=useState<CatalogRun[]>([]),[unlocked,setUnlocked]=useState(false),[configured,setConfigured]=useState<boolean|null>(null);
+  const [publicDemo,setPublicDemo]=useState(false);
   const [question,setQuestion]=useState(''),[caption,setCaption]=useState(''),[evidence,setEvidence]=useState<Evidence|null>(null),[muted,setMuted]=useState(false),[speakerMuted,setSpeakerMuted]=useState(false);
   const roomRef=useRef<RoomView|null>(null),credential=useRef(''),audio=useRef<AshRoomAudio|null>(null),signalCursor=useRef(0),refreshRef=useRef<()=>void>(()=>{});
   const updateRoom=useCallback((value:RoomView)=>{roomRef.current=value;setRoom(value);},[]);
@@ -42,7 +43,7 @@ export default function AshRoomWorkspace(){
   },[requestRoom]);
   useEffect(()=>{
     const query=new URLSearchParams(location.search);setRoomId(query.get('room')||'');setRunId(query.get('sageRun')||'');setMinute(Number(query.get('minute'))||0);
-    void fetch('/api/ash/rooms').then(r=>r.json()).then(data=>setConfigured(data.configured)).catch(()=>setConfigured(false));
+    void fetch('/api/ash/rooms').then(r=>r.json()).then(data=>{setConfigured(data.configured);setPublicDemo(data.publicDemo===true);}).catch(()=>setConfigured(false));
     const id=query.get('room');if(!id)return;credential.current=sessionStorage.getItem(`ginger-ash-member:${id}`)||'';
     void fetch(`/api/ash/rooms/${id}`,{headers:credential.current?{Authorization:`Bearer ${credential.current}`}:{}}).then(async response=>{if(response.ok)updateRoom(await response.json());}).catch(()=>{});
   },[updateRoom]);
@@ -74,14 +75,14 @@ export default function AshRoomWorkspace(){
       {configured===false&&<p className="ash-notice">Operator room access is not configured on this server.</p>}
       <form onSubmit={event=>{event.preventDefault();void bootstrap(roomId?'join':unlocked?'create':'catalog');}}>
         <label>Your name<input value={name} onChange={event=>setName(event.target.value)} maxLength={60} autoComplete="name" placeholder="Operator name" required/></label>
-        <label>Operator access token<input type="password" value={accessToken} onChange={event=>setAccessToken(event.target.value)} autoComplete="off" placeholder="Server-issued access token" required/></label>
+        {!publicDemo&&<label>Operator access token<input type="password" value={accessToken} onChange={event=>setAccessToken(event.target.value)} autoComplete="off" placeholder="Server-issued access token" required/></label>}
         {roomId?<label>Room<input value={roomId} onChange={event=>setRoomId(event.target.value)} maxLength={36} required/></label>:unlocked?<label>Sage forecast<select value={runId} onChange={event=>setRunId(event.target.value)} required><option value="">Select a saved forecast</option>{catalog.map(run=><option value={run.id} key={run.id}>{run.basis} · {run.lat.toFixed(3)}, {run.lon.toFixed(3)} · {new Date(run.createdAt).toLocaleString()}</option>)}</select></label>:null}
         {unlocked&&!catalog.length&&!roomId&&<p className="ash-notice">No completed forecast is available. <Link href="/sage">Create one in Sage</Link>.</p>}
         <button className="ash-primary" disabled={busy||configured===false}>{busy?'Connecting…':roomId?'Join room':unlocked?'Open room':'Continue'}</button>
       </form>
       <details className="ash-join-existing"><summary>Join another room</summary><label>Room ID<input value={roomId} onChange={event=>setRoomId(event.target.value)} placeholder="Paste room ID" maxLength={36}/></label></details>
       {error&&<p role="alert" className="ash-error">{error}</p>}
-      <small>Authorised operators only. No public messages or emergency commands.</small>
+      <small>{publicDemo?'Public demo · hypothetical scenarios. No real alerts or emergency commands.':'Authorised operators only. No public messages or emergency commands.'}</small>
     </section>:<>
       <header className="ash-room-header"><div><span className="ash-eyebrow">ASH · SHARED OPERATIONS</span><h1>{room.name}</h1><p>{room.basis==='confirmed-incident'?'Operator-confirmed incident':'Hypothetical scenario'} <span>·</span> <Link href={`/sage?sageRun=${room.runId}&minute=${room.minute}`}>Run {room.runId?.slice(0,8)} ↗</Link> <span>·</span> +{room.minute} min{room.forecastIssuedAt&&<> <span>·</span> Issued {new Date(room.forecastIssuedAt).toLocaleString([], {month:'short',day:'numeric',hour:'2-digit',minute:'2-digit'})}</>}</p></div><div className="ash-room-actions"><button onClick={()=>void navigator.clipboard.writeText(`${location.origin}/ash?room=${room.id}`).then(()=>setError('Room link copied. Participants still need an operator token.')).catch(()=>setError('Copy the room URL from the address bar.'))}><Copy size={14}/> Share room</button><button onClick={()=>void leave()}>Leave</button></div></header>
       <div className="ash-room-grid">

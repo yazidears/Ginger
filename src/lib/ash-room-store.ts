@@ -10,7 +10,8 @@ export const roomDirectory=()=>path.resolve(process.env.ASH_ROOM_DIR||path.join(
 const idPattern=/^[a-f0-9-]{36}$/;
 export function roomSecret(){const value=(process.env.GINGER_ASH_ROOM_TOKEN||process.env.ASH_ACCESS_TOKEN||'').trim();if(value.length<32)throw new AshRoomError('An operator access token must be configured on the server.',503);return value;}
 export function safeEqual(a:string,b:string){const x=Buffer.from(a),y=Buffer.from(b);return x.length===y.length&&timingSafeEqual(x,y);}
-export function authorizeBootstrap(token:unknown){if(typeof token!=='string'||!safeEqual(token,roomSecret()))throw new AshRoomError('Operator access token not recognised.',401);}
+export const publicDemo=()=>process.env.GINGER_PUBLIC_DEMO==='1';
+export function authorizeBootstrap(token:unknown){const secret=roomSecret();if(publicDemo())return;if(typeof token!=='string'||!safeEqual(token,secret))throw new AshRoomError('Operator access token not recognised.',401);}
 export function assertSameOrigin(request:Request){
   // Next dev may canonicalise request.url to localhost even when the browser uses 127.0.0.1.
   // Host is the actual HTTP target; unlike forwarded headers it is not trusted as an alternate origin.

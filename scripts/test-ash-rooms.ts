@@ -5,6 +5,7 @@ import path from 'node:path';
 import {randomUUID} from 'node:crypto';
 
 async function main(){
+  delete process.env.GINGER_PUBLIC_DEMO;
   const root=await mkdtemp(path.join(tmpdir(),'ginger-ash-test-'));
   process.env.ASH_ROOM_DIR=path.join(root,'rooms');process.env.SAGE_RUN_DIR=path.join(root,'runs');process.env.GINGER_ASH_ROOM_TOKEN='test-only-operator-secret-never-used-in-production';
   try{
@@ -41,6 +42,14 @@ async function main(){
     const snapshot=await changeRoom(roomId,room=>structuredClone(room));process.env.OPENAI_API_KEY='test-server-only-key';let captured:Record<string,unknown>|undefined;
     const credential=await createAshRealtimeSecret(snapshot,host.room.memberId,async(_url,init)=>{captured=JSON.parse(String(init?.body));return Response.json({value:'test-ephemeral-client-secret',expires_at:123});});
     assert.equal(credential.value,'test-ephemeral-client-secret');assert.equal(JSON.stringify(credential).includes('test-server-only-key'),false);const session=captured?.session as {type:string;model:string;tools:unknown[];audio:{input:{turn_detection:{interrupt_response:boolean}}}};assert.equal(session.type,'realtime');assert.equal(session.model,process.env.ASH_REALTIME_MODEL||'gpt-realtime-2.1');assert.equal(session.tools.length,6);assert.equal(session.audio.input.turn_detection.interrupt_response,true);
+    process.env.GINGER_PUBLIC_DEMO='1';
+    assert.equal((await (await status()).json()).publicDemo,true);
+    assert.equal((await create(post('/api/ash/rooms',{action:'catalog'}))).status,200);
+    const guest=await create(post('/api/ash/rooms',{action:'create',name:'Demo guest',runId:id}));assert.equal(guest.status,201);
+    const guestRoom=await guest.json();assert.equal((await read(new Request(origin+`/api/ash/rooms/${guestRoom.room.id}`),{params:Promise.resolve({id:guestRoom.room.id})})).status,401);
+    assert.equal((await create(new Request(origin+'/api/ash/rooms',{method:'POST',headers:{Origin:'https://attacker.invalid','Content-Type':'application/json'},body:JSON.stringify({action:'catalog'})}))).status,403);
+    delete process.env.GINGER_PUBLIC_DEMO;
+    assert.equal((await create(post('/api/ash/rooms',{action:'catalog'}))).status,401);
     console.log('PASS Ash: two authenticated clients; shared run/time/events; exclusive floor and expiry; signaling isolation; replay-safe tools; explicit proposal approval; no emergency tool; ephemeral Realtime contract. Synthetic fixture only; no live operations writes or provider calls.');
   }finally{await rm(root,{recursive:true,force:true});}
 }

@@ -1,11 +1,11 @@
 import {randomUUID} from 'node:crypto';
 import {readRun,listRuns} from '@/lib/sage/jobs';
-import {AshRoomError,appendRoomEvent,assertSameOrigin,authorizeBootstrap,boundedText,changeRoom,createRoom,memberToken,roomBody,roomCookie,roomRateLimit,roomSecret,roomView} from '@/lib/ash-room-store';
+import {AshRoomError,appendRoomEvent,assertSameOrigin,authorizeBootstrap,boundedText,changeRoom,createRoom,memberToken,publicDemo,roomBody,roomCookie,roomRateLimit,roomSecret,roomView} from '@/lib/ash-room-store';
 import type {ScenarioContext} from '@/lib/product-contracts';
 export const runtime='nodejs';
 export const dynamic='force-dynamic';
 const headers={'Cache-Control':'no-store'};
-export async function GET(){let configured=true;try{roomSecret();}catch{configured=false;}return Response.json({configured,voiceConfigured:Boolean(process.env.OPENAI_API_KEY),model:process.env.ASH_REALTIME_MODEL||'gpt-realtime-2.1'}, {headers});}
+export async function GET(){let configured=true;try{roomSecret();}catch{configured=false;}return Response.json({configured,publicDemo:publicDemo(),voiceConfigured:Boolean(process.env.OPENAI_API_KEY),model:process.env.ASH_REALTIME_MODEL||'gpt-realtime-2.1'}, {headers});}
 export async function POST(request:Request){
   try{
     assertSameOrigin(request);roomRateLimit('bootstrap',30);const body=await roomBody(request);authorizeBootstrap(body.accessToken);
