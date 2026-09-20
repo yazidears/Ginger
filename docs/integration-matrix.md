@@ -1,0 +1,35 @@
+# GINGER product integration matrix
+
+Development-only handoff. Source wiring is not predictive validation. Updated for the three-product implementation; runtime verification is recorded separately.
+
+| Source / capability | Available information | Existing consumer | Product connection | Verified connection or limitation |
+|---|---|---|---|---|
+| Meteocat XEMA | Time-labelled T/RH, 10 m wind, rain, optional gust/direction; complete rolling history | `receptivity/engine.ts` hourly FFMC/ISI after ≥48 h spin-up | Prevent review; scenario initial dead fine-fuel moisture and first weather sample | `product-context.ts` copies actual values/time, regional station distance, valid interval and derivation; source values are not per-cell observations. Missing wind direction remains absent. |
+| Open-Meteo / MET Norway | Hourly forecast weather and rain accumulation; issue/retrieval semantics differ | Receptivity future frames | Immutable Sage weather forcing | Scenario API captures original disk-cache hourly forecast only when source AND issue time match the prepared assessment. No new provider fetch or silent version mixing. Sparse-only snapshots can fail run coverage explicitly. |
+| Forecast solar radiation | Receptivity source does not include direct-normal/diffuse components | Existing Sage landscape provider has components when independently fetched | Sage solar heating / drying only with complete input | Captured Prevent radiation is null; solar drying must be disabled. Total shortwave is never substituted for direct-normal radiation. |
+| WorldCover / prepared fuel geography | Class, burnable fraction, neighbourhood continuity, edition | Prevent local review and fuel context | Context travels with scenario; Sage samples its own supported model landscape | No claim that this 200 m class describes every tree or measured fuel load. |
+| Terrain DEM / prepared slope | Elevation, slope, aspect at known grid resolution | Prevent review; Sage solver terrain separately | Shared scenario location/context and provenance | Prevent cell terrain is retained; Sage uses model-resolution terrain. Coarse slope is not passed off as fine-scale terrain measurement. |
+| Sentinel-2 NDVI / NDMI | Clear-pixel vegetation indices, observation date and coverage | Freshness-gated Prevent review rule | Evidence preserved into scenario and Ash-readable run context | Spectral screening only; never converted into dead/live fuel moisture or independent spread physics. |
+| Soil moisture / ET | Optional model soil-layer moisture and ET; XEMA has neither | Inspection only | Preserved distinct meaning / explicit lack of model consumption | Does not affect FFMC or primary Sage solver. Missing is not zero. Soil moisture is not fuel moisture. |
+| Heatwave screening | Modelled multi-day maximum-temperature episodes and gaps | Prevent local review | Integrated review drivers and source details | Freshness/selected day gate exists in `priority.ts`; not an official warning and no forced modification of FFMC. |
+| DeepFire / FIRMS thermal evidence | Acquisition time, position, source, confidence | Deduplicated spatial/temporal Prevent verification rules | Unverified incident context can seed an explicitly hypothetical Sage scenario | Server resolves thermal ID against the same regional snapshot that supplies the evidence chooser. Never labels a thermal anomaly as a confirmed wildfire or its acquisition time as actual ignition. |
+| Catalonia infrastructure inventory | Deduplicated facilities, roads, residential/work complexes, geometry and coverage/source dates | Prevent vicinity consequence priority | Sage footprint/arrival-cell exposure, then Ash tools | Nearby Prevent assets are context, not modelled exposure. Sage computes geometry intersections and retains run/time. Segment identity is distinct from road identity; no population/capacity invention. |
+| Sage building inventory | Building geometry/height where known; exposure by sensitivity member | Primary Sage propagation/structural output | Time-indexed building inspection | Exposure is modelled; structural transfer assumptions do not prove actual ignition or damage. Missing heights retained. |
+| Forest / LiDAR / ELMFIRE | Tree geometry and acquisition coverage; specialist fire/wind engine | Existing forest service and renderer | Sage specialist scene with shared selected location/context | Separate engine identity remains explicit. Outputs are not presented as one coupled primary-model forecast; per-tree geometry is not validated per-tree fire physics. Service availability remains external. |
+| Pla Alfa | Official administrative levels when current feed verifiable | Optional Prevent layer | Separately sourced official context | Not part of the experimental ignition/review score; stale feed withheld. |
+| Immutable scenario + Sage run | Basis, time, sources, model version, assumptions, run ID | New scenario store and existing run store | Prevent → Sage → Ash room/tool evidence | Content hash detects scenario file edits. Changed scenarios require another stored context/run. Scenario storage is local single-host, not a multi-tenant database. |
+| Operational field reports | Human reports with actor/time and verification status | Ash room tools / existing operations | Team context linked to scenario/run | Unverified reports do not replace authoritative observations or physical model output. |
+
+## Important temporal conventions
+
+- All boundary timestamps are ISO UTC; Sage playback labels UTC; regional observations retain their stated display timezone.
+- `observedAt`, `validAt` and `retrievedAt` are separate; recently retrieved old evidence remains stale.
+- Station and model weather samples use their supplied intervals. The spread solver holds instantaneous weather during its declared interval; rainfall retains ending-interval accumulation and is not a resolved rain field.
+- The environmental snapshot's six display horizons are not assumed to be continuous forcing. The original, matching hourly forecast is captured server-side for Sage. If no matching cache survives, the missing intervals remain visible blockers.
+- Capturing stale evidence is allowed for a labelled historical hypothetical scenario. It does not make that evidence current.
+
+## Verification
+
+`NODE_OPTIONS=--conditions=react-server tsx scripts/test-product-context.ts` exercises source-value changes through the shared scenario and Sage coverage validation, immutable copies/storage, mismatched forecast cache rejection, missing wind direction, null radiation, stale evidence and hypothetical/confirmed separation. It uses labelled synthetic fixtures only; no fixture is installed as live data.
+
+Observed local checks: real HTTP scenario creation returned 201 for `17ebf4ad-6d0a-4436-be17-63e1a0515a62` (Sant Cugat forest; hypothetical basis 2026-09-19T20:00Z), with 26 captured station/hourly forecast frames. Sage context validation accepted a 120-minute run with solar drying disabled. This verifies data handoff and weather coverage, not forecast accuracy or completion of the physical simulation.

@@ -1,7 +1,9 @@
 import type {Feature, FeatureCollection, MultiPolygon, Polygon} from 'geojson';
+import type {ScenarioContext} from '../product-contracts';
 export type Footprint = Feature<Polygon | MultiPolygon>;
 export type XY = [number, number];
 export type RunRequest = {
+  scenarioId?: string;
   lat: number; lon: number; horizonMinutes: 60 | 120 | 240;
   ignitionRadiusM: number; deadMoisturePct: number; liveMoisturePct: number;
   windAdjustment: number; mode: 'scenario' | 'confirmed'; confirmation: string;
@@ -17,7 +19,8 @@ export type RunRequest = {
 export type Source = {name: string; url: string; retrievedAt: string; detail: string};
 export type WeatherFrame = {
   time: string; temperatureC: number; humidityPct: number; windKmh: number;
-  windFromDegrees: number; directNormalWm2: number; diffuseWm2: number; precipitationMm: number;
+  windFromDegrees: number; directNormalWm2: number | null; diffuseWm2: number | null; precipitationMm: number;
+  validForMinutes?: number; source?: string;
 };
 export type Landscape = {
   center: XY; size: number; cellM: number; elevations: number[];
@@ -37,6 +40,7 @@ export type BuildingResult = {
   unknowns: string[];
 };
 export type RunResult = {
+  scenario?: ScenarioContext;
   id: string; engine: string; generatedAt: string; forecastOrigin: string;
   model?: {name: string; version: string; validation: string; stencil: 'legacy8'|'ginger16'; grassModel?: 'rothermel'|'ginger-o2'; learnedGrassCells?: number; grassFallbackCells?: number; grassArtifactId?: string};
   inputSnapshot?: boolean;

@@ -8,6 +8,13 @@ import type {Hotspot,ProviderResult} from './providers/types';
 import {distanceKm} from './simulation';
 import {recordThermalHistory} from './sage/thermal-store';
 import {watchAreaStore} from './watch-areas';
+import {providerFailure} from './providers/http';
+export function weatherUnavailableReason(error: unknown) {
+ const reason=providerFailure(error);
+ return reason==='Provider returned HTTP 429'
+  ? 'Weather service is temporarily limiting requests. Monitoring will retry on the next scheduled scan.'
+  : 'Weather unavailable. '+reason+'. Monitoring will retry on the next scheduled scan.';
+}
 export const watchAreas=[{id:'garraf',name:'Garraf',position:[1.86,41.3]},{id:'penedes',name:'Alt Penedès',position:[1.69,41.35]},{id:'bages',name:'Bages',position:[1.83,41.73]},{id:'montseny',name:'Montseny',position:[2.4,41.76]},{id:'ebre',name:'Terres de l’Ebre',position:[.52,40.82]},{id:'emporda',name:'Alt Empordà',position:[2.96,42.27]}] as const;
 export type MonitorZone={exposure?:ExposureSummary;id:string;name:string;position:readonly [number,number];state:'monitoring'|'review'|'escalating'|'unavailable';temperature:number|null;humidity:number|null;windKmh:number|null;windFromDegrees?:number|null;hotspots:number|null;reasons:string[];updatedAt:string;radiusM?:number;detectionIds?:string[];evidence?:{satelliteSource?:string;weatherValidAt:string|null;weatherRetrievedAt:string|null;satelliteRetrievedAt:string|null;newestDetectionAt:string|null;weatherAgeMinutes:number|null;satelliteAgeMinutes:number|null;coverage:string};hazardWindow?:{startsAt:string;endsAt:string}|null};
 export type MonitorChange={id:string;zoneId:string;time:string;area:string;kind:'wind'|'weather'|'detections'|'window'|'coverage'|'status'|'exposure';title:string;text:string};
@@ -49,9 +56,11 @@ async function scan(){
   // Bound upstream weather requests even when the watch list grows.
   await Promise.all(Array.from({length:Math.min(4,areas.length)},async()=>{
    for(;;){const index=cursor++;if(index>=areas.length)return;const a=areas[index];
-    const [w,fire]=await Promise.all([readLocationWeather(a.lat,a.lon).catch(()=>null),locationHotspots(a.lat,a.lon,a.radiusM/1000).catch(()=>null)]);
+    let weatherIssue: string|undefined;
+    const [w,fire]=await Promise.all([readLocationWeather(a.lat,a.lon).catch(error=>{weatherIssue=weatherUnavailableReason(error);return null;}),locationHotspots(a.lat,a.lon,a.radiusM/1000).catch(()=>null)]);
     if(fire)thermal.push(...fire.data);
     const zone=evaluateZone({...a,position:[a.lon,a.lat]},w,fire);
+    if(weatherIssue)zone.reasons=zone.reasons.map(reason=>reason==='Weather unavailable or stale.'?weatherIssue!:reason);
     zone.exposure=await readExposure(a.lon,a.lat,a.radiusM,!!zone.hazardWindow||!!zone.hotspots);
     const reason=exposureReason(zone.exposure);if(reason)zone.reasons.push(reason);
     zones[index]=zone;

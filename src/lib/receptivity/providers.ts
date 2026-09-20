@@ -10,7 +10,7 @@ export const ALFA_URL='https://services7.arcgis.com/ZCqVt1fRXwwK6GF4/arcgis/rest
 const inFlight=new Map<string,Promise<unknown>>();
 export async function atomicJSON(file:string,value:unknown){await mkdir(DATA_DIR,{recursive:true});const temp=file+`.${process.pid}.tmp`;await writeFile(temp,JSON.stringify(value));await rename(temp,file);}
 /** Persistent bounded-by-provider/key cache. Never converts failed requests to successful data. */
-async function diskCache<T>(key:string,ttl:number,load:()=>Promise<T>):Promise<T>{
+export async function diskCache<T>(key:string,ttl:number,load:()=>Promise<T>):Promise<T>{
  const file=join(DATA_DIR,createHash('sha256').update(key).digest('hex')+'.json');
  try{const old=JSON.parse(await readFile(file,'utf8'));if(Date.now()-old.at<ttl)return old.value as T;}catch{}
  if(inFlight.has(key))return inFlight.get(key) as Promise<T>;

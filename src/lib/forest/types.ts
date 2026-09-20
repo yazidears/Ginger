@@ -1,0 +1,7 @@
+export type ForestMetric = 'density' | 'height' | 'cover' | 'biomass' | 'foliage' | 'diameter';
+export type ForestTree = {id:string;lon:number;lat:number;heightM:number;groundM:number;crownRadiusM:number;crownAreaM2:number;points:number;species:string|null;speciesEvidence:string;edge:boolean};
+export type ForestTile = {id:string;bbox:number[];state:string;treeCount?:number;error?:string};
+export type ForestStatus = {catalogTiles:number;readyTiles:number;trees:number;activeJobs:number;engine:string;windEngine:string;tiles:ForestTile[];warnings:string[]};
+export type ForestTrees = {trees:ForestTree[];tiles:ForestTile[];truncated:boolean;limit:number;method:string;source:string;acquired:string;};
+export type ForestWeather = {latitude:number;longitude:number;hourly:{time:string[];temperature_2m:number[];relative_humidity_2m:number[];wind_speed_10m:number[];wind_direction_10m:number[];wind_gusts_10m:number[];precipitation:number[];vapour_pressure_deficit:number[]};hourly_units:Record<string,string>};
+export type ForestRun = {id:string;state:string;stage:string;error?:string;result?:{inputs?:{lat:number;lon:number;windKmh:number;windFrom:number;moisture:number;minutes:number;crown:boolean;spotting:boolean;canopyBaseM:number;canopyBulkKgM3:number};engine:string;resolutionM:number;members:number;areaHa:number;maxMinutes:number;bounds:number[];cells:GeoJSON.FeatureCollection;warnings:string[];sources:unknown[];wind:{speedKmh:number;fromDegrees:number;vectors?:{lon:number;lat:number;speedKmh:number;fromDegrees:number}[]};}};

@@ -1,0 +1,11 @@
+import assert from 'node:assert/strict';
+import {rankWeatherAreas,weatherCoverage} from '../../src/lib/receptivity/presentation';
+import type {CellResult} from '../../src/lib/receptivity/types';
+const cell=(id:string,stationId:string,score:number|null,distance:number,velocity:number|null=0)=>({id,stationId,stationDistanceKm:distance,receptivity:[score,score,score,score,score,score],velocity,fuel:{burnableFraction:.8}} as CellResult);
+const cells=[cell('near','A',63,1),cell('duplicate','A',63,8),cell('tie','B',63,2),cell('lower','C',43,3,4),cell('uncovered','',null,30)];
+assert.deepEqual(rankWeatherAreas(cells,0).map(c=>c.id),['near','tie','lower']);
+assert.deepEqual(rankWeatherAreas(cells,0,true).map(c=>c.id),['lower']);
+const coverage=weatherCoverage(cells,0);
+assert.equal(coverage.min,43);assert.equal(coverage.max,63);assert.equal(coverage.stationCells.get('A'),2);assert.equal(coverage.stationCells.size,3);
+assert.equal(weatherCoverage([],0).min,null);
+console.log('PASS: repeated station-supported cells collapse to one ranking entry; independent ties, lower scores, rising areas and missing coverage remain honest.');

@@ -52,7 +52,9 @@
     ".next-satellite-lab/types/**/*.ts",
     ".next-satellite-lab/dev/types/**/*.ts",
     ".next-receptivity/types/**/*.ts",
-    ".next-receptivity/dev/types/**/*.ts"
+    ".next-receptivity/dev/types/**/*.ts",
+    ".next-replay-check/types/**/*.ts",
+    ".next-replay-check/dev/types/**/*.ts"
   ],
   "exclude": [
     "node_modules",

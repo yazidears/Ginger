@@ -1,6 +1,7 @@
 import type {FeatureCollection} from 'geojson';
 import {DeepfireProvider, deepfireConfigured, type Bounds} from './deepfire';
 import type {FireCluster} from './types';
+import {providerFailure} from './http';
 
 export type DeepfireContext = {
   configured: boolean; bounds: Bounds;
@@ -23,8 +24,8 @@ export async function readDeepfireContext(bounds: Bounds): Promise<DeepfireConte
       const result = await job.load();
       Object.assign(context, {[job.key]:result.data});
       return {source:job.name,status:'live' as const,retrievedAt:result.updatedAt,detail:result.detail,coverage:`Bounding box ${bounds.join(',')} (WGS84)`};
-    } catch {
-      return {source:job.name,status:'unavailable' as const,retrievedAt:new Date().toISOString(),detail:context.configured?'Request failed or incomplete; retry or check Deepfire access.':'Connect a Deepfire API client to load this layer.',coverage:`Bounding box ${bounds.join(',')} (WGS84)`};
+    } catch (error) {
+      return {source:job.name,status:'unavailable' as const,retrievedAt:new Date().toISOString(),detail:context.configured?`${providerFailure(error)}. This layer is unavailable.`:'Connect a Deepfire API client to load this layer.',coverage:`Bounding box ${bounds.join(',')} (WGS84)`};
     }
   }));
   context.sources = results;

@@ -1,0 +1,15 @@
+import assert from 'node:assert/strict';
+import {capturedSolarAvailable,normalizeSolarInput} from '../src/lib/sage/solar-input';
+import type {ScenarioContext} from '../src/lib/product-contracts';
+import type {RunRequest} from '../src/lib/sage/types';
+const context=(direct:unknown,diffuse:unknown)=>({inputs:{weather:[{directNormalWm2:direct,diffuseWm2:diffuse}]}} as ScenarioContext);
+assert.equal(capturedSolarAvailable(),false);
+assert.equal(capturedSolarAvailable({inputs:{weather:[]}} as unknown as ScenarioContext),false);
+assert.equal(capturedSolarAvailable(context(null,null)),false);
+assert.equal(capturedSolarAvailable(context(undefined,20)),false);
+assert.equal(capturedSolarAvailable(context(0,0)),true);
+assert.equal(normalizeSolarInput({solarDrying:true} as RunRequest,context(null,null)).solarDrying,false);
+assert.equal(normalizeSolarInput({} as RunRequest).solarDrying,false);
+assert.equal(normalizeSolarInput({solarDrying:false} as RunRequest,context(0,0)).solarDrying,false);
+assert.equal(normalizeSolarInput({solarDrying:true} as RunRequest,context(0,0)).solarDrying,true);
+console.log('PASS solar input: no evidence defaults off, missing radiation cannot enable drying, valid night zeros and explicit valid choice retained.');

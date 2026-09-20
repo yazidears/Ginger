@@ -1,6 +1,6 @@
 import {DeepfireProvider, deepfireConfigured, type Bounds} from './deepfire';
 import {firmsHotspots} from './firms';
-import {isoNow} from './http';
+import {isoNow,providerFailure} from './http';
 import type {Hotspot, ProviderResult} from './types';
 import {distanceKm} from '../simulation';
 
@@ -22,8 +22,8 @@ export async function locationHotspots(lat: number, lon: number, radiusKm = 10):
     try {
       const result = await new DeepfireProvider().hotspots(bounds);
       return {...result, data: result.data.filter(h => distanceKm([lon, lat], h.position) <= radiusKm), source: 'Deepfire satellite detections', coverage, covered: true};
-    } catch {
-      fallback = 'Deepfire request failed or was incomplete; using NASA FIRMS fallback. ';
+    } catch (error) {
+      fallback = `Deepfire: ${providerFailure(error)}; using NASA FIRMS fallback. `;
     }
   } else fallback = 'Deepfire credentials are not configured; using NASA FIRMS. ';
   const inEurope = lat >= 34 && lat <= 72 && lon >= -25 && lon <= 45;
@@ -37,8 +37,8 @@ export async function regionalHotspots(bounds: Bounds): Promise<SatelliteResult>
   let fallback = 'Deepfire credentials are not configured; using NASA FIRMS. ';
   if (deepfireConfigured()) {
     try {const result = await new DeepfireProvider().hotspots(bounds);return {...result,source:'Deepfire satellite detections',covered:true,coverage:'Requested region; multiple satellite instruments'};}
-    catch {fallback = 'Deepfire request failed or was incomplete; using NASA FIRMS fallback. ';}
+    catch (error) {fallback = `Deepfire: ${providerFailure(error)}; using NASA FIRMS fallback. `;}
   }
   const result = await firmsHotspots();
-  return {...result,source:'NASA FIRMS NOAA-20 VIIRS',covered:true,coverage:'Europe fallback feed',detail:fallback+result.detail};
+  return {...result,data:result.data.filter(h=>h.position[0]>=bounds[0]&&h.position[0]<=bounds[2]&&h.position[1]>=bounds[1]&&h.position[1]<=bounds[3]),source:'NASA FIRMS NOAA-20 VIIRS',covered:true,coverage:'Europe fallback feed',detail:fallback+result.detail};
 }

@@ -4,6 +4,7 @@ const {cached,fetchJSON,clearProviderCacheForTests}=require('../src/lib/provider
 const {OSMProvider,OpenMeteoWeatherProvider,parseSatelliteObservations}=require('../src/lib/providers/adapters.ts');
 const originalFetch=global.fetch;let checks=0;
 async function test(name,fn){clearProviderCacheForTests();await fn();checks++;console.log('PASS',name);}
+async function withinDeadline(work){let timer;try{return await Promise.race([work,new Promise((_,reject)=>{timer=setTimeout(()=>reject(Error('Provider cleanup blocked the request')),250);})]);}finally{clearTimeout(timer);}}
 (async()=>{
  await test('cache deduplicates simultaneous requests',async()=>{let n=0;const load=async()=>{n++;await new Promise(r=>setTimeout(r,5));return 7};assert.deepEqual(await Promise.all([cached('x',100,load),cached('x',100,load)]),[7,7]);assert.equal(n,1)});
  await test('sync loader failures release inflight key',async()=>{await assert.rejects(cached('x',100,()=>{throw Error('bad')}));assert.equal(await cached('x',100,async()=>8),8)});
@@ -13,6 +14,41 @@ async function test(name,fn){clearProviderCacheForTests();await fn();checks++;co
  await test('permanent 401 does not retry',async()=>{let calls=0;global.fetch=async()=>{calls++;return new Response('',{status:401})};await assert.rejects(fetchJSON('https://test.invalid'),/401/);assert.equal(calls,1)});
  await test('POST is not blindly replayed',async()=>{let calls=0;global.fetch=async()=>{calls++;return new Response('',{status:503})};await assert.rejects(fetchJSON('https://test.invalid',{method:'POST'}));assert.equal(calls,1)});
  await test('long Retry-After is not violated',async()=>{let calls=0;global.fetch=async()=>{calls++;return new Response('',{status:429,headers:{'retry-after':'60'}})};await assert.rejects(fetchJSON('https://test.invalid'),/429/);assert.equal(calls,1)});
+ await test('hanging body cancellation cannot block HTTP failure or poison cache',async()=>{
+  global.fetch=async()=>({ok:false,status:401,headers:new Headers(),body:{cancel:()=>new Promise(()=>{})}});
+  await assert.rejects(withinDeadline(cached('cancel-hang',100,()=>fetchJSON('https://test.invalid',{},10))),/401/);
+  assert.equal(await withinDeadline(cached('cancel-hang',100,async()=>7)),7);
+ });
+ await test('hanging body cancellation cannot block a retry',async()=>{
+  let calls=0;
+  global.fetch=async()=>++calls===1?{ok:false,status:503,headers:new Headers({'retry-after':'0'}),body:{cancel:()=>new Promise(()=>{})}}:Response.json({ok:true});
+  assert.deepEqual(await withinDeadline(fetchJSON('https://test.invalid')),{ok:true});assert.equal(calls,2);
+ });
+ await test('rejected body cancellation is consumed and preserves HTTP status',async()=>{
+  global.fetch=async()=>({ok:false,status:401,headers:new Headers(),body:{cancel:()=>Promise.reject(Error('Cleanup rejected'))}});
+  await assert.rejects(withinDeadline(fetchJSON('https://test.invalid')),/401/);
+  await new Promise(resolve=>setImmediate(resolve));
+ });
+ await test('total deadline settles a transport that ignores AbortSignal',async()=>{
+  let signal;
+  global.fetch=async(_,init)=>{signal=init.signal;return new Promise(()=>{});};
+  await assert.rejects(withinDeadline(fetchJSON('https://test.invalid',{},10)),error=>error.name==='TimeoutError');
+  assert.equal(signal.aborted,true,'Underlying request also receives cancellation');
+ });
+ await test('total deadline settles a successful body reader that never resolves',async()=>{
+  global.fetch=async()=>({ok:true,json:()=>new Promise(()=>{})});
+  await assert.rejects(withinDeadline(fetchJSON('https://test.invalid',{},10)),error=>error.name==='TimeoutError');
+ });
+ await test('late transport and body failures after timeout are consumed',async()=>{
+  for(const stage of ['fetch','body']){
+   let rejectLate;
+   const stalled=new Promise((_,reject)=>{rejectLate=reject;});
+   global.fetch=()=>stage==='fetch'?stalled:Promise.resolve({ok:true,json:()=>stalled});
+   await assert.rejects(withinDeadline(fetchJSON('https://test.invalid',{},10)),error=>error.name==='TimeoutError');
+   rejectLate(Error('Late '+stage+' failure'));
+   await new Promise(resolve=>setImmediate(resolve));
+  }
+ });
  await test('invalid JSON is not retried',async()=>{let calls=0;global.fetch=async()=>{calls++;return new Response('bad')};await assert.rejects(fetchJSON('https://test.invalid'),/invalid JSON/);assert.equal(calls,1)});
  await test('caller cancellation honored before network',async()=>{let calls=0;global.fetch=async()=>{calls++;return Response.json({})};const c=new AbortController();c.abort();await assert.rejects(fetchJSON('https://test.invalid',{signal:c.signal}));assert.equal(calls,0)});
  await test('Overpass partial payload is rejected',async()=>{global.fetch=async()=>Response.json({elements:[],remark:'runtime timeout'});await assert.rejects(new OSMProvider().assets(),/Incomplete/)});

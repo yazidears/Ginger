@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useMemo, useRef, useState } from 'react';
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import * as maplibregl from 'maplibre-gl';
 import type { GeoJSONSource, Map as MapInstance } from 'maplibre-gl';
 import type { FeatureCollection } from 'geojson';
@@ -14,8 +14,23 @@ import {compass, smokeIllustration} from '@/lib/sage/smoke';
 import {addReceptivityLayers,useReceptivityLayers,type ReceptivityMapProps} from './receptivity/map-layers';
 import {EvidenceBadge} from './evidence';
 import {exposureCategories, type ExposureCategory, type ExposureDataset} from '@/lib/exposure/types';
+import type {ForecastExposure} from '@/lib/product-contracts';
+import type {ForestTree} from '@/lib/forest/types';
+import {useForestScene, type ForestSceneStatus} from './sage-forest-scene';
+import SageForestAvailability from './sage-forest-availability';
+import SageWindOverlay from './sage-wind-overlay';
 
 export interface TerrainMapProps {
+  cinematic?: boolean;
+  forestEnabled?: boolean;
+  onForestStatus?: (status: ForestSceneStatus) => void;
+  onSelectTree?: (tree: ForestTree) => void;
+  forecastExposure?: ForecastExposure | null;
+  selectedAsset?: string | null;
+  onSelectAsset?: (id: string) => void;
+  cameraAction?: {id: number; kind: 'overview' | 'reveal'};
+  onDemoPoint?: (longitude: number, latitude: number) => void;
+  demoEditing?: boolean;
   receptivity?: ReceptivityMapProps;
   initialView?: {center:[number,number];zoom:number;satellite:boolean;threeD:boolean};
   exposureEnabled?: boolean;
@@ -54,7 +69,11 @@ maplibregl.setWorkerUrl('/maplibre/maplibre-gl-worker.mjs');
 
 /** Real GIS terrain, not a photogrammetric mesh. Terrarium source documented at
  * https://github.com/tilezen/joerd/blob/master/docs/use-service.md */
-export default function TerrainMap({ initialView, receptivity, exposureEnabled = false, opportunities = EMPTY, onSelectOpportunity, persistentCamera = false, simulation, investigationOverlay = EMPTY, minute = 240, selectedBuilding, center, hotspotKind = 'observed', hotspots, perimeters = EMPTY, perimeterKind = 'derived', staticHeatSources = EMPTY, buildings, landcover, assets, onSelectPoint, focusKey = 0, onSelectBuilding, initialZoom = 12, watchAreas = [], onSelectArea, selectedRadiusM = 1500 }: TerrainMapProps) {
+export default function TerrainMap({ cinematic = false, forestEnabled = false, onForestStatus, onSelectTree, forecastExposure, selectedAsset, onSelectAsset, cameraAction, onDemoPoint, demoEditing = false, initialView, receptivity, exposureEnabled = false, opportunities = EMPTY, onSelectOpportunity, persistentCamera = false, simulation, investigationOverlay = EMPTY, minute = 240, selectedBuilding, center, hotspotKind = 'observed', hotspots, perimeters = EMPTY, perimeterKind = 'derived', staticHeatSources = EMPTY, buildings, landcover, assets, onSelectPoint, focusKey = 0, onSelectBuilding, initialZoom = 12, watchAreas = [], onSelectArea, selectedRadiusM = 1500 }: TerrainMapProps) {
+  const assetCallback = useRef(onSelectAsset); assetCallback.current = onSelectAsset;
+  const treeCallback = useRef(onSelectTree); treeCallback.current = onSelectTree;
+  const demoCallback = useRef(onDemoPoint); demoCallback.current = onDemoPoint;
+  const demoEditingRef = useRef(demoEditing); demoEditingRef.current = demoEditing;
   const receptivityActive=useRef(Boolean(receptivity));receptivityActive.current=Boolean(receptivity);
   const opportunityCallback = useRef(onSelectOpportunity);
   opportunityCallback.current = onSelectOpportunity;
@@ -82,26 +101,35 @@ export default function TerrainMap({ initialView, receptivity, exposureEnabled =
   const [researchRisk,setResearchRisk]=useState(false);
   const [riskError,setRiskError]=useState('');
   const [showSmoke, setShowSmoke] = useState(false);
-  const smoke = useMemo(() => simulation ? smokeIllustration(simulation, minute, showSmoke) : null, [simulation, minute, showSmoke]);
+  const smoke = useMemo(() => simulation && !cinematic ? smokeIllustration(simulation, minute, showSmoke) : null, [simulation, minute, showSmoke, cinematic]);
   const [satellite, setSatellite] = useState(initialView?.satellite??true);
   const [visible, setVisible] = useState({ buildings: true, landcover: true, hotspots: true, assets: true, perimeters: true, staticHeatSources: false });
 
+  const forestFocusPending=useRef(false);
+  useEffect(()=>{forestFocusPending.current=forestEnabled;if(forestEnabled&&ready)setThreeD(true);},[forestEnabled,ready]);
+
   useReceptivityLayers(map.current,ready,receptivity);
+  const [localForestStatus,setLocalForestStatus]=useState<ForestSceneStatus|null>(null);
+  const forestStatusCallback=useCallback((status:ForestSceneStatus)=>{setLocalForestStatus(status);onForestStatus?.(status);},[onForestStatus]);
+  useForestScene(map.current,ready,forestEnabled,threeD,forestStatusCallback,simulation,minute);
 
   useEffect(() => {
     if (!host.current) return;
     setReady(false);
     let m: MapInstance;
     try {
+      let remembered: {center:[number,number];zoom:number;pitch:number;bearing:number} | undefined;
+      if (persistentCamera) try { remembered = JSON.parse(sessionStorage.getItem('ginger-map-camera') || 'null') || undefined; } catch { /* Session storage may be unavailable. */ }
       m = new maplibregl.Map({
-        container: host.current, center: initialView?.center??currentCenter.current, zoom: initialView?.zoom??initialZoomRef.current,
-        pitch: threeD?45:0, bearing: threeD?-12:0, maxPitch: 75, minZoom: 4, maxZoom: 19,
+        container: host.current, center: remembered?.center??initialView?.center??currentCenter.current, zoom: remembered?.zoom??initialView?.zoom??initialZoomRef.current,
+        pitch: remembered?.pitch??(threeD?45:0), bearing: remembered?.bearing??(threeD?-12:0), maxPitch: 75, minZoom: 4, maxZoom: 19,
         attributionControl: false,
         style: {
           version: 8,
           sources: {
             satellite: { type: 'raster', tiles: ['https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}'], tileSize: 256, attribution: 'Imagery © Esri, Maxar, Earthstar Geographics' },
-            dark: { type: 'raster', tiles: ['https://server.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Dark_Gray_Base/MapServer/tile/{z}/{y}/{x}'], tileSize: 256, attribution: '© OpenStreetMap contributors © CARTO' },
+            // Esri returns placeholder images above z16 here; overzoom the last real tiles.
+            dark: { type: 'raster', maxzoom: 16, tiles: ['https://server.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Dark_Gray_Base/MapServer/tile/{z}/{y}/{x}'], tileSize: 256, attribution: 'Tiles © Esri — Esri, HERE, Garmin, © OpenStreetMap contributors' },
             labels: { type: 'raster', tiles: ['https://basemaps.cartocdn.com/dark_only_labels/{z}/{x}/{y}.png'], tileSize: 256, attribution: '© OpenStreetMap contributors © CARTO' },
             elevation: { type: 'raster-dem', tiles: ['https://s3.amazonaws.com/elevation-tiles-prod/terrarium/{z}/{x}/{y}.png'], encoding: 'terrarium', tileSize: 256, maxzoom: 15, attribution: 'Terrain: Mapzen / <a href="https://github.com/tilezen/joerd/blob/master/docs/attribution.md" target="_blank">DEM sources</a>' },
           },
@@ -114,6 +142,7 @@ export default function TerrainMap({ initialView, receptivity, exposureEnabled =
         },
       });
       map.current = m;
+      if (remembered) setThreeD(remembered.pitch > 0);
     } catch {
       setError('3D renderer unavailable. Geographic observations remain accessible in the panels.');
       return;
@@ -133,6 +162,7 @@ export default function TerrainMap({ initialView, receptivity, exposureEnabled =
       m.addLayer({ id: 'inspection-area', type: 'line', source: 'inspection-area', paint: { 'line-color': '#f6e7bb', 'line-width': 1, 'line-opacity': .7, 'line-dasharray': [2, 3] } });
       m.addSource('fire-cells', {type:'geojson', data:EMPTY});
       m.addSource('fire-domain', {type:'geojson', data:EMPTY});
+      m.addSource('forecast-assets', {type:'geojson', data:EMPTY});
       m.addSource('selected-point', { type: 'geojson', data: EMPTY });
       m.addLayer({ id: 'landcover-fill', type: 'fill', source: 'landcover', paint: { 'fill-color': ['match', ['coalesce', ['get', 'natural'], ['get', 'landuse'], ['get', 'class'], ''], 'wood', '#6b9968', 'forest', '#6b9968', 'scrub', '#b1a061', 'grassland', '#a7b77c', 'farmland', '#bbab70', '#859674'], 'fill-opacity': .18 } });
       m.addLayer({ id: 'landcover-line', type: 'line', source: 'landcover', paint: { 'line-color': '#9eb886', 'line-width': .6, 'line-opacity': .45 } });
@@ -144,6 +174,11 @@ export default function TerrainMap({ initialView, receptivity, exposureEnabled =
       m.addLayer({id:'investigation-point',type:'circle',source:'investigation',filter:['==',['geometry-type'],'Point'],paint:{'circle-color':['coalesce',['get','color'],'#74d2ca'],'circle-radius':7,'circle-stroke-color':'#ffffff','circle-stroke-width':1}});
       m.addLayer({id:'fire-domain-line',type:'line',source:'fire-domain',paint:{'line-color':'#e6d6a8','line-width':1.5,'line-dasharray':[4,3]}});
       m.addLayer({id:'fire-cells-fill',type:'fill',source:'fire-cells',paint:{'fill-color':['case',['==',['get','arrivalCentral'],null],'#e6b86b','#f66b43'],'fill-opacity':.38},filter:['<=',['get','arrivalMin'],0]});
+      m.addLayer({id:'fire-front',type:'line',source:'fire-cells',paint:{'line-color':'#ffcd8b','line-width':1.6,'line-opacity':.8},filter:['==',['get','arrivalCentral'],-1]});
+      m.addLayer({id:'forecast-assets-fill',type:'fill',source:'forecast-assets',filter:['==',['geometry-type'],'Polygon'],paint:{'fill-color':'#78c8d0','fill-opacity':['case',['==',['get','category'],'complex'],.025,.1]}});
+      m.addLayer({id:'forecast-assets-line',type:'line',source:'forecast-assets',filter:['!=',['geometry-type'],'Point'],paint:{'line-color':'#78c8d0','line-width':['case',['==',['get','category'],'complex'],1,2],'line-opacity':.7}});
+      m.addLayer({id:'forecast-assets-dot',type:'circle',source:'forecast-assets',filter:['==',['geometry-type'],'Point'],paint:{'circle-color':'#78c8d0','circle-radius':7,'circle-stroke-color':'#152422','circle-stroke-width':2}});
+      m.addLayer({id:'forecast-asset-selection',type:'line',source:'forecast-assets',filter:['==',['get','id'],''],paint:{'line-color':'#ffffff','line-width':5}});
       m.addLayer({ id: 'buildings-flat', type: 'fill', source: 'buildings', minzoom: 12, layout: { visibility: 'none' }, paint: { 'fill-color': '#d1d6c9', 'fill-opacity': .65 } });
       m.addLayer({ id: 'buildings-unknown', type: 'fill', source: 'buildings', minzoom: 12, filter: ['==', ['get', 'heightM'], null], paint: { 'fill-color': '#d1d6c9', 'fill-opacity': .5 } });
       m.addLayer({ id: 'buildings-3d', type: 'fill-extrusion', source: 'buildings', minzoom: 12, paint: { 'fill-extrusion-color': ['match', ['get', 'heightSource'], 'height', '#ccd5d0', 'osm-height', '#ccd5d0', '#a6b9b0'], 'fill-extrusion-height': ['max', 0, ['to-number', ['get', 'heightM'], 0]], 'fill-extrusion-base': 0, 'fill-extrusion-opacity': .88 } });
@@ -169,10 +204,17 @@ export default function TerrainMap({ initialView, receptivity, exposureEnabled =
     });
     m.on('click', event => {
       if (loaded.current !== m || receptivityActive.current) return;
+      if (demoCallback.current) { popup.current?.remove(); demoCallback.current(event.lngLat.lng,event.lngLat.lat); return; }
+      const forecastAsset = m.queryRenderedFeatures(event.point, {layers:['forecast-assets-fill','forecast-assets-line','forecast-assets-dot']})[0];
+      if(forecastAsset?.properties?.id && assetCallback.current) { popup.current?.remove(); assetCallback.current(String(forecastAsset.properties.id)); return; }
+      if (m.getLayer('sage-tree-pick') && treeCallback.current) {
+        const tree=m.queryRenderedFeatures(event.point,{layers:['sage-tree-pick']})[0];
+        if(tree?.properties){treeCallback.current(tree.properties as ForestTree);return;}
+      }
       const opportunity=m.queryRenderedFeatures(event.point,{layers:['opportunity-point']})[0];
       if(opportunity?.properties?.id&&opportunityCallback.current){popup.current?.remove();opportunityCallback.current(String(opportunity.properties.id));return;}
       if (buildingCallback.current && loaded.current === m) {
-        const feature = m.queryRenderedFeatures(event.point, {layers:['buildings-3d','buildings-flat']})[0];
+        const feature = m.queryRenderedFeatures(event.point, {layers:['buildings-3d','buildings-flat','buildings-unknown']})[0];
         if (feature?.properties?.id) {buildingCallback.current(String(feature.properties.id)); return;}
       }
       const { lng, lat } = event.lngLat;
@@ -204,7 +246,8 @@ export default function TerrainMap({ initialView, receptivity, exposureEnabled =
       if (area?.properties?.id && areaCallback.current) { areaCallback.current(String(area.properties.id)); return; }
       popup.current?.remove(); pointCallback.current(lng, lat);
     });
-    m.on('mousemove', event => { if (loaded.current !== m || receptivityActive.current) return; m.getCanvas().style.cursor = m.queryRenderedFeatures(event.point, { layers: ['opportunity-point', 'buildings-3d', 'buildings-flat', 'buildings-unknown', 'assets-dot', 'hotspots-dot', 'watch-area-fill', 'exposure-dot', 'exposure-line', 'exposure-fill'] }).length ? 'pointer' : 'crosshair'; });
+    m.on('mousemove', event => { if (loaded.current !== m || receptivityActive.current) return; if(demoCallback.current){m.getCanvas().style.cursor=demoEditingRef.current?'crosshair':'grab';return;} m.getCanvas().style.cursor = m.queryRenderedFeatures(event.point, { layers: ['opportunity-point', 'buildings-3d', 'buildings-flat', 'buildings-unknown', 'assets-dot', 'hotspots-dot', 'watch-area-fill', 'exposure-dot', 'exposure-line', 'exposure-fill', 'forecast-assets-fill', 'forecast-assets-line', 'forecast-assets-dot', ...(m.getLayer('sage-tree-pick')?['sage-tree-pick']:[])] }).length ? 'pointer' : 'grab'; });
+    if (persistentCamera) m.on('moveend', () => { try { const point=m.getCenter(); sessionStorage.setItem('ginger-map-camera',JSON.stringify({center:[point.lng,point.lat],zoom:m.getZoom(),pitch:m.getPitch(),bearing:m.getBearing()})); } catch { /* Best-effort session preference. */ } });
     const observer = new ResizeObserver(() => m.resize());
     observer.observe(host.current);
     return () => { observer.disconnect(); loaded.current = null; map.current = null; m.remove(); };
@@ -221,14 +264,39 @@ export default function TerrainMap({ initialView, receptivity, exposureEnabled =
     const m=map.current;if(!ready||!m||loaded.current!==m)return;
     (m.getSource('fire-cells') as GeoJSONSource)?.setData(simulation?.cells||EMPTY);
     (m.getSource('fire-domain') as GeoJSONSource)?.setData(simulation?.domain||EMPTY);
+  },[ready,simulation]);
+  useEffect(() => {
+    const m=map.current;if(!ready||!m||loaded.current!==m)return;
     m.setFilter('fire-cells-fill',['<=',['get','arrivalMin'],minute]);
     m.setPaintProperty('fire-cells-fill','fill-color',['case',['all',['!=',['get','arrivalCentral'],null],['<=',['get','arrivalCentral'],minute]],'#f66b43','#e6b86b']);
+    m.setFilter('fire-front',['all',['!=',['get','arrivalCentral'],null],['<=',['get','arrivalCentral'],minute],['>=',['get','arrivalCentral'],Math.max(0,minute-3)]]);
     m.setFilter('building-selection',['==',['get','id'],selectedBuilding||'']);
-    const color: maplibregl.ExpressionSpecification = simulation ? ['case',['all',['!=',['get','structuralIgnitionCentral'],null],['<=',['get','structuralIgnitionCentral'],minute]],'#e74432',['all',['!=',['get','arrivalMin'],null],['<=',['get','arrivalMin'],minute]],'#ff8558','#b6c4bf'] : ['match',['get','heightSource'],'osm-height','#ccd5d0','#a6b9b0'];
+    const central: maplibregl.ExpressionSpecification = ['at',0,['coalesce',['get','arrivalByMember'],['literal',[null]]]];
+    const color: maplibregl.ExpressionSpecification = simulation ? ['case',['all',['!=',['get','structuralIgnitionCentral'],null],['<=',['get','structuralIgnitionCentral'],minute]],'#e74432',['all',['!=',central,null],['<=',central,minute]],'#ff8558','#b6c4bf'] : ['match',['get','heightSource'],'osm-height','#ccd5d0','#a6b9b0'];
     m.setPaintProperty('buildings-3d','fill-extrusion-color',color);
     m.setPaintProperty('buildings-flat','fill-color',color);
     m.setPaintProperty('buildings-unknown','fill-color',color);
   },[ready,simulation,minute,selectedBuilding]);
+  useEffect(()=>{const m=map.current;if(ready&&m)(m.getSource('forecast-assets') as GeoJSONSource)?.setData(forecastExposure?.assets||EMPTY);},[ready,forecastExposure]);
+  useEffect(()=>{
+    const m=map.current;if(!ready||!m)return;
+    const reached: maplibregl.FilterSpecification=['all',['!=',['get','arrivalCentralMinutes'],null],['<=',['get','arrivalCentralMinutes'],minute]];
+    m.setFilter('forecast-assets-fill',['all',['==',['geometry-type'],'Polygon'],reached]);
+    m.setFilter('forecast-assets-line',['all',['!=',['geometry-type'],'Point'],reached]);
+    m.setFilter('forecast-assets-dot',['all',['==',['geometry-type'],'Point'],reached]);
+    m.setFilter('forecast-asset-selection',['==',['get','id'],selectedAsset||'']);
+  },[ready,minute,selectedAsset]);
+  const lastCameraAction=useRef<number|undefined>(undefined);
+  const revealOwnsDimension=useRef(false);
+  const appliedDimension=useRef<boolean|null>(null);
+  useEffect(()=>{
+    const m=map.current;if(!ready||!m||!cameraAction||lastCameraAction.current===cameraAction.id)return;
+    lastCameraAction.current=cameraAction.id;
+    const reduce=window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    m.stop();
+    if(cameraAction.kind==='reveal') { revealOwnsDimension.current=!threeD; setThreeD(true); setSatellite(true); m.easeTo({center:currentCenter.current,zoom:15.2,pitch:55,bearing:-18,duration:reduce?0:1500,essential:false}); }
+    else { m.easeTo({center:currentCenter.current,zoom:simulation?13.8:initialZoom,pitch:threeD?35:0,bearing:0,duration:reduce?0:900,essential:false}); }
+  },[ready,cameraAction,simulation,initialZoom,threeD]);
   useEffect(()=>{if(!ready||!map.current)return;map.current.setPaintProperty('estimated-perimeter-fill','fill-color',perimeterKind==='simulated'?'#bd9fe8':'#fa683e');map.current.setPaintProperty('estimated-perimeter-line','line-color',perimeterKind==='simulated'?'#d3adff':'#ff9c67');},[ready,perimeterKind]);
   useEffect(() => {
     const m = map.current;
@@ -252,7 +320,12 @@ export default function TerrainMap({ initialView, receptivity, exposureEnabled =
     const m = map.current;
     if (!ready || !m || loaded.current !== m) return;
     m.setTerrain(threeD ? { source: 'elevation', exaggeration: 1 } : null);
-    m.easeTo({ pitch: threeD ? 45 : 0, duration: window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 0 : 650 });
+    // Layer changes must not interrupt the explicit reveal or move an inspection camera.
+    if(appliedDimension.current!==threeD){
+      if(!revealOwnsDimension.current) m.easeTo({ pitch: threeD ? (cinematic?55:45) : 0, duration: window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 0 : 650 });
+      appliedDimension.current=threeD;
+    }
+    revealOwnsDimension.current=false;
     for (const layer of m.getStyle().layers) {
       const source = (layer as { source?: keyof typeof visible }).source;
       if (source && source in visible) {
@@ -264,6 +337,9 @@ export default function TerrainMap({ initialView, receptivity, exposureEnabled =
     m.setLayoutProperty('labels', 'visibility', satellite ? 'visible' : 'none');
     m.setLayoutProperty('dark', 'visibility', satellite ? 'none' : 'visible');
   }, [ready, threeD, satellite, visible]);
+  // Apply the forest camera after dimension and initial-focus effects. A pitch-only
+  // transition otherwise cancels the zoom transition when enabling 3D from 2D.
+  useEffect(()=>{const m=map.current;if(!forestEnabled||!ready||!threeD||!m||!forestFocusPending.current)return;forestFocusPending.current=false;m.stop();m.jumpTo({center:currentCenter.current,pitch:60,zoom:Math.max(15.5,m.getZoom())});},[forestEnabled,ready,threeD]);
 
   useEffect(() => {
     const m=map.current;if(!ready||!m)return;if(!exposureEnabled){(m.getSource('exposure') as GeoJSONSource).setData(EMPTY);return;}
@@ -300,11 +376,11 @@ export default function TerrainMap({ initialView, receptivity, exposureEnabled =
     }
   },[ready,researchRisk]);
 
-  return <div className="map-wrapper terrain-map" style={{ position: 'relative', width: '100%', height: '100%', minHeight: 300 }}>
-    <div ref={host} className="map-canvas" style={{ position: 'absolute', inset: 0 }} aria-label="Interactive regional terrain and infrastructure map. Click any location to inspect it." />
+  return <div className={'map-wrapper terrain-map'+(cinematic?' sage-terrain-scene':'')} style={{ position: 'relative', width: '100%', height: '100%', minHeight: 300 }}>
+    <div ref={host} className="map-canvas" style={{ position: 'absolute', inset: 0 }} aria-label={onDemoPoint ? 'Scenario map. Click to place a hypothetical ignition and run the Ginger simulation engine.' : 'Interactive regional terrain and infrastructure map. Click any location to inspect it.'} />
     {!ready && !error && <div className="map-loading"><span className="spinner" /> Loading geographic context…</div>}
     {error && <div className="map-warning" role="status">{error}</div>}
-    {smoke && <aside className="sage-wind-card" aria-label="Wind and smoke illustration">
+    {smoke && !cinematic && <aside className="sage-wind-card" aria-label="Wind and smoke illustration">
       <div className="sage-wind-top"><span className="sage-wind-compass" aria-hidden="true"><i>N</i><b style={{transform:`rotate(${smoke.wind?.toDegrees??0}deg)`}}>↑</b></span><div><span className="sage-wind-eyebrow">Wind at +{Math.round(smoke.minute)} min</span><strong>{smoke.wind ? smoke.wind.speedKmh < .1 ? 'Calm wind' : `${compass(smoke.wind.fromDegrees)} → ${compass(smoke.wind.toDegrees)} · ${smoke.wind.speedKmh.toFixed(1)} km/h` : 'Weather unavailable'}</strong><small>{smoke.wind && smoke.wind.speedKmh >= .1 ? `From ${Math.round(smoke.wind.fromDegrees)}° · blowing toward ${Math.round(smoke.wind.toDegrees)}°` : 'No reliable transport direction'}</small></div></div>
       <p className="sage-fire-heading">Recent fire-front shift: <b>{smoke.fireHeadingDegrees === null ? 'no clear direction' : `mainly ${compass(smoke.fireHeadingDegrees)}`}</b></p>
       {simulation?.request.structural && !simulation.cells.features.length && <p className="sage-fire-heading">Building transfer follows distance/delay assumptions; wind affects the smoke illustration.</p>}
@@ -312,6 +388,8 @@ export default function TerrainMap({ initialView, receptivity, exposureEnabled =
       {showSmoke && smoke.plumes.features.length === 0 && <p className="sage-fire-heading">No illustrated puffs remain here at this time. Scrub earlier to explore drift; this does not establish clean air.</p>}
       <details className="sage-smoke-details"><summary>What am I seeing?</summary><p>Wind carries smoke; terrain and fuel also steer the fire. The heading compares the centroids of newly reached central-run cells in two successive 5-minute windows. It describes a recent shift, not where fire must go next. Sparse or nearly stationary centroids show no clear direction.</p><p>Smoke follows the central run and the timeline. Sampled vegetation emits for 10 minutes; assumed burning buildings for 30. Puffs spread and drift for up to 30 minutes inside this map domain.</p><p>Uses forecast 10 m wind, including your wind scenario. Pale areas illustrate horizontal drift only: no measured smoke, concentration, plume height or airflow around buildings.</p></details>
     </aside>}
+    {ready&&map.current&&simulation&&cinematic&&<SageWindOverlay map={map.current} run={simulation} minute={minute}/>}
+    {forestEnabled&&<div style={{position:"absolute",top:16,left:16,zIndex:5,maxWidth:300}}><SageForestAvailability center={center} status={localForestStatus}/></div>}
     <div className="map-controls">
       <button aria-label="Zoom in" onClick={() => map.current?.zoomIn()}><Plus size={17} /></button>
       <button aria-label="Zoom out" onClick={() => map.current?.zoomOut()}><Minus size={17} /></button>
@@ -321,6 +399,6 @@ export default function TerrainMap({ initialView, receptivity, exposureEnabled =
     </div>
     {layerMenu && <div className="layer-menu panel"><div className="panel-heading">Geographic layers<button aria-label="Close map layers" onClick={() => setLayerMenu(false)}><X size={15} /></button></div><div className="segmented"><button className={satellite ? 'active' : ''} onClick={() => setSatellite(true)}>Satellite</button><button className={!satellite ? 'active' : ''} onClick={() => setSatellite(false)}>Dark map</button></div>{(Object.keys(GROUPS) as Array<keyof typeof GROUPS>).map(id => <button className="layer-row" key={id} aria-pressed={visible[id]} onClick={() => setVisible(v => ({ ...v, [id]: !v[id] }))}><span className={'checkbox ' + (visible[id] ? 'checked' : '')}>{visible[id] && <Check size={11} />}</span>{id==='perimeters'&&perimeterKind==='simulated'?'Modelled spread':id==='hotspots'&&hotspotKind==='simulated'?'Scenario ignition':GROUPS[id]}<EvidenceBadge kind={id==='perimeters'?perimeterKind:id==='hotspots'?hotspotKind:'observed'}/></button>)}{exposureEnabled&&<><div className="panel-heading">Catalonia · people & infrastructure</div>{(Object.keys(exposureCategories) as ExposureCategory[]).map(category=><button key={category} className="layer-row" aria-pressed={exposureVisible[category]} onClick={()=>setExposureVisible(v=>({...v,[category]:!v[category]}))}><span className={'checkbox '+(exposureVisible[category]?'checked':'')}>{exposureVisible[category]&&<Check size={11}/>}</span><i className="exposure-swatch" style={{background:exposureCategories[category].color}}/>{exposureCategories[category].label}</button>)}<p className="exposure-layer-status" role="status">{exposureStatus}<br/>Potential busy places · occupancy unknown.<br/><a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noreferrer">© OpenStreetMap contributors · ODbL</a></p></>}<button className="layer-row" aria-pressed={researchRisk} disabled={!ready} onClick={()=>setResearchRisk(v=>!v)}><span className={'checkbox '+(researchRisk?'checked':'')}>{researchRisk&&<Check size={11}/>}</span>FireScope · 2026 annual risk</button><div className="firescope-layer-note">Research model · Europe & Asia. Annual likelihood and intensity, not current fire danger. Blank areas mean no data. <a href="https://firescope.ai/" target="_blank" rel="noopener noreferrer">Method & limitations ↗</a></div><WildfireReferences context="incidents"/><p>Real DEM terrain and sourced building footprints. Height provenance is shown in the building inspector.</p></div>}
     {researchRisk&&<aside className="firescope-map-key" aria-label="FireScope research risk legend"><b>FIRESCOPE · 2026 RESEARCH RISK</b><span className="firescope-legend"><span><i style={{background:'#d0d0d0'}}/>Lowest</span><span><i style={{background:'#f1c40f'}}/>Low</span><span><i style={{background:'#e67e22'}}/>Moderate</span><span><i style={{background:'#c0392b'}}/>High</span></span><span>Annual model · not current danger · blank = no data</span>{riskError&&<span role="status">{riskError}</span>}</aside>}
-    <div className="map-legend" style={{ maxWidth: 'calc(100% - 80px)' }}>{opportunities.features.length>0&&<span>● Teal: prevention opportunity · grey: unscored · select to review</span>}<b>{threeD ? '3D TERRAIN' : '2D MAP'}</b><span><EvidenceBadge kind={hotspotKind}/> · {hotspotKind==='simulated'?'Scenario ignition':'Thermal detection'}</span><span><EvidenceBadge kind="observed"/> · Geography</span>{selectedRadiusM>0?<span><EvidenceBadge kind="derived"/> · Dashed ring: {(selectedRadiusM / 1000).toFixed(1)} km inspection area</span>:<span>Watch areas: mint · monitoring / amber · review / red · escalating / grey · unavailable</span>}<span>{exposureEnabled?'Catalonia exposure: category filters in Layers':'Click buildings to inspect height evidence'}</span></div>
+    {!cinematic&&<div className="map-legend" style={{ maxWidth: 'calc(100% - 80px)' }}>{opportunities.features.length>0&&<span>● Teal: prevention opportunity · grey: unscored · select to review</span>}<b>{threeD ? '3D TERRAIN' : '2D MAP'}</b><span><EvidenceBadge kind={hotspotKind}/> · {hotspotKind==='simulated'?'Scenario ignition':'Thermal detection'}</span><span><EvidenceBadge kind="observed"/> · Geography</span>{selectedRadiusM>0?<span><EvidenceBadge kind="derived"/> · Dashed ring: {(selectedRadiusM / 1000).toFixed(1)} km inspection area</span>:<span>Watch areas: mint · monitoring / amber · review / red · escalating / grey · unavailable</span>}<span>{exposureEnabled?'Catalonia exposure: category filters in Layers':'Click buildings to inspect height evidence'}</span></div>}
   </div>;
 }

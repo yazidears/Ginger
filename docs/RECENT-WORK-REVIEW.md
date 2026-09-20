@@ -37,3 +37,15 @@ Work was split between UI fixes, working local features, configuration scaffoldi
 A backup of the previous running source is in /Users/yazidears/.cache/ginger-backups/satellite-20260919/src.
 
 Verified in this task: focused Satellite TypeScript and tests pass; main-server page returns HTTP 200; the live catalog returns 20 Sentinel-2 scenes; browser-triggered vegetation analysis produced NDVI and NBR images with 98.65% valid pixels for the selected scene; empty fire history shows no playback controls. Both Deepfire history feeds responded successfully with zero local detections/perimeters. Paid spread execution, iMessage, Ash audio and Nebius activation were not revalidated.
+
+
+## Follow-up interaction checks
+
+- Coordinate errors now use the input's validation feedback in every Satellite view, rather than appearing only in Fire detections. Browser check: latitude 91 is rejected with a visible validation message.
+- Switching between Satellite images, Fire detections and Measurements retains the selected scene and completed vegetation result. Verified with a real NDVI/NBR analysis and a round trip through Fire detections.
+- Changing location or refreshing cancels the client-side analysis request so an obsolete result cannot replace the new selection.
+- Empty Measurements no longer shows an empty table, graph or download button. It offers imagery and fire detections instead.
+- Main-server /prevention and /replay return HTTP 200. Replay renders, but its historical incident library is empty. The Tasks button opens Operations log; no inspection records were created during verification.
+- Satellite-focused TypeScript and the existing Satellite tests pass. Interaction checks used an isolated copy because other active tasks were updating the main server concurrently. The final Satellite component was synchronized to the source project and main server with matching contents.
+
+No paid spread simulation, external notification or account configuration was performed in this follow-up.

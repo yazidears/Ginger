@@ -6,6 +6,7 @@ import MapLayers from './shared-map';
 import type {FeatureCollection} from 'geojson';
 import {toLonLat, toLocal} from '@/lib/sage/geometry';
 import './replay-workspace.css';
+import ReplayArchive from './replay-archive';
 
 const pct=(v:number|null)=>v===null?'—':`${(v*100).toFixed(1)}%`;
 const num=(v:number|null,d=1)=>v===null?'—':v.toFixed(d);
@@ -85,6 +86,16 @@ function MetricTable({frame}:{frame:ReplayFrame}){
 }
 
 export default function ReplayWorkspace(){
+  const [evaluation,setEvaluation]=useState(false);
+  useEffect(()=>{
+    const restore=()=>{const params=new URLSearchParams(window.location.search);setEvaluation(params.has('run')||params.get('view')==='evaluation');};
+    restore();window.addEventListener('popstate',restore);return()=>window.removeEventListener('popstate',restore);
+  },[]);
+  if(!evaluation)return <ReplayArchive onEvaluation={()=>{window.history.replaceState(null,'','/replay?view=evaluation');setEvaluation(true);}}/>;
+  return <><div className="replay-back-to-archive"><button onClick={()=>{window.history.replaceState(null,'','/replay');setEvaluation(false);}}>← Past incidents</button></div><ReplayEvaluation/></>;
+}
+
+function ReplayEvaluation(){
   const [job,setJob]=useState<ReplayJob|null>(null),[jobs,setJobs]=useState<SavedJob[]>([]),[error,setError]=useState(''),[busy,setBusy]=useState(false);
   const [showSynthetic,setShowSynthetic]=useState(false);
   const visibleJobs=jobs.filter(j=>showSynthetic||j.kind!=='synthetic');

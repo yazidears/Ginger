@@ -1,5 +1,5 @@
 import type {Weather, Assessment, Horizon, CellResult, StationResult} from './types';
-export const MODEL_VERSION='sage-receptivity-1.0';
+export const MODEL_VERSION='sage-receptivity-1.1-evidence';
 const C=147.27723;
 export const clamp=(x:number,lo:number,hi:number)=>Math.min(hi,Math.max(lo,x));
 export const round=(x:number,n=1)=>Number(x.toFixed(n));
@@ -41,5 +41,6 @@ export function explainCell(cell:CellResult,station:StationResult,horizon:Horizo
  lines.push(`Spread uses ISI ${f.isi.toFixed(1)}, including ${f.conditions.windSpeed.toFixed(1)} km/h sustained wind. ${cell.terrain.slope!==undefined?`Terrain slope is ${cell.terrain.slope}°; terrain and mapped continuity are context, not calibrated spread multipliers.`:'Terrain is unavailable.'}`);
  if(horizon){const now=station.frames.find(x=>x.horizon===0)!;lines.push(`Receptivity changes ${f.fireReceptivity-now.fireReceptivity>=0?'+':''}${f.fireReceptivity-now.fireReceptivity} points by ${new Date(f.timestamp).toLocaleTimeString('en-GB',{timeZone:'Europe/Madrid',hour:'2-digit',minute:'2-digit'})}, based on forecast weather. This describes environmental change.`);}
  lines.push(`Weather is transferred from ${station.station.name}, ${cell.stationDistanceKm.toFixed(1)} km away. A 200 m map cell does not imply 200 m weather accuracy.`);
+ if(cell.evidence)lines.push(...cell.evidence.reasons);
  return lines;
 }

@@ -1,0 +1,25 @@
+import type {CellResult,Snapshot} from '@/lib/receptivity/types';
+import {PRIORITY,type AreaPriority} from '@/lib/receptivity/priority';
+const labels={urgent:'Urgent verification',review:'Review evidence',routine:'No review trigger',unknown:'Evidence incomplete'};
+export function EnvironmentAlerts({data,onSelect,stale}:{data:Snapshot;onSelect:(id:string)=>void;stale:boolean}){
+ const seen=new Set<string>();
+ const cells=data.cells.filter(c=>c.evidence&&['urgent','review'].includes(c.evidence.priority)).sort((a,b)=>(a.evidence!.priority==='urgent'?-1:0)-(b.evidence!.priority==='urgent'?-1:0)||(b.receptivity[0]??0)-(a.receptivity[0]??0)).filter(c=>{const key=`${c.evidence!.heatwaveId}:${Math.round(c.center[0]*50)}:${Math.round(c.center[1]*50)}`;if(seen.has(key))return false;seen.add(key);return true;}).slice(0,5);
+ return <section className="r-environment-alerts" aria-label="Satellite and heat alerts"><h3>Satellite & heat alerts</h3><p>{stale?'Saved evidence · refresh pending':data.satellite?.source||'Satellite connection pending'}</p>{cells.map(c=><button key={c.id} onClick={()=>onSelect(c.id)}><strong>{c.name}</strong><span>{labels[c.evidence!.priority]} · {c.evidence!.thermalCount?`${c.evidence!.thermalCount} nearby thermal observations`:'Heat / vegetation signal'}</span></button>)}{!cells.length&&<p>{!data.satellite||data.satellite.status!=='live'?'Satellite evidence unavailable.':!data.heatwaves?.length||data.heatwaves.some(h=>['unavailable','incomplete'].includes(h.status))?'Heatwave coverage incomplete. No satellite review trigger.':'No current satellite or heatwave review trigger.'}</p>}</section>;
+}
+export default function EnvironmentEvidence({data,cell,stale,priority}:{data:Snapshot;cell:CellResult;stale:boolean;priority?:AreaPriority}){
+ const e=cell.evidence,heat=data.heatwaves?.find(h=>h.id===e?.heatwaveId),satellite=data.satellite;
+ const download=()=>{const blob=new Blob([JSON.stringify({retrievedAt:satellite?.retrievedAt,source:satellite?.source,detail:satellite?.detail,observations:satellite?.observations},null,2)],{type:'application/json'}),url=URL.createObjectURL(blob),a=document.createElement('a');a.href=url;a.download='ginger-satellite-measurements.json';a.click();setTimeout(()=>URL.revokeObjectURL(url),1000);};
+ return <section className="r-environment-evidence" aria-label="Satellite and heatwave assessment">
+  <h3>Satellite & heatwave assessment</h3><strong data-priority={priority?.level||(stale?'unknown':e?.priority||'unknown')}>{priority?PRIORITY[priority.level].label:stale?'Saved evidence — check timestamps':e?labels[e.priority]:'Preparing connected evidence…'}</strong>
+  {!priority&&e?.reasons.map(reason=><p key={reason}>{reason}</p>)}
+  <details open={heat?.status==='ongoing'||heat?.status==='forecast'}><summary>Heatwave tracking · {heat?.status||'pending'}</summary>
+   <p>{heat?.source||'Forecast source unavailable'}. {heat?.detail}</p>
+   <p>{heat?.thresholdC!==null&&heat?.thresholdC!==undefined?`${heat.municipality}: more than ${heat.thresholdC}°C for at least 3 consecutive days.`:'Local threshold or forecast unavailable.'} Meteocat 2026 thresholds; model-based screening.</p>
+   {heat?.episodes.map(ep=><p key={ep.start}>{ep.phase.toUpperCase()} · {ep.start} → {ep.end} · {ep.days} days · peak {ep.peakC}°C</p>)}
+   {!!heat?.days.length&&<table><caption>Daily peak · Europe/Madrid · ≥ means sampled lower bound</caption><thead><tr><th>Date</th><th>°C</th><th>Evidence</th></tr></thead><tbody>{heat.days.map(d=><tr key={d.date} data-hot={d.maximumC!==null&&heat.thresholdC!==null&&d.maximumC>heat.thresholdC}><td>{d.date.slice(5)}</td><td>{d.maximumC===null?'—':`${d.complete===false?'≥ ':''}${d.maximumC}`}</td><td>{d.kind==='forecast'?'Forecast':d.kind==='observed-samples'?'XEMA samples':d.kind==='observations-and-forecast'?'Observed + forecast':'Modelled history'}</td></tr>)}</tbody></table>}
+   <p>Data retrieved {heat?.retrievedAt?new Date(heat.retrievedAt).toLocaleString('en-GB',{timeZone:'Europe/Madrid'}):'—'}. This is not an official heat warning.</p>
+  </details>
+  <details><summary>Thermal satellite evidence · {satellite?.status||'pending'}</summary><p>{satellite?.source}. {satellite?.detail}</p><p>{e?.thermalCount??'—'} observations within 5 km in the last 6 hours. {e?.nearestThermalKm!==null&&e?.nearestThermalKm!==undefined?`Nearest ${e.nearestThermalKm} km.`:''} Acquisition time, source and original scalar measurement fields are retained; the download also includes older returned records excluded from alerts.</p><p>Fire-product records, not Level-1 radiance or raw satellite imagery.</p><button disabled={!satellite?.observations.length} onClick={download}>Download source measurements</button></details>
+  <p>Sentinel-2 vegetation: {e?.vegetation||'unavailable'}{cell.fuel.ndmi!==undefined?` · NDMI ${cell.fuel.ndmi.toFixed(2)} · ${cell.fuel.satelliteAt?.slice(0,10)}`:''}. Fresh clear-pixel evidence informs review priority; FFMC remains a weather-derived moisture estimate.</p>
+ </section>;
+}

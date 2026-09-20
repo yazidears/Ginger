@@ -1,0 +1,14 @@
+import assert from 'node:assert/strict';
+import {reviewZones} from '../src/lib/receptivity/zones';
+import type {CellResult} from '../src/lib/receptivity/types';
+import type {AreaPriority} from '../src/lib/receptivity/priority';
+const cell=(id:string,name:string,cover=0.8)=>({id,name,center:[2,41],fuel:{burnableFraction:cover,continuity:0.8}} as CellResult);
+const priority=(level:AreaPriority['level'])=>({level} as AreaPriority);
+const cells=[cell('a','Pallejà · forest'),cell('b','Pallejà · grassland'),cell('c','Terrassa · forest'),cell('d','Begues · forest')];
+const zones=reviewZones(cells,new Map([['a',priority('routine')],['b',priority('watch')],['c',priority('routine')],['d',priority('unknown')]]));
+assert.equal(zones.length,3,'Municipalities remain independently navigable even without a trigger');
+assert.equal(zones[0].name,'Pallejà');assert.equal(zones[0].cell.id,'b');assert.equal(zones[0].cells,2);assert.equal(zones[0].attentionCells,1,'Do not classify every cell by its representative');
+assert.equal(zones.find(z=>z.name==='Begues')?.attentionCells,0,'Missing evidence is not a positive trigger');
+assert.equal(zones.find(z=>z.name==='Terrassa')?.priority.level,'routine');assert.equal(cells[0].id,'a');
+assert.deepEqual(reviewZones([],new Map()),[]);
+console.log('PASS multi-zone navigation: distinct towns, highest-priority representative, accurate attention counts, missing evidence and empty inventory.');

@@ -1,0 +1,40 @@
+/* The demo uses the same SAGE renderer, forms, worker, results and investigation. */
+.demo-engine-workspace .sage-lab.sage-demo-engine .sage-lab-header{top:20px;left:20px;right:20px;transform:none;width:auto;padding:12px 16px;border:1px solid #a7bd8f30;border-radius:12px;background:#14221ff2;pointer-events:auto}
+.demo-engine-workspace .sage-lab.sage-demo-engine .sage-lab-header h1{font-size:18px}
+.demo-engine-workspace .sage-lab.sage-demo-engine .sage-lab-header .eyebrow{color:#e4b887}
+.demo-engine-workspace .sage-lab.sage-demo-engine .sage-lab-header>.evidence-badge{display:flex}
+.demo-engine-workspace .ginger-workspace-toolbar{top:112px;flex-wrap:wrap;right:76px}
+.demo-engine-workspace .ginger-setup-toggle[aria-pressed=true]{background:#e7b57e;color:#1f281d}
+.demo-engine-workspace .sage-demo-status{position:absolute;z-index:5;top:171px;left:20px;max-width:min(570px,calc(100% - 96px));background:#16261eee;border:1px solid #a7bd8f30;border-radius:9px;padding:12px 15px;color:#c4d1bb;font-size:12px;line-height:1.7;pointer-events:auto}
+.demo-engine-workspace .sage-demo-status .spinner{display:inline-block;margin-right:10px}
+.demo-engine-workspace .sage-demo-status a{display:block;color:#edc49b;margin-top:6px}
+.demo-engine-workspace .sage-lab.sage-demo-engine .sage-config{top:243px;max-height:calc(100dvh - 310px)}
+.demo-engine-workspace .sage-lab.sage-demo-engine .sage-results{top:243px;bottom:190px}
+.demo-engine-workspace .ginger-run-error{top:246px;max-width:550px}
+.demo-map-host .shared-map-surface .map-controls{top:112px}
+.demo-map-host .shared-map-surface .map-legend{display:none}
+.demo-map-host .shared-map-surface .map-warning{top:auto;bottom:40px;font-size:10px}
+@media(max-width:700px){
+ .demo-engine-workspace .sage-lab.sage-demo-engine .sage-lab-header{left:12px;right:12px;top:12px;padding:11px;gap:10px}
+ .demo-engine-workspace .sage-lab.sage-demo-engine .sage-lab-header>div{display:block}
+ .demo-engine-workspace .sage-lab.sage-demo-engine .sage-lab-header>.evidence-badge{display:none}
+ .demo-engine-workspace .sage-lab.sage-demo-engine .sage-lab-header h1{font-size:14px}
+ .demo-engine-workspace .sage-lab.sage-demo-engine .sage-lab-header .eyebrow{font-size:8px}
+ .demo-engine-workspace .ginger-workspace-toolbar{left:12px;right:60px;top:90px;gap:7px}
+ .demo-engine-workspace .ginger-workspace-toolbar button{font-size:10px;padding:8px 10px}
+ .demo-engine-workspace .sage-demo-status{top:183px;left:12px;max-width:calc(100% - 74px);font-size:10px;padding:9px 12px}
+ .demo-engine-workspace .sage-lab.sage-demo-engine .sage-config{top:283px;bottom:180px;max-height:none}
+ .demo-engine-workspace .sage-lab.sage-demo-engine .sage-results{top:283px;height:auto;bottom:180px}
+ .demo-engine-workspace .ginger-run-error{top:287px;left:12px;max-width:calc(100% - 74px);font-size:11px}
+ .demo-engine-workspace .sage-lab.sage-demo-engine .mapping-status{bottom:95px}
+ .demo-map-host .shared-map-surface .map-controls{top:90px}
+}
+
+/* Keep the wind card above the shared playback surface. */
+.demo-engine-workspace.map-first .ginger-o2-workspace.sage-demo-engine .sage-timeline{bottom:44px}
+.demo-engine-workspace.map-first .ginger-o2-workspace.sage-demo-engine .sage-map-stats{bottom:190px;left:auto;right:20px}
+.demo-map-host .shared-map-surface .sage-wind-card{left:20px;right:auto;bottom:228px;max-height:calc(100dvh - 490px);overflow:auto}
+@media(max-width:700px){
+ .demo-engine-workspace.map-first .ginger-o2-workspace.sage-demo-engine .sage-timeline{bottom:38px}
+ .demo-map-host .shared-map-surface .sage-wind-card{left:12px;right:auto;top:auto;bottom:176px;width:236px;max-height:130px}
+}

@@ -1,0 +1,34 @@
+if (!process.execArgv.includes('--conditions=react-server')) {const r=require('node:child_process').spawnSync(process.execPath,['--conditions=react-server',__filename],{stdio:'inherit'});process.exit(r.status??1);}
+const fs=require('node:fs'),fsp=require('node:fs/promises'),os=require('node:os'),path=require('node:path'),assert=require('node:assert/strict'),ts=require('typescript');
+const root=path.resolve(__dirname,'..');
+require.extensions['.ts']=(m,f)=>m._compile(ts.transpileModule(fs.readFileSync(f,'utf8').replace(/from '@\//g,`from '${root}/src/`),{compilerOptions:{module:ts.ModuleKind.CommonJS,target:ts.ScriptTarget.ES2022,esModuleInterop:true}}).outputText,f);
+(async()=>{const dir=await fsp.mkdtemp(path.join(os.tmpdir(),'ginger-resident-test-'));const cwd=process.cwd(),oldFetch=global.fetch;try {
+ process.chdir(dir); process.env.ASHCONNECT_OPERATOR_TOKEN='t'.repeat(32);
+ const {watchAreaStore}=require(path.join(root,'src/lib/watch-areas.ts'));
+ const {createUpdates}=require(path.join(root,'integrations/imessage/src/updates.ts'));
+ const {createConnectApi}=require(path.join(root,'integrations/imessage/src/connect-api.ts'));
+ const route=require(path.join(root,'src/app/api/ash-connect/resident/route.ts'));
+ const operator=require(path.join(root,'src/app/api/ash-connect/route.ts'));
+ const updates=createUpdates(path.join(dir,'subscriptions.json'),async()=>null,Date.now,()=>watchAreaStore.list());
+ const bridge=createConnectApi({updates,registeredIds:async()=>(await watchAreaStore.list()).map(a=>a.id),send:async()=>assert.fail('Registration must never send a message')});
+ global.fetch=async(url,init)=>bridge(new Request(url,init));
+ const req=(method,body,cookie,origin='http://localhost')=>new Request('http://localhost/api/ash-connect/resident',{method,headers:{origin,'content-type':'application/json',...(cookie?{cookie}:{})},...(method==='POST'?{body:JSON.stringify(body)}:{})});
+ assert.deepEqual(await (await route.GET(req('GET'))).json(),{homes:[]});
+ const response=await route.POST(req('POST',{name:'Private school',lat:41,lon:2,radiusM:3000,placeType:'school'}));
+ assert.equal(response.status,201);const cookie=response.headers.get('set-cookie');assert.match(cookie,/HttpOnly/);assert.match(cookie,/SameSite=Lax/);
+ const home=(await response.json()).home;assert.equal(home.subscribed,false);
+ assert.equal((await route.POST(req('POST',{areaId:home.id}))).status,404);
+ const other=await route.POST(req('POST',{name:'Other home',lat:42,lon:2,radiusM:3000}));const otherCookie=other.headers.get('set-cookie');
+ assert.equal((await route.POST(req('POST',{areaId:home.id},otherCookie))).status,404);
+ assert.equal((await route.POST(req('POST',{areaId:home.id},cookie,'https://attacker.example'))).status,403);
+ await updates.command('someone-else','watch',`WATCH ${home.id}`);
+ let mine=await (await route.GET(req('GET',null,cookie))).json();assert.equal(mine.homes.length,1);assert.equal(mine.homes[0].subscribed,false);
+ const publicStatus=await (await operator.GET(new Request('http://localhost/api/ash-connect'))).json();assert.deepEqual(publicStatus.homes,[]);assert.deepEqual(publicStatus.history,[]);
+ await updates.command('my-chat','connect',`CONNECT ${home.code}`);
+ mine=await (await route.GET(req('GET',null,cookie))).json();assert.equal(mine.homes[0].subscribed,true);assert.equal(mine.homes[0].enhanced,true);assert.equal('code' in mine.homes[0],false);
+ const theirs=await (await route.GET(req('GET',null,otherCookie))).json();assert.equal(theirs.homes.some(h=>h.id===home.id),false);
+ await updates.command('my-chat','stop','STOP');mine=await (await route.GET(req('GET',null,cookie))).json();assert.equal(mine.homes[0].subscribed,false);
+ global.fetch=async()=>{throw Error('offline');};assert.equal((await route.GET(req('GET',null,cookie))).status,503);
+ const count=(await watchAreaStore.list()).length;assert.equal((await route.POST(req('POST',{name:'Offline',lat:41,lon:2,radiusM:3000},cookie))).status,503);assert.equal((await watchAreaStore.list()).length,count);
+ console.log('PASS resident routes: browser isolation, recovery cookie, actual DM confirmation, STOP, origin rejection, private registry and offline behavior');
+}finally{process.chdir(cwd);global.fetch=oldFetch;await fsp.rm(dir,{recursive:true,force:true});}})().catch(e=>{console.error(e);process.exit(1)});

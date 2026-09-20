@@ -5,6 +5,10 @@ const {createWatchAreaStore,validateWatchArea,requireSameOrigin}=require('../src
 (async()=>{const dir=await fsp.mkdtemp(path.join(os.tmpdir(),'ginger-watch-test-'));try {
  const file=path.join(dir,'areas.json'),store=createWatchAreaStore(file);
  assert.equal((await store.list()).length,6);
+ const school=await store.add({name:'Fixture school',lat:41,lon:2,radiusM:3000,placeType:'school'});
+ assert.equal((await createWatchAreaStore(file).list()).find(a=>a.id===school.id).placeType,'school');
+ for(const placeType of ['invalid',['school'],{}])assert.throws(()=>validateWatchArea({name:'Fixture',lat:41,lon:2,radiusM:3000,placeType}));
+ await store.remove(school.id);
  const good={name:'  Test area  ',lat:41,lon:2,radiusM:500};
  for(const bad of [{...good,lat:'41'},{...good,lon:181},{...good,radiusM:499},{...good,radiusM:10001},{...good,name:'<img>'}])assert.throws(()=>validateWatchArea(bad));
  const results=await Promise.allSettled(Array.from({length:25},()=>store.add(good)));
@@ -17,6 +21,9 @@ const {createWatchAreaStore,validateWatchArea,requireSameOrigin}=require('../src
  assert.deepEqual(await createWatchAreaStore(file).list(),[]);
  await fsp.writeFile(file,'corrupted');await assert.rejects(()=>store.list());assert.equal(await fsp.readFile(file,'utf8'),'corrupted');
  requireSameOrigin(new Request('http://localhost:3002/api/watch-areas',{headers:{origin:'http://localhost:3002'}}));
+ requireSameOrigin(new Request('http://0.0.0.0:3033/api/watch-areas',{headers:{origin:'http://localhost:3033',host:'localhost:3033'}}));
+ assert.throws(()=>requireSameOrigin(new Request('http://0.0.0.0:3033/api/watch-areas',{headers:{origin:'https://attacker.example',host:'localhost:3033','x-forwarded-host':'attacker.example'}})));
+ assert.throws(()=>requireSameOrigin(new Request('http://0.0.0.0:3033/api/watch-areas',{headers:{origin:'http://localhost:3033',host:'localhost:3033','sec-fetch-site':'cross-site'}})));
  assert.throws(()=>requireSameOrigin(new Request('http://localhost:3002/api/watch-areas',{headers:{origin:'https://attacker.example'}})));
  assert.throws(()=>requireSameOrigin(new Request('http://localhost:3002/api/watch-areas')));
  console.log('PASS watch areas: defaults, strict validation, concurrent limit, persistence, deletion, empty retention, corrupt-file preservation and origin guard');

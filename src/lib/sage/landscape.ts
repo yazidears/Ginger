@@ -115,20 +115,21 @@ export function parseSimulationWeather(raw:{hourly?:Record<string,unknown>;hourl
   if(frames.length!==6||frames.some((f,i)=>Date.parse(f.time)!==start+i*3600000))throw Error('Six contiguous weather hours are required');
   return frames;
 }
-async function weather(center:XY){
+async function weather(center:XY,origin=Date.now()){
+  if(!Number.isFinite(origin)||origin<Date.now()-48*3600000||origin>Date.now()+48*3600000)throw Error('Weather retrieval supports scenario origins within 48 hours of now. Captured historical forcing is required outside that window.');
   const url=new URL('https://api.open-meteo.com/v1/forecast');
-  url.search=new URLSearchParams({latitude:String(center[1]),longitude:String(center[0]),hourly:'temperature_2m,relative_humidity_2m,wind_speed_10m,wind_direction_10m,direct_normal_irradiance,diffuse_radiation,precipitation',forecast_days:'2',timezone:'UTC',wind_speed_unit:'kmh',temperature_unit:'celsius',precipitation_unit:'mm'}).toString();
-  return {frames:parseSimulationWeather(await json(url.href)),retrievedAt:new Date().toISOString()};
+  url.search=new URLSearchParams({latitude:String(center[1]),longitude:String(center[0]),hourly:'temperature_2m,relative_humidity_2m,wind_speed_10m,wind_direction_10m,direct_normal_irradiance,diffuse_radiation,precipitation',forecast_days:'3',past_days:'2',timezone:'UTC',wind_speed_unit:'kmh',temperature_unit:'celsius',precipitation_unit:'mm'}).toString();
+  return {frames:parseSimulationWeather(await json(url.href),origin),retrievedAt:new Date().toISOString()};
 }
-export async function loadLandscape(center:XY,onStage:(stage:string)=>void):Promise<Landscape>{
+export async function loadLandscape(center:XY,onStage:(stage:string)=>void,capturedWeather?:WeatherFrame[],origin=Date.now()):Promise<Landscape>{
   onStage('Loading ICGC buildings, land cover, terrain and hourly weather');
-  const [geo,dem,w]=await Promise.all([inventory(center),terrain(center),weather(center)]);
+  const [geo,dem,w]=await Promise.all([inventory(center),terrain(center),capturedWeather?Promise.resolve({frames:capturedWeather,retrievedAt:new Date().toISOString()}):weather(center,origin)]);
   const sources:Source[]=[
     ...(geo.osmSource?[geo.osmSource]:[]),
     {name:'ICGC RTT buildings',url:`${API}/construccions-rtt`,retrievedAt:geo.retrievedAt,detail:'Building polygons and altura attributes. 16 bounded queries; deduplicated by source ID. © ICGC · CC BY 4.0. Inventory is not a field survey.'},
     {name:'ICGC land cover',url:`${API}/cobertes-sol`,retrievedAt:geo.retrievedAt,detail:'Mapped land-cover categories with source dates; conversion to Anderson fuel models is an uncalibrated assumption.'},
     {name:'Mapzen Terrarium DEM',url:'https://github.com/tilezen/joerd/blob/master/docs/attribution.md',retrievedAt:dem.retrievedAt,detail:'Decoded terrain elevations at zoom 14; sampled on a 25 m grid. Raster pixel spacing does not establish native DEM accuracy.'},
-    {name:'Open-Meteo',url:'https://open-meteo.com/en/docs',retrievedAt:w.retrievedAt,detail:'Hourly modelled wind, humidity, temperature and radiation; radiation is preceding-hour mean. UTC valid times; not local station measurements.'}
+    ...(capturedWeather?[]:[{name:'Open-Meteo',url:'https://open-meteo.com/en/docs',retrievedAt:w.retrievedAt,detail:'Hourly modelled wind, humidity, temperature and radiation; radiation is preceding-hour mean. UTC valid times; not local station measurements.'}])
   ];
   return {center,size:GRID_SIZE,cellM:CELL_M,elevations:dem.elevations,buildings:geo.buildings,landcover:geo.landcover,weather:w.frames,sources,warnings:geo.warnings};
 }

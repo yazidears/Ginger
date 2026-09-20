@@ -1,6 +1,6 @@
 import type {FeatureCollection,Point,Geometry} from 'geojson';
 export type Provenance={source:string;observedAt:string;retrievedAt:string;mode:'live'|'demo';confidence?:number};
-export type Hotspot={raw?:Record<string,string|number|null>;id:string;position:[number,number];clusterId:string|null;frpMw:number|null;confidence:string;provenance:Provenance};
+export type Hotspot={raw?:Record<string,string|number|boolean|null>;id:string;position:[number,number];clusterId:string|null;frpMw:number|null;confidence:string;provenance:Provenance};
 export type FireCluster={id:string;position:[number,number];firstObserved:string;lastObserved:string;active:boolean};
 export type ProviderResult<T>={data:T;status:'live'|'demo'|'unavailable'|'stale';detail:string;updatedAt:string};
 export interface FireDetectionProvider{hotspots():Promise<ProviderResult<Hotspot[]>>;clusters():Promise<ProviderResult<FireCluster[]>>;}

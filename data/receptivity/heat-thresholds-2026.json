@@ -1,0 +1,3794 @@
+{
+  "source": "https://static-m.meteo.cat/wordpressweb/wp-content/uploads/2026/07/16102355/LLindars_municipi_2026.csv",
+  "edition": "2026-07-16",
+  "municipalities": [
+    {
+      "name": "Aiguamúrcia",
+      "maximumC": 36.9
+    },
+    {
+      "name": "Alcover",
+      "maximumC": 36.2
+    },
+    {
+      "name": "Alió",
+      "maximumC": 36.2
+    },
+    {
+      "name": "Bràfim",
+      "maximumC": 36.2
+    },
+    {
+      "name": "Cabra del Camp",
+      "maximumC": 36.1
+    },
+    {
+      "name": "el Milà",
+      "maximumC": 36.2
+    },
+    {
+      "name": "el Pla de Santa Maria",
+      "maximumC": 36.4
+    },
+    {
+      "name": "el Pont d'Armentera",
+      "maximumC": 37.2
+    },
+    {
+      "name": "el Rourell",
+      "maximumC": 36.0
+    },
+    {
+      "name": "els Garidells",
+      "maximumC": 35.6
+    },
+    {
+      "name": "Figuerola del Camp",
+      "maximumC": 35.7
+    },
+    {
+      "name": "la Masó",
+      "maximumC": 36.3
+    },
+    {
+      "name": "la Riba",
+      "maximumC": 37.3
+    },
+    {
+      "name": "Montferri",
+      "maximumC": 36.1
+    },
+    {
+      "name": "Mont-ral",
+      "maximumC": 32.9
+    },
+    {
+      "name": "Nulles",
+      "maximumC": 36.7
+    },
+    {
+      "name": "Puigpelat",
+      "maximumC": 36.1
+    },
+    {
+      "name": "Querol",
+      "maximumC": 36.2
+    },
+    {
+      "name": "Rodonyà",
+      "maximumC": 35.5
+    },
+    {
+      "name": "Vallmoll",
+      "maximumC": 36.3
+    },
+    {
+      "name": "Valls",
+      "maximumC": 36.2
+    },
+    {
+      "name": "Vilabella",
+      "maximumC": 36.0
+    },
+    {
+      "name": "Vila-rodona",
+      "maximumC": 36.8
+    },
+    {
+      "name": "Agullana",
+      "maximumC": 37.6
+    },
+    {
+      "name": "Albanyà",
+      "maximumC": 37.8
+    },
+    {
+      "name": "Avinyonet de Puigventós",
+      "maximumC": 37.5
+    },
+    {
+      "name": "Bàscara",
+      "maximumC": 37.3
+    },
+    {
+      "name": "Biure",
+      "maximumC": 37.8
+    },
+    {
+      "name": "Boadella i les Escaules",
+      "maximumC": 38.1
+    },
+    {
+      "name": "Borrassà",
+      "maximumC": 37.1
+    },
+    {
+      "name": "Cabanelles",
+      "maximumC": 37.4
+    },
+    {
+      "name": "Cabanes",
+      "maximumC": 37.8
+    },
+    {
+      "name": "Cadaqués",
+      "maximumC": 36.5
+    },
+    {
+      "name": "Cantallops",
+      "maximumC": 36.9
+    },
+    {
+      "name": "Capmany",
+      "maximumC": 37.7
+    },
+    {
+      "name": "Castelló d'Empúries",
+      "maximumC": 35.5
+    },
+    {
+      "name": "Cistella",
+      "maximumC": 37.5
+    },
+    {
+      "name": "Colera",
+      "maximumC": 36.5
+    },
+    {
+      "name": "Darnius",
+      "maximumC": 37.5
+    },
+    {
+      "name": "el Far d'Empordà",
+      "maximumC": 36.6
+    },
+    {
+      "name": "el Port de la Selva",
+      "maximumC": 36.9
+    },
+    {
+      "name": "Espolla",
+      "maximumC": 37.5
+    },
+    {
+      "name": "Figueres",
+      "maximumC": 37.3
+    },
+    {
+      "name": "Fortià",
+      "maximumC": 36.2
+    },
+    {
+      "name": "Garrigàs",
+      "maximumC": 36.2
+    },
+    {
+      "name": "Garriguella",
+      "maximumC": 37.1
+    },
+    {
+      "name": "la Jonquera",
+      "maximumC": 37.8
+    },
+    {
+      "name": "la Selva de Mar",
+      "maximumC": 36.8
+    },
+    {
+      "name": "la Vajol",
+      "maximumC": 34.8
+    },
+    {
+      "name": "l'Armentera",
+      "maximumC": 35.6
+    },
+    {
+      "name": "l'Escala",
+      "maximumC": 35.2
+    },
+    {
+      "name": "Lladó",
+      "maximumC": 37.3
+    },
+    {
+      "name": "Llançà",
+      "maximumC": 37.0
+    },
+    {
+      "name": "Llers",
+      "maximumC": 37.0
+    },
+    {
+      "name": "Maçanet de Cabrenys",
+      "maximumC": 36.7
+    },
+    {
+      "name": "Masarac i Vilarnadal",
+      "maximumC": 37.5
+    },
+    {
+      "name": "Mollet de Peralada",
+      "maximumC": 37.9
+    },
+    {
+      "name": "Navata",
+      "maximumC": 37.3
+    },
+    {
+      "name": "Ordis",
+      "maximumC": 37.2
+    },
+    {
+      "name": "Palau de Santa Eulàlia",
+      "maximumC": 36.2
+    },
+    {
+      "name": "Palau-saverdera",
+      "maximumC": 36.9
+    },
+    {
+      "name": "Pau",
+      "maximumC": 37.1
+    },
+    {
+      "name": "Pedret i Marzà",
+      "maximumC": 36.8
+    },
+    {
+      "name": "Peralada",
+      "maximumC": 37.4
+    },
+    {
+      "name": "Pont de Molins",
+      "maximumC": 37.8
+    },
+    {
+      "name": "Pontós",
+      "maximumC": 37.0
+    },
+    {
+      "name": "Portbou",
+      "maximumC": 36.4
+    },
+    {
+      "name": "Rabós",
+      "maximumC": 37.5
+    },
+    {
+      "name": "Riumors",
+      "maximumC": 36.0
+    },
+    {
+      "name": "Roses",
+      "maximumC": 37.2
+    },
+    {
+      "name": "Sant Climent Sescebes",
+      "maximumC": 37.9
+    },
+    {
+      "name": "Sant Llorenç de la Muga",
+      "maximumC": 37.9
+    },
+    {
+      "name": "Sant Miquel de Fluvià",
+      "maximumC": 36.2
+    },
+    {
+      "name": "Sant Mori",
+      "maximumC": 36.0
+    },
+    {
+      "name": "Sant Pere Pescador",
+      "maximumC": 35.3
+    },
+    {
+      "name": "Santa Llogaia d'Àlguema",
+      "maximumC": 37.0
+    },
+    {
+      "name": "Saus, Camallera i Llampaies",
+      "maximumC": 36.1
+    },
+    {
+      "name": "Siurana",
+      "maximumC": 36.2
+    },
+    {
+      "name": "Terrades",
+      "maximumC": 37.0
+    },
+    {
+      "name": "Torroella de Fluvià",
+      "maximumC": 35.9
+    },
+    {
+      "name": "Ventalló",
+      "maximumC": 35.8
+    },
+    {
+      "name": "Vilabertran",
+      "maximumC": 37.5
+    },
+    {
+      "name": "Viladamat",
+      "maximumC": 35.6
+    },
+    {
+      "name": "Vilafant",
+      "maximumC": 37.3
+    },
+    {
+      "name": "Vilajuïga",
+      "maximumC": 37.0
+    },
+    {
+      "name": "Vilamacolum",
+      "maximumC": 35.8
+    },
+    {
+      "name": "Vilamalla",
+      "maximumC": 36.5
+    },
+    {
+      "name": "Vilamaniscle",
+      "maximumC": 36.6
+    },
+    {
+      "name": "Vilanant",
+      "maximumC": 37.5
+    },
+    {
+      "name": "Vila-sacra",
+      "maximumC": 36.7
+    },
+    {
+      "name": "Vilaür",
+      "maximumC": 36.6
+    },
+    {
+      "name": "Avinyonet del Penedès",
+      "maximumC": 36.0
+    },
+    {
+      "name": "Castellet i la Gornal",
+      "maximumC": 34.5
+    },
+    {
+      "name": "Castellví de la Marca",
+      "maximumC": 36.2
+    },
+    {
+      "name": "el Pla del Penedès",
+      "maximumC": 37.1
+    },
+    {
+      "name": "Font-rubí",
+      "maximumC": 36.6
+    },
+    {
+      "name": "Gelida",
+      "maximumC": 38.0
+    },
+    {
+      "name": "la Granada",
+      "maximumC": 36.3
+    },
+    {
+      "name": "les Cabanyes",
+      "maximumC": 36.4
+    },
+    {
+      "name": "Mediona",
+      "maximumC": 36.5
+    },
+    {
+      "name": "Olèrdola",
+      "maximumC": 35.8
+    },
+    {
+      "name": "Olesa de Bonesvalls",
+      "maximumC": 36.5
+    },
+    {
+      "name": "Pacs del Penedès",
+      "maximumC": 36.7
+    },
+    {
+      "name": "Pontons",
+      "maximumC": 35.6
+    },
+    {
+      "name": "Puigdàlber",
+      "maximumC": 36.8
+    },
+    {
+      "name": "Sant Cugat Sesgarrigues",
+      "maximumC": 36.1
+    },
+    {
+      "name": "Sant Llorenç d'Hortons",
+      "maximumC": 37.9
+    },
+    {
+      "name": "Sant Martí Sarroca",
+      "maximumC": 36.6
+    },
+    {
+      "name": "Sant Pere de Riudebitlles",
+      "maximumC": 37.2
+    },
+    {
+      "name": "Sant Quintí de Mediona",
+      "maximumC": 36.7
+    },
+    {
+      "name": "Sant Sadurní d'Anoia",
+      "maximumC": 37.9
+    },
+    {
+      "name": "Santa Fe del Penedès",
+      "maximumC": 36.6
+    },
+    {
+      "name": "Santa Margarida i els Monjos",
+      "maximumC": 36.2
+    },
+    {
+      "name": "Subirats",
+      "maximumC": 36.7
+    },
+    {
+      "name": "Torrelavit",
+      "maximumC": 37.6
+    },
+    {
+      "name": "Torrelles de Foix",
+      "maximumC": 36.3
+    },
+    {
+      "name": "Vilafranca del Penedès",
+      "maximumC": 36.0
+    },
+    {
+      "name": "Vilobí del Penedès",
+      "maximumC": 36.7
+    },
+    {
+      "name": "Alàs i Cerc",
+      "maximumC": 37.6
+    },
+    {
+      "name": "Arsèguel",
+      "maximumC": 36.6
+    },
+    {
+      "name": "Bassella",
+      "maximumC": 39.7
+    },
+    {
+      "name": "Cabó",
+      "maximumC": 37.7
+    },
+    {
+      "name": "Cava",
+      "maximumC": 33.1
+    },
+    {
+      "name": "Coll de Nargó",
+      "maximumC": 39.1
+    },
+    {
+      "name": "el Pont de Bar",
+      "maximumC": 37.3
+    },
+    {
+      "name": "Estamariu",
+      "maximumC": 35.4
+    },
+    {
+      "name": "Fígols i Alinyà",
+      "maximumC": 38.9
+    },
+    {
+      "name": "Josa i Tuixén",
+      "maximumC": 32.4
+    },
+    {
+      "name": "la Seu d'Urgell",
+      "maximumC": 38.2
+    },
+    {
+      "name": "la Vansa i Fórnols",
+      "maximumC": 34.6
+    },
+    {
+      "name": "les Valls d'Aguilar",
+      "maximumC": 38.2
+    },
+    {
+      "name": "les Valls de Valira",
+      "maximumC": 38.1
+    },
+    {
+      "name": "Montferrer i Castellbò",
+      "maximumC": 38.3
+    },
+    {
+      "name": "Oliana",
+      "maximumC": 39.5
+    },
+    {
+      "name": "Organyà",
+      "maximumC": 39.2
+    },
+    {
+      "name": "Peramola",
+      "maximumC": 38.7
+    },
+    {
+      "name": "Ribera d'Urgellet",
+      "maximumC": 38.1
+    },
+    {
+      "name": "el Pont de Suert",
+      "maximumC": 36.2
+    },
+    {
+      "name": "la Vall de Boí",
+      "maximumC": 33.3
+    },
+    {
+      "name": "Vilaller",
+      "maximumC": 34.9
+    },
+    {
+      "name": "Argençola",
+      "maximumC": 36.2
+    },
+    {
+      "name": "Bellprat",
+      "maximumC": 36.2
+    },
+    {
+      "name": "Cabrera d'Anoia",
+      "maximumC": 36.9
+    },
+    {
+      "name": "Calaf",
+      "maximumC": 36.9
+    },
+    {
+      "name": "Calonge de Segarra",
+      "maximumC": 37.0
+    },
+    {
+      "name": "Capellades",
+      "maximumC": 37.5
+    },
+    {
+      "name": "Carme",
+      "maximumC": 37.8
+    },
+    {
+      "name": "Castellfollit de Riubregós",
+      "maximumC": 39.0
+    },
+    {
+      "name": "Castellolí",
+      "maximumC": 37.7
+    },
+    {
+      "name": "Copons",
+      "maximumC": 38.6
+    },
+    {
+      "name": "el Bruc",
+      "maximumC": 36.1
+    },
+    {
+      "name": "els Hostalets de Pierola",
+      "maximumC": 37.2
+    },
+    {
+      "name": "els Prats de Rei",
+      "maximumC": 37.5
+    },
+    {
+      "name": "Igualada",
+      "maximumC": 38.7
+    },
+    {
+      "name": "Jorba",
+      "maximumC": 38.1
+    },
+    {
+      "name": "la Llacuna",
+      "maximumC": 35.9
+    },
+    {
+      "name": "la Pobla de Claramunt",
+      "maximumC": 38.6
+    },
+    {
+      "name": "la Torre de Claramunt",
+      "maximumC": 37.4
+    },
+    {
+      "name": "Masquefa",
+      "maximumC": 37.8
+    },
+    {
+      "name": "Montmaneu",
+      "maximumC": 36.6
+    },
+    {
+      "name": "Òdena",
+      "maximumC": 38.2
+    },
+    {
+      "name": "Orpí",
+      "maximumC": 37.4
+    },
+    {
+      "name": "Piera",
+      "maximumC": 37.7
+    },
+    {
+      "name": "Pujalt",
+      "maximumC": 36.6
+    },
+    {
+      "name": "Rubió",
+      "maximumC": 37.0
+    },
+    {
+      "name": "Sant Martí de Tous",
+      "maximumC": 37.7
+    },
+    {
+      "name": "Sant Martí Sesgueioles",
+      "maximumC": 37.2
+    },
+    {
+      "name": "Sant Pere Sallavinera",
+      "maximumC": 37.6
+    },
+    {
+      "name": "Santa Margarida de Montbui",
+      "maximumC": 38.7
+    },
+    {
+      "name": "Santa Maria de Miralles",
+      "maximumC": 36.6
+    },
+    {
+      "name": "Vallbona d'Anoia",
+      "maximumC": 37.4
+    },
+    {
+      "name": "Veciana",
+      "maximumC": 37.9
+    },
+    {
+      "name": "Vilanova del Camí",
+      "maximumC": 38.9
+    },
+    {
+      "name": "Aguilar de Segarra",
+      "maximumC": 38.5
+    },
+    {
+      "name": "Artés",
+      "maximumC": 39.7
+    },
+    {
+      "name": "Avinyó",
+      "maximumC": 38.9
+    },
+    {
+      "name": "Balsareny",
+      "maximumC": 39.4
+    },
+    {
+      "name": "Callús",
+      "maximumC": 39.9
+    },
+    {
+      "name": "Cardona",
+      "maximumC": 38.4
+    },
+    {
+      "name": "Castellbell i el Vilar",
+      "maximumC": 38.7
+    },
+    {
+      "name": "Castellfollit del Boix",
+      "maximumC": 35.9
+    },
+    {
+      "name": "Castellgalí",
+      "maximumC": 38.8
+    },
+    {
+      "name": "Castellnou de Bages",
+      "maximumC": 38.6
+    },
+    {
+      "name": "el Pont de Vilomara i Rocafort",
+      "maximumC": 39.3
+    },
+    {
+      "name": "Fonollosa",
+      "maximumC": 38.1
+    },
+    {
+      "name": "Gaià",
+      "maximumC": 38.5
+    },
+    {
+      "name": "Manresa",
+      "maximumC": 39.1
+    },
+    {
+      "name": "Marganell",
+      "maximumC": 38.1
+    },
+    {
+      "name": "Monistrol de Montserrat",
+      "maximumC": 38.1
+    },
+    {
+      "name": "Mura",
+      "maximumC": 36.6
+    },
+    {
+      "name": "Navarcles",
+      "maximumC": 39.4
+    },
+    {
+      "name": "Navàs",
+      "maximumC": 39.3
+    },
+    {
+      "name": "Rajadell",
+      "maximumC": 39.1
+    },
+    {
+      "name": "Sallent",
+      "maximumC": 39.9
+    },
+    {
+      "name": "Sant Feliu Sasserra",
+      "maximumC": 37.8
+    },
+    {
+      "name": "Sant Fruitós de Bages",
+      "maximumC": 39.3
+    },
+    {
+      "name": "Sant Joan de Vilatorrada",
+      "maximumC": 39.7
+    },
+    {
+      "name": "Sant Mateu de Bages",
+      "maximumC": 37.7
+    },
+    {
+      "name": "Sant Salvador de Guardiola",
+      "maximumC": 39.4
+    },
+    {
+      "name": "Sant Vicenç de Castellet",
+      "maximumC": 39.2
+    },
+    {
+      "name": "Santpedor",
+      "maximumC": 39.3
+    },
+    {
+      "name": "Súria",
+      "maximumC": 39.9
+    },
+    {
+      "name": "Talamanca",
+      "maximumC": 36.6
+    },
+    {
+      "name": "Alforja",
+      "maximumC": 36.3
+    },
+    {
+      "name": "Almoster",
+      "maximumC": 34.5
+    },
+    {
+      "name": "Arbolí",
+      "maximumC": 36.1
+    },
+    {
+      "name": "Botarell",
+      "maximumC": 35.4
+    },
+    {
+      "name": "Cambrils",
+      "maximumC": 34.4
+    },
+    {
+      "name": "Capafonts",
+      "maximumC": 35.0
+    },
+    {
+      "name": "Castellvell del Camp",
+      "maximumC": 34.7
+    },
+    {
+      "name": "Colldejou",
+      "maximumC": 34.5
+    },
+    {
+      "name": "Duesaigües",
+      "maximumC": 35.7
+    },
+    {
+      "name": "la Febró",
+      "maximumC": 34.9
+    },
+    {
+      "name": "la Selva del Camp",
+      "maximumC": 35.0
+    },
+    {
+      "name": "l'Albiol",
+      "maximumC": 32.0
+    },
+    {
+      "name": "l'Aleixar",
+      "maximumC": 35.8
+    },
+    {
+      "name": "l'Argentera",
+      "maximumC": 35.7
+    },
+    {
+      "name": "les Borges del Camp",
+      "maximumC": 35.8
+    },
+    {
+      "name": "Maspujols",
+      "maximumC": 35.8
+    },
+    {
+      "name": "Montbrió del Camp",
+      "maximumC": 35.8
+    },
+    {
+      "name": "Mont-roig del Camp",
+      "maximumC": 35.2
+    },
+    {
+      "name": "Prades",
+      "maximumC": 34.1
+    },
+    {
+      "name": "Pratdip",
+      "maximumC": 35.7
+    },
+    {
+      "name": "Reus",
+      "maximumC": 35.1
+    },
+    {
+      "name": "Riudecanyes",
+      "maximumC": 35.3
+    },
+    {
+      "name": "Riudecols",
+      "maximumC": 35.9
+    },
+    {
+      "name": "Riudoms",
+      "maximumC": 35.6
+    },
+    {
+      "name": "Vandellòs i l'Hospitalet de l'Infant",
+      "maximumC": 36.0
+    },
+    {
+      "name": "Vilanova d'Escornalbou",
+      "maximumC": 35.1
+    },
+    {
+      "name": "Vilaplana",
+      "maximumC": 36.0
+    },
+    {
+      "name": "Vinyols i els Arcs",
+      "maximumC": 35.6
+    },
+    {
+      "name": "Aldover",
+      "maximumC": 39.6
+    },
+    {
+      "name": "Alfara de Carles",
+      "maximumC": 37.4
+    },
+    {
+      "name": "Benifallet",
+      "maximumC": 40.2
+    },
+    {
+      "name": "Camarles",
+      "maximumC": 35.4
+    },
+    {
+      "name": "Deltebre",
+      "maximumC": 34.4
+    },
+    {
+      "name": "el Perelló",
+      "maximumC": 36.4
+    },
+    {
+      "name": "l'Aldea",
+      "maximumC": 35.1
+    },
+    {
+      "name": "l'Ametlla de Mar",
+      "maximumC": 36.2
+    },
+    {
+      "name": "l'Ampolla",
+      "maximumC": 36.3
+    },
+    {
+      "name": "Paüls",
+      "maximumC": 37.9
+    },
+    {
+      "name": "Roquetes",
+      "maximumC": 39.8
+    },
+    {
+      "name": "Tivenys",
+      "maximumC": 39.7
+    },
+    {
+      "name": "Tortosa",
+      "maximumC": 39.2
+    },
+    {
+      "name": "Xerta",
+      "maximumC": 39.8
+    },
+    {
+      "name": "Albons",
+      "maximumC": 35.5
+    },
+    {
+      "name": "Begur",
+      "maximumC": 33.5
+    },
+    {
+      "name": "Bellcaire d'Empordà",
+      "maximumC": 35.4
+    },
+    {
+      "name": "Calonge i Sant Antoni",
+      "maximumC": 35.9
+    },
+    {
+      "name": "Castell d'Aro, Platja d'Aro i s'Agaró",
+      "maximumC": 34.9
+    },
+    {
+      "name": "Colomers",
+      "maximumC": 36.4
+    },
+    {
+      "name": "Corçà",
+      "maximumC": 36.8
+    },
+    {
+      "name": "Cruïlles, Monells i Sant Sadurní de l'Heura",
+      "maximumC": 36.5
+    },
+    {
+      "name": "Foixà",
+      "maximumC": 36.1
+    },
+    {
+      "name": "Fontanilles",
+      "maximumC": 35.5
+    },
+    {
+      "name": "Forallac",
+      "maximumC": 36.9
+    },
+    {
+      "name": "Garrigoles",
+      "maximumC": 35.4
+    },
+    {
+      "name": "Gualta",
+      "maximumC": 35.6
+    },
+    {
+      "name": "Jafre",
+      "maximumC": 36.1
+    },
+    {
+      "name": "la Bisbal d'Empordà",
+      "maximumC": 37.1
+    },
+    {
+      "name": "la Pera",
+      "maximumC": 36.5
+    },
+    {
+      "name": "la Tallada d'Empordà",
+      "maximumC": 36.1
+    },
+    {
+      "name": "Mont-ras",
+      "maximumC": 34.2
+    },
+    {
+      "name": "Palafrugell",
+      "maximumC": 34.2
+    },
+    {
+      "name": "Palamós",
+      "maximumC": 35.5
+    },
+    {
+      "name": "Palau-sator",
+      "maximumC": 35.7
+    },
+    {
+      "name": "Pals",
+      "maximumC": 35.2
+    },
+    {
+      "name": "Parlavà",
+      "maximumC": 36.3
+    },
+    {
+      "name": "Regencós",
+      "maximumC": 34.6
+    },
+    {
+      "name": "Rupià",
+      "maximumC": 36.2
+    },
+    {
+      "name": "Sant Feliu de Guíxols",
+      "maximumC": 34.7
+    },
+    {
+      "name": "Santa Cristina d'Aro",
+      "maximumC": 34.9
+    },
+    {
+      "name": "Serra de Daró",
+      "maximumC": 36.1
+    },
+    {
+      "name": "Torrent",
+      "maximumC": 35.5
+    },
+    {
+      "name": "Torroella de Montgrí",
+      "maximumC": 35.0
+    },
+    {
+      "name": "Ullà",
+      "maximumC": 35.5
+    },
+    {
+      "name": "Ullastret",
+      "maximumC": 36.1
+    },
+    {
+      "name": "Ultramort",
+      "maximumC": 36.2
+    },
+    {
+      "name": "Vall-llobrega",
+      "maximumC": 35.1
+    },
+    {
+      "name": "Verges",
+      "maximumC": 36.2
+    },
+    {
+      "name": "Vilopriu",
+      "maximumC": 35.9
+    },
+    {
+      "name": "Abrera",
+      "maximumC": 38.6
+    },
+    {
+      "name": "Begues",
+      "maximumC": 35.2
+    },
+    {
+      "name": "Castelldefels",
+      "maximumC": 36.6
+    },
+    {
+      "name": "Castellví de Rosanes",
+      "maximumC": 38.0
+    },
+    {
+      "name": "Cervelló",
+      "maximumC": 38.3
+    },
+    {
+      "name": "Collbató",
+      "maximumC": 36.6
+    },
+    {
+      "name": "Corbera de Llobregat",
+      "maximumC": 37.1
+    },
+    {
+      "name": "Cornellà de Llobregat",
+      "maximumC": 35.8
+    },
+    {
+      "name": "el Papiol",
+      "maximumC": 37.1
+    },
+    {
+      "name": "el Prat de Llobregat",
+      "maximumC": 35.7
+    },
+    {
+      "name": "Esparreguera",
+      "maximumC": 38.0
+    },
+    {
+      "name": "Esplugues de Llobregat",
+      "maximumC": 35.2
+    },
+    {
+      "name": "Gavà",
+      "maximumC": 36.0
+    },
+    {
+      "name": "la Palma de Cervelló",
+      "maximumC": 38.0
+    },
+    {
+      "name": "Martorell",
+      "maximumC": 38.9
+    },
+    {
+      "name": "Molins de Rei",
+      "maximumC": 37.3
+    },
+    {
+      "name": "Olesa de Montserrat",
+      "maximumC": 38.5
+    },
+    {
+      "name": "Pallejà",
+      "maximumC": 37.8
+    },
+    {
+      "name": "Sant Andreu de la Barca",
+      "maximumC": 38.6
+    },
+    {
+      "name": "Sant Boi de Llobregat",
+      "maximumC": 36.0
+    },
+    {
+      "name": "Sant Climent de Llobregat",
+      "maximumC": 36.3
+    },
+    {
+      "name": "Sant Esteve Sesrovires",
+      "maximumC": 38.1
+    },
+    {
+      "name": "Sant Feliu de Llobregat",
+      "maximumC": 36.2
+    },
+    {
+      "name": "Sant Joan Despí",
+      "maximumC": 36.0
+    },
+    {
+      "name": "Sant Just Desvern",
+      "maximumC": 35.2
+    },
+    {
+      "name": "Sant Vicenç dels Horts",
+      "maximumC": 37.1
+    },
+    {
+      "name": "Santa Coloma de Cervelló",
+      "maximumC": 36.4
+    },
+    {
+      "name": "Torrelles de Llobregat",
+      "maximumC": 36.6
+    },
+    {
+      "name": "Vallirana",
+      "maximumC": 38.5
+    },
+    {
+      "name": "Viladecans",
+      "maximumC": 35.9
+    },
+    {
+      "name": "Albinyana",
+      "maximumC": 35.3
+    },
+    {
+      "name": "Banyeres del Penedès",
+      "maximumC": 35.5
+    },
+    {
+      "name": "Bellvei",
+      "maximumC": 34.6
+    },
+    {
+      "name": "Bonastre",
+      "maximumC": 34.8
+    },
+    {
+      "name": "Calafell",
+      "maximumC": 34.1
+    },
+    {
+      "name": "Cunit",
+      "maximumC": 32.4
+    },
+    {
+      "name": "el Montmell",
+      "maximumC": 36.3
+    },
+    {
+      "name": "el Vendrell",
+      "maximumC": 35.4
+    },
+    {
+      "name": "la Bisbal del Penedès",
+      "maximumC": 36.3
+    },
+    {
+      "name": "l'Arboç",
+      "maximumC": 34.8
+    },
+    {
+      "name": "Llorenç del Penedès",
+      "maximumC": 36.1
+    },
+    {
+      "name": "Masllorenç",
+      "maximumC": 35.3
+    },
+    {
+      "name": "Sant Jaume dels Domenys",
+      "maximumC": 36.1
+    },
+    {
+      "name": "Santa Oliva",
+      "maximumC": 35.5
+    },
+    {
+      "name": "Badalona",
+      "maximumC": 32.3
+    },
+    {
+      "name": "Barcelona",
+      "maximumC": 34.3
+    },
+    {
+      "name": "l'Hospitalet de Llobregat",
+      "maximumC": 35.6
+    },
+    {
+      "name": "Sant Adrià de Besòs",
+      "maximumC": 34.3
+    },
+    {
+      "name": "Santa Coloma de Gramenet",
+      "maximumC": 34.4
+    },
+    {
+      "name": "Avià",
+      "maximumC": 37.3
+    },
+    {
+      "name": "Bagà",
+      "maximumC": 36.1
+    },
+    {
+      "name": "Berga",
+      "maximumC": 36.4
+    },
+    {
+      "name": "Borredà",
+      "maximumC": 36.8
+    },
+    {
+      "name": "Capolat",
+      "maximumC": 32.6
+    },
+    {
+      "name": "Casserres",
+      "maximumC": 36.9
+    },
+    {
+      "name": "Castell de l'Areny",
+      "maximumC": 35.5
+    },
+    {
+      "name": "Castellar de n'Hug",
+      "maximumC": 31.5
+    },
+    {
+      "name": "Castellar del Riu",
+      "maximumC": 35.2
+    },
+    {
+      "name": "Cercs",
+      "maximumC": 37.6
+    },
+    {
+      "name": "Fígols",
+      "maximumC": 33.3
+    },
+    {
+      "name": "Gironella",
+      "maximumC": 38.7
+    },
+    {
+      "name": "Gisclareny",
+      "maximumC": 32.3
+    },
+    {
+      "name": "Gósol",
+      "maximumC": 31.2
+    },
+    {
+      "name": "Guardiola de Berguedà",
+      "maximumC": 36.5
+    },
+    {
+      "name": "la Nou de Berguedà",
+      "maximumC": 35.8
+    },
+    {
+      "name": "la Pobla de Lillet",
+      "maximumC": 36.3
+    },
+    {
+      "name": "la Quar",
+      "maximumC": 37.6
+    },
+    {
+      "name": "l'Espunyola",
+      "maximumC": 36.0
+    },
+    {
+      "name": "Montclar",
+      "maximumC": 36.8
+    },
+    {
+      "name": "Montmajor",
+      "maximumC": 36.7
+    },
+    {
+      "name": "Olvan",
+      "maximumC": 38.5
+    },
+    {
+      "name": "Puig-reig",
+      "maximumC": 38.8
+    },
+    {
+      "name": "Sagàs",
+      "maximumC": 38.1
+    },
+    {
+      "name": "Saldes",
+      "maximumC": 32.9
+    },
+    {
+      "name": "Sant Jaume de Frontanyà",
+      "maximumC": 34.8
+    },
+    {
+      "name": "Sant Julià de Cerdanyola",
+      "maximumC": 34.7
+    },
+    {
+      "name": "Santa Maria de Merlès",
+      "maximumC": 38.8
+    },
+    {
+      "name": "Vallcebre",
+      "maximumC": 33.8
+    },
+    {
+      "name": "Vilada",
+      "maximumC": 37.2
+    },
+    {
+      "name": "Viver i Serrateix",
+      "maximumC": 36.9
+    },
+    {
+      "name": "Alp",
+      "maximumC": 34.6
+    },
+    {
+      "name": "Bellver de Cerdanya",
+      "maximumC": 35.9
+    },
+    {
+      "name": "Bolvir",
+      "maximumC": 34.8
+    },
+    {
+      "name": "Das",
+      "maximumC": 33.9
+    },
+    {
+      "name": "Fontanals de Cerdanya",
+      "maximumC": 34.5
+    },
+    {
+      "name": "Ger",
+      "maximumC": 35.1
+    },
+    {
+      "name": "Guils de Cerdanya",
+      "maximumC": 32.4
+    },
+    {
+      "name": "Isòvol",
+      "maximumC": 35.4
+    },
+    {
+      "name": "Lles de Cerdanya",
+      "maximumC": 33.4
+    },
+    {
+      "name": "Llívia",
+      "maximumC": 33.1
+    },
+    {
+      "name": "Meranges",
+      "maximumC": 30.6
+    },
+    {
+      "name": "Montellà i Martinet",
+      "maximumC": 38.0
+    },
+    {
+      "name": "Prats i Sansor",
+      "maximumC": 35.0
+    },
+    {
+      "name": "Prullans",
+      "maximumC": 35.9
+    },
+    {
+      "name": "Puigcerdà",
+      "maximumC": 33.8
+    },
+    {
+      "name": "Riu de Cerdanya",
+      "maximumC": 33.9
+    },
+    {
+      "name": "Urús",
+      "maximumC": 32.9
+    },
+    {
+      "name": "Barberà de la Conca",
+      "maximumC": 36.6
+    },
+    {
+      "name": "Blancafort",
+      "maximumC": 36.9
+    },
+    {
+      "name": "Conesa",
+      "maximumC": 35.8
+    },
+    {
+      "name": "Forès",
+      "maximumC": 34.6
+    },
+    {
+      "name": "les Piles de Gaià",
+      "maximumC": 36.1
+    },
+    {
+      "name": "l'Espluga de Francolí",
+      "maximumC": 37.9
+    },
+    {
+      "name": "Llorac",
+      "maximumC": 36.7
+    },
+    {
+      "name": "Montblanc",
+      "maximumC": 37.1
+    },
+    {
+      "name": "Passanant i Belltall",
+      "maximumC": 35.7
+    },
+    {
+      "name": "Pira",
+      "maximumC": 37.2
+    },
+    {
+      "name": "Pontils",
+      "maximumC": 36.5
+    },
+    {
+      "name": "Rocafort de Queralt",
+      "maximumC": 36.6
+    },
+    {
+      "name": "Santa Coloma de Queralt",
+      "maximumC": 36.4
+    },
+    {
+      "name": "Sarral",
+      "maximumC": 37.0
+    },
+    {
+      "name": "Savallà del Comtat",
+      "maximumC": 34.9
+    },
+    {
+      "name": "Senan",
+      "maximumC": 35.8
+    },
+    {
+      "name": "Solivella",
+      "maximumC": 36.6
+    },
+    {
+      "name": "Vallclara",
+      "maximumC": 36.9
+    },
+    {
+      "name": "Vallfogona de Riucorb",
+      "maximumC": 37.2
+    },
+    {
+      "name": "Vilanova de Prades",
+      "maximumC": 34.6
+    },
+    {
+      "name": "Vilaverd",
+      "maximumC": 37.5
+    },
+    {
+      "name": "Vimbodí i Poblet",
+      "maximumC": 37.4
+    },
+    {
+      "name": "Canyelles",
+      "maximumC": 35.5
+    },
+    {
+      "name": "Cubelles",
+      "maximumC": 33.3
+    },
+    {
+      "name": "Olivella",
+      "maximumC": 36.1
+    },
+    {
+      "name": "Sant Pere de Ribes",
+      "maximumC": 36.1
+    },
+    {
+      "name": "Sitges",
+      "maximumC": 36.1
+    },
+    {
+      "name": "Vilanova i la Geltrú",
+      "maximumC": 34.5
+    },
+    {
+      "name": "Arbeca",
+      "maximumC": 38.4
+    },
+    {
+      "name": "Bellaguarda",
+      "maximumC": 37.0
+    },
+    {
+      "name": "Bovera",
+      "maximumC": 39.5
+    },
+    {
+      "name": "Castelldans",
+      "maximumC": 38.3
+    },
+    {
+      "name": "Cervià de les Garrigues",
+      "maximumC": 38.5
+    },
+    {
+      "name": "el Cogul",
+      "maximumC": 39.0
+    },
+    {
+      "name": "el Soleràs",
+      "maximumC": 38.8
+    },
+    {
+      "name": "el Vilosell",
+      "maximumC": 36.9
+    },
+    {
+      "name": "els Omellons",
+      "maximumC": 38.1
+    },
+    {
+      "name": "els Torms",
+      "maximumC": 38.1
+    },
+    {
+      "name": "Fulleda",
+      "maximumC": 36.6
+    },
+    {
+      "name": "Granyena de les Garrigues",
+      "maximumC": 38.5
+    },
+    {
+      "name": "Juncosa",
+      "maximumC": 37.7
+    },
+    {
+      "name": "Juneda",
+      "maximumC": 39.1
+    },
+    {
+      "name": "la Floresta",
+      "maximumC": 38.5
+    },
+    {
+      "name": "la Granadella",
+      "maximumC": 37.6
+    },
+    {
+      "name": "la Pobla de Cérvoles",
+      "maximumC": 37.1
+    },
+    {
+      "name": "l'Albagés",
+      "maximumC": 38.6
+    },
+    {
+      "name": "l'Albi",
+      "maximumC": 37.7
+    },
+    {
+      "name": "les Borges Blanques",
+      "maximumC": 38.8
+    },
+    {
+      "name": "l'Espluga Calba",
+      "maximumC": 37.8
+    },
+    {
+      "name": "Puiggròs",
+      "maximumC": 38.7
+    },
+    {
+      "name": "Tarrés",
+      "maximumC": 36.7
+    },
+    {
+      "name": "Vinaixa",
+      "maximumC": 37.9
+    },
+    {
+      "name": "Argelaguer",
+      "maximumC": 38.8
+    },
+    {
+      "name": "Besalú",
+      "maximumC": 38.9
+    },
+    {
+      "name": "Beuda",
+      "maximumC": 37.3
+    },
+    {
+      "name": "Castellfollit de la Roca",
+      "maximumC": 38.3
+    },
+    {
+      "name": "la Vall de Bianya",
+      "maximumC": 38.2
+    },
+    {
+      "name": "la Vall d'en Bas",
+      "maximumC": 36.9
+    },
+    {
+      "name": "les Planes d'Hostoles",
+      "maximumC": 38.3
+    },
+    {
+      "name": "les Preses",
+      "maximumC": 36.9
+    },
+    {
+      "name": "Maià de Montcal",
+      "maximumC": 37.9
+    },
+    {
+      "name": "Mieres",
+      "maximumC": 39.5
+    },
+    {
+      "name": "Montagut i Oix",
+      "maximumC": 38.2
+    },
+    {
+      "name": "Olot",
+      "maximumC": 37.6
+    },
+    {
+      "name": "Riudaura",
+      "maximumC": 36.6
+    },
+    {
+      "name": "Sales de Llierca",
+      "maximumC": 38.1
+    },
+    {
+      "name": "Sant Aniol de Finestres",
+      "maximumC": 38.5
+    },
+    {
+      "name": "Sant Feliu de Pallerols",
+      "maximumC": 37.5
+    },
+    {
+      "name": "Sant Ferriol",
+      "maximumC": 38.9
+    },
+    {
+      "name": "Sant Jaume de Llierca",
+      "maximumC": 38.8
+    },
+    {
+      "name": "Sant Joan les Fonts",
+      "maximumC": 38.2
+    },
+    {
+      "name": "Santa Pau",
+      "maximumC": 36.8
+    },
+    {
+      "name": "Tortellà",
+      "maximumC": 38.1
+    },
+    {
+      "name": "Aiguaviva",
+      "maximumC": 37.8
+    },
+    {
+      "name": "Bescanó",
+      "maximumC": 38.4
+    },
+    {
+      "name": "Bordils",
+      "maximumC": 37.6
+    },
+    {
+      "name": "Campllong",
+      "maximumC": 37.9
+    },
+    {
+      "name": "Canet d'Adri",
+      "maximumC": 37.8
+    },
+    {
+      "name": "Cassà de la Selva",
+      "maximumC": 37.1
+    },
+    {
+      "name": "Celrà",
+      "maximumC": 38.0
+    },
+    {
+      "name": "Cervià de Ter",
+      "maximumC": 37.6
+    },
+    {
+      "name": "Flaçà",
+      "maximumC": 36.9
+    },
+    {
+      "name": "Fornells de la Selva",
+      "maximumC": 38.1
+    },
+    {
+      "name": "Girona",
+      "maximumC": 38.3
+    },
+    {
+      "name": "Juià",
+      "maximumC": 37.4
+    },
+    {
+      "name": "Llagostera",
+      "maximumC": 36.5
+    },
+    {
+      "name": "Llambilles",
+      "maximumC": 37.5
+    },
+    {
+      "name": "Madremanya",
+      "maximumC": 36.1
+    },
+    {
+      "name": "Quart",
+      "maximumC": 38.1
+    },
+    {
+      "name": "Salt",
+      "maximumC": 38.0
+    },
+    {
+      "name": "Sant Andreu Salou",
+      "maximumC": 37.5
+    },
+    {
+      "name": "Sant Gregori",
+      "maximumC": 38.3
+    },
+    {
+      "name": "Sant Joan de Mollet",
+      "maximumC": 37.1
+    },
+    {
+      "name": "Sant Jordi Desvalls",
+      "maximumC": 36.8
+    },
+    {
+      "name": "Sant Julià de Ramis",
+      "maximumC": 38.2
+    },
+    {
+      "name": "Sant Martí de Llémena",
+      "maximumC": 38.4
+    },
+    {
+      "name": "Sant Martí Vell",
+      "maximumC": 37.2
+    },
+    {
+      "name": "Sarrià de Ter",
+      "maximumC": 38.3
+    },
+    {
+      "name": "Vilablareix",
+      "maximumC": 38.0
+    },
+    {
+      "name": "Viladasens",
+      "maximumC": 36.9
+    },
+    {
+      "name": "Alpens",
+      "maximumC": 36.9
+    },
+    {
+      "name": "Lluçà",
+      "maximumC": 37.5
+    },
+    {
+      "name": "Olost",
+      "maximumC": 38.6
+    },
+    {
+      "name": "Oristà",
+      "maximumC": 38.9
+    },
+    {
+      "name": "Perafita",
+      "maximumC": 37.1
+    },
+    {
+      "name": "Prats de Lluçanès",
+      "maximumC": 37.4
+    },
+    {
+      "name": "Sant Martí d'Albars",
+      "maximumC": 38.3
+    },
+    {
+      "name": "Sobremunt",
+      "maximumC": 36.2
+    },
+    {
+      "name": "Alella",
+      "maximumC": 32.7
+    },
+    {
+      "name": "Arenys de Mar",
+      "maximumC": 33.1
+    },
+    {
+      "name": "Arenys de Munt",
+      "maximumC": 33.1
+    },
+    {
+      "name": "Argentona",
+      "maximumC": 33.9
+    },
+    {
+      "name": "Cabrera de Mar",
+      "maximumC": 33.0
+    },
+    {
+      "name": "Cabrils",
+      "maximumC": 32.6
+    },
+    {
+      "name": "Caldes d'Estrac",
+      "maximumC": 33.5
+    },
+    {
+      "name": "Calella",
+      "maximumC": 34.3
+    },
+    {
+      "name": "Canet de Mar",
+      "maximumC": 33.4
+    },
+    {
+      "name": "Dosrius",
+      "maximumC": 34.4
+    },
+    {
+      "name": "el Masnou",
+      "maximumC": 31.7
+    },
+    {
+      "name": "Malgrat de Mar",
+      "maximumC": 33.1
+    },
+    {
+      "name": "Mataró",
+      "maximumC": 34.0
+    },
+    {
+      "name": "Montgat",
+      "maximumC": 33.2
+    },
+    {
+      "name": "Òrrius",
+      "maximumC": 33.3
+    },
+    {
+      "name": "Palafolls",
+      "maximumC": 33.6
+    },
+    {
+      "name": "Pineda de Mar",
+      "maximumC": 34.2
+    },
+    {
+      "name": "Premià de Dalt",
+      "maximumC": 32.9
+    },
+    {
+      "name": "Premià de Mar",
+      "maximumC": 33.4
+    },
+    {
+      "name": "Sant Andreu de Llavaneres",
+      "maximumC": 34.1
+    },
+    {
+      "name": "Sant Cebrià de Vallalta",
+      "maximumC": 33.6
+    },
+    {
+      "name": "Sant Iscle de Vallalta",
+      "maximumC": 33.4
+    },
+    {
+      "name": "Sant Pol de Mar",
+      "maximumC": 33.9
+    },
+    {
+      "name": "Sant Vicenç de Montalt",
+      "maximumC": 33.3
+    },
+    {
+      "name": "Santa Susanna",
+      "maximumC": 33.9
+    },
+    {
+      "name": "Teià",
+      "maximumC": 32.6
+    },
+    {
+      "name": "Tiana",
+      "maximumC": 33.0
+    },
+    {
+      "name": "Tordera",
+      "maximumC": 35.2
+    },
+    {
+      "name": "Vilassar de Dalt",
+      "maximumC": 32.7
+    },
+    {
+      "name": "Vilassar de Mar",
+      "maximumC": 33.1
+    },
+    {
+      "name": "Calders",
+      "maximumC": 37.2
+    },
+    {
+      "name": "Castellcir",
+      "maximumC": 34.6
+    },
+    {
+      "name": "Castellterçol",
+      "maximumC": 35.0
+    },
+    {
+      "name": "Collsuspina",
+      "maximumC": 34.1
+    },
+    {
+      "name": "Granera",
+      "maximumC": 34.5
+    },
+    {
+      "name": "l'Estany",
+      "maximumC": 34.8
+    },
+    {
+      "name": "Moià",
+      "maximumC": 34.8
+    },
+    {
+      "name": "Monistrol de Calders",
+      "maximumC": 37.5
+    },
+    {
+      "name": "Sant Quirze Safaja",
+      "maximumC": 35.7
+    },
+    {
+      "name": "Santa Maria d'Oló",
+      "maximumC": 37.9
+    },
+    {
+      "name": "Alcanar",
+      "maximumC": 33.7
+    },
+    {
+      "name": "Amposta",
+      "maximumC": 34.2
+    },
+    {
+      "name": "Freginals",
+      "maximumC": 35.1
+    },
+    {
+      "name": "Godall",
+      "maximumC": 35.7
+    },
+    {
+      "name": "la Galera",
+      "maximumC": 36.6
+    },
+    {
+      "name": "la Ràpita",
+      "maximumC": 33.8
+    },
+    {
+      "name": "la Sénia",
+      "maximumC": 35.8
+    },
+    {
+      "name": "Mas de Barberans",
+      "maximumC": 35.8
+    },
+    {
+      "name": "Masdenverge",
+      "maximumC": 35.7
+    },
+    {
+      "name": "Sant Jaume d'Enveja",
+      "maximumC": 34.2
+    },
+    {
+      "name": "Santa Bàrbara",
+      "maximumC": 36.5
+    },
+    {
+      "name": "Ulldecona",
+      "maximumC": 35.2
+    },
+    {
+      "name": "Àger",
+      "maximumC": 37.7
+    },
+    {
+      "name": "Albesa",
+      "maximumC": 39.6
+    },
+    {
+      "name": "Algerri",
+      "maximumC": 38.7
+    },
+    {
+      "name": "Alòs de Balaguer",
+      "maximumC": 40.4
+    },
+    {
+      "name": "Artesa de Segre",
+      "maximumC": 40.0
+    },
+    {
+      "name": "Balaguer",
+      "maximumC": 39.2
+    },
+    {
+      "name": "Bellcaire d'Urgell",
+      "maximumC": 39.5
+    },
+    {
+      "name": "Bellmunt d'Urgell",
+      "maximumC": 38.9
+    },
+    {
+      "name": "Cabanabona",
+      "maximumC": 39.5
+    },
+    {
+      "name": "Camarasa",
+      "maximumC": 40.2
+    },
+    {
+      "name": "Castelló de Farfanya",
+      "maximumC": 39.2
+    },
+    {
+      "name": "Cubells",
+      "maximumC": 38.7
+    },
+    {
+      "name": "Foradada",
+      "maximumC": 38.7
+    },
+    {
+      "name": "Ivars de Noguera",
+      "maximumC": 39.6
+    },
+    {
+      "name": "la Baronia de Rialb",
+      "maximumC": 39.8
+    },
+    {
+      "name": "la Sentiu de Sió",
+      "maximumC": 39.6
+    },
+    {
+      "name": "les Avellanes i Santa Linya",
+      "maximumC": 38.7
+    },
+    {
+      "name": "Menàrguens",
+      "maximumC": 39.6
+    },
+    {
+      "name": "Montgai",
+      "maximumC": 39.8
+    },
+    {
+      "name": "Oliola",
+      "maximumC": 39.0
+    },
+    {
+      "name": "Os de Balaguer",
+      "maximumC": 39.1
+    },
+    {
+      "name": "Penelles",
+      "maximumC": 39.6
+    },
+    {
+      "name": "Ponts",
+      "maximumC": 40.0
+    },
+    {
+      "name": "Preixens",
+      "maximumC": 39.9
+    },
+    {
+      "name": "Térmens",
+      "maximumC": 39.8
+    },
+    {
+      "name": "Tiurana",
+      "maximumC": 38.2
+    },
+    {
+      "name": "Torrelameu",
+      "maximumC": 39.8
+    },
+    {
+      "name": "Vallfogona de Balaguer",
+      "maximumC": 39.4
+    },
+    {
+      "name": "Vilanova de l'Aguda",
+      "maximumC": 39.9
+    },
+    {
+      "name": "Vilanova de Meià",
+      "maximumC": 38.7
+    },
+    {
+      "name": "Aiguafreda",
+      "maximumC": 37.8
+    },
+    {
+      "name": "Balenyà",
+      "maximumC": 36.6
+    },
+    {
+      "name": "Calldetenes",
+      "maximumC": 38.3
+    },
+    {
+      "name": "Centelles",
+      "maximumC": 36.9
+    },
+    {
+      "name": "el Brull",
+      "maximumC": 35.0
+    },
+    {
+      "name": "Espinelves",
+      "maximumC": 35.8
+    },
+    {
+      "name": "Folgueroles",
+      "maximumC": 37.9
+    },
+    {
+      "name": "Gurb",
+      "maximumC": 38.2
+    },
+    {
+      "name": "les Masies de Roda",
+      "maximumC": 39.3
+    },
+    {
+      "name": "les Masies de Voltregà",
+      "maximumC": 39.0
+    },
+    {
+      "name": "l'Esquirol",
+      "maximumC": 37.1
+    },
+    {
+      "name": "Malla",
+      "maximumC": 37.0
+    },
+    {
+      "name": "Manlleu",
+      "maximumC": 39.3
+    },
+    {
+      "name": "Montesquiu",
+      "maximumC": 40.0
+    },
+    {
+      "name": "Muntanyola",
+      "maximumC": 35.6
+    },
+    {
+      "name": "Orís",
+      "maximumC": 38.9
+    },
+    {
+      "name": "Roda de Ter",
+      "maximumC": 39.3
+    },
+    {
+      "name": "Rupit i Pruit",
+      "maximumC": 35.2
+    },
+    {
+      "name": "Sant Agustí de Lluçanès",
+      "maximumC": 37.2
+    },
+    {
+      "name": "Sant Bartomeu del Grau",
+      "maximumC": 35.8
+    },
+    {
+      "name": "Sant Boi de Lluçanès",
+      "maximumC": 37.0
+    },
+    {
+      "name": "Sant Hipòlit de Voltregà",
+      "maximumC": 38.7
+    },
+    {
+      "name": "Sant Julià de Vilatorta",
+      "maximumC": 37.5
+    },
+    {
+      "name": "Sant Martí de Centelles",
+      "maximumC": 37.8
+    },
+    {
+      "name": "Sant Pere de Torelló",
+      "maximumC": 38.3
+    },
+    {
+      "name": "Sant Quirze de Besora",
+      "maximumC": 39.7
+    },
+    {
+      "name": "Sant Sadurní d'Osormort",
+      "maximumC": 37.9
+    },
+    {
+      "name": "Sant Vicenç de Torelló",
+      "maximumC": 38.8
+    },
+    {
+      "name": "Santa Cecília de Voltregà",
+      "maximumC": 38.6
+    },
+    {
+      "name": "Santa Eugènia de Berga",
+      "maximumC": 37.9
+    },
+    {
+      "name": "Santa Eulàlia de Riuprimer",
+      "maximumC": 37.5
+    },
+    {
+      "name": "Santa Maria de Besora",
+      "maximumC": 36.8
+    },
+    {
+      "name": "Seva",
+      "maximumC": 36.7
+    },
+    {
+      "name": "Sora",
+      "maximumC": 38.6
+    },
+    {
+      "name": "Taradell",
+      "maximumC": 38.0
+    },
+    {
+      "name": "Tavèrnoles",
+      "maximumC": 38.3
+    },
+    {
+      "name": "Tavertet",
+      "maximumC": 35.4
+    },
+    {
+      "name": "Tona",
+      "maximumC": 36.4
+    },
+    {
+      "name": "Torelló",
+      "maximumC": 39.2
+    },
+    {
+      "name": "Vic",
+      "maximumC": 38.1
+    },
+    {
+      "name": "Vidrà",
+      "maximumC": 35.0
+    },
+    {
+      "name": "Viladrau",
+      "maximumC": 35.4
+    },
+    {
+      "name": "Vilanova de Sau",
+      "maximumC": 37.9
+    },
+    {
+      "name": "Abella de la Conca",
+      "maximumC": 37.1
+    },
+    {
+      "name": "Castell de Mur",
+      "maximumC": 39.3
+    },
+    {
+      "name": "Conca de Dalt",
+      "maximumC": 39.2
+    },
+    {
+      "name": "Gavet de la Conca",
+      "maximumC": 40.6
+    },
+    {
+      "name": "Isona i Conca Dellà",
+      "maximumC": 40.0
+    },
+    {
+      "name": "la Pobla de Segur",
+      "maximumC": 39.0
+    },
+    {
+      "name": "la Torre de Cabdella",
+      "maximumC": 33.3
+    },
+    {
+      "name": "Llimiana",
+      "maximumC": 37.5
+    },
+    {
+      "name": "Salàs de Pallars",
+      "maximumC": 39.0
+    },
+    {
+      "name": "Sant Esteve de la Sarga",
+      "maximumC": 35.6
+    },
+    {
+      "name": "Sarroca de Bellera",
+      "maximumC": 34.9
+    },
+    {
+      "name": "Senterada",
+      "maximumC": 37.2
+    },
+    {
+      "name": "Talarn",
+      "maximumC": 39.5
+    },
+    {
+      "name": "Tremp",
+      "maximumC": 40.3
+    },
+    {
+      "name": "Alins",
+      "maximumC": 33.5
+    },
+    {
+      "name": "Alt Àneu",
+      "maximumC": 32.9
+    },
+    {
+      "name": "Baix Pallars",
+      "maximumC": 37.7
+    },
+    {
+      "name": "Espot",
+      "maximumC": 30.8
+    },
+    {
+      "name": "Esterri d'Àneu",
+      "maximumC": 34.1
+    },
+    {
+      "name": "Esterri de Cardós",
+      "maximumC": 32.1
+    },
+    {
+      "name": "Farrera",
+      "maximumC": 31.9
+    },
+    {
+      "name": "la Guingueta d'Àneu",
+      "maximumC": 34.3
+    },
+    {
+      "name": "Lladorre",
+      "maximumC": 33.3
+    },
+    {
+      "name": "Llavorsí",
+      "maximumC": 36.1
+    },
+    {
+      "name": "Rialp",
+      "maximumC": 36.5
+    },
+    {
+      "name": "Soriguera",
+      "maximumC": 32.1
+    },
+    {
+      "name": "Sort",
+      "maximumC": 36.5
+    },
+    {
+      "name": "Tírvia",
+      "maximumC": 35.2
+    },
+    {
+      "name": "Vall de Cardós",
+      "maximumC": 35.1
+    },
+    {
+      "name": "Banyoles",
+      "maximumC": 38.3
+    },
+    {
+      "name": "Camós",
+      "maximumC": 38.5
+    },
+    {
+      "name": "Cornellà del Terri",
+      "maximumC": 38.6
+    },
+    {
+      "name": "Crespià",
+      "maximumC": 38.2
+    },
+    {
+      "name": "Esponellà",
+      "maximumC": 38.4
+    },
+    {
+      "name": "Fontcoberta",
+      "maximumC": 37.7
+    },
+    {
+      "name": "Palol de Revardit",
+      "maximumC": 38.3
+    },
+    {
+      "name": "Porqueres",
+      "maximumC": 38.7
+    },
+    {
+      "name": "Sant Miquel de Campmajor",
+      "maximumC": 39.0
+    },
+    {
+      "name": "Serinyà",
+      "maximumC": 38.3
+    },
+    {
+      "name": "Vilademuls",
+      "maximumC": 37.2
+    },
+    {
+      "name": "Barbens",
+      "maximumC": 39.1
+    },
+    {
+      "name": "Bell-lloc d'Urgell",
+      "maximumC": 39.7
+    },
+    {
+      "name": "Bellvís",
+      "maximumC": 39.7
+    },
+    {
+      "name": "Castellnou de Seana",
+      "maximumC": 39.3
+    },
+    {
+      "name": "el Palau d'Anglesola",
+      "maximumC": 39.2
+    },
+    {
+      "name": "el Poal",
+      "maximumC": 39.4
+    },
+    {
+      "name": "Fondarella",
+      "maximumC": 39.3
+    },
+    {
+      "name": "Golmés",
+      "maximumC": 38.8
+    },
+    {
+      "name": "Ivars d'Urgell",
+      "maximumC": 39.8
+    },
+    {
+      "name": "Linyola",
+      "maximumC": 39.5
+    },
+    {
+      "name": "Miralcamp",
+      "maximumC": 38.9
+    },
+    {
+      "name": "Mollerussa",
+      "maximumC": 39.2
+    },
+    {
+      "name": "Sidamon",
+      "maximumC": 39.4
+    },
+    {
+      "name": "Torregrossa",
+      "maximumC": 39.3
+    },
+    {
+      "name": "Vilanova de Bellpuig",
+      "maximumC": 38.8
+    },
+    {
+      "name": "Vila-sana",
+      "maximumC": 39.5
+    },
+    {
+      "name": "Bellmunt del Priorat",
+      "maximumC": 39.5
+    },
+    {
+      "name": "Cabacés",
+      "maximumC": 39.0
+    },
+    {
+      "name": "Capçanes",
+      "maximumC": 38.3
+    },
+    {
+      "name": "Cornudella de Montsant",
+      "maximumC": 38.8
+    },
+    {
+      "name": "el Lloar",
+      "maximumC": 39.8
+    },
+    {
+      "name": "el Masroig",
+      "maximumC": 39.4
+    },
+    {
+      "name": "el Molar",
+      "maximumC": 39.3
+    },
+    {
+      "name": "els Guiamets",
+      "maximumC": 38.6
+    },
+    {
+      "name": "Falset",
+      "maximumC": 38.1
+    },
+    {
+      "name": "Gratallops",
+      "maximumC": 39.2
+    },
+    {
+      "name": "la Bisbal de Montsant",
+      "maximumC": 38.7
+    },
+    {
+      "name": "la Figuera",
+      "maximumC": 37.5
+    },
+    {
+      "name": "la Morera de Montsant",
+      "maximumC": 36.1
+    },
+    {
+      "name": "la Torre de Fontaubella",
+      "maximumC": 36.7
+    },
+    {
+      "name": "la Vilella Alta",
+      "maximumC": 39.6
+    },
+    {
+      "name": "la Vilella Baixa",
+      "maximumC": 40.5
+    },
+    {
+      "name": "Marçà",
+      "maximumC": 38.1
+    },
+    {
+      "name": "Margalef",
+      "maximumC": 38.6
+    },
+    {
+      "name": "Poboleda",
+      "maximumC": 39.2
+    },
+    {
+      "name": "Porrera",
+      "maximumC": 38.3
+    },
+    {
+      "name": "Pradell de la Teixeta",
+      "maximumC": 36.4
+    },
+    {
+      "name": "Torroja del Priorat",
+      "maximumC": 39.6
+    },
+    {
+      "name": "Ulldemolins",
+      "maximumC": 36.8
+    },
+    {
+      "name": "Ascó",
+      "maximumC": 40.9
+    },
+    {
+      "name": "Benissanet",
+      "maximumC": 39.6
+    },
+    {
+      "name": "Flix",
+      "maximumC": 41.1
+    },
+    {
+      "name": "Garcia",
+      "maximumC": 40.6
+    },
+    {
+      "name": "Ginestar",
+      "maximumC": 39.7
+    },
+    {
+      "name": "la Palma d'Ebre",
+      "maximumC": 39.1
+    },
+    {
+      "name": "la Torre de l'Espanyol",
+      "maximumC": 40.0
+    },
+    {
+      "name": "Miravet",
+      "maximumC": 39.9
+    },
+    {
+      "name": "Móra d'Ebre",
+      "maximumC": 40.1
+    },
+    {
+      "name": "Móra la Nova",
+      "maximumC": 40.2
+    },
+    {
+      "name": "Rasquera",
+      "maximumC": 38.7
+    },
+    {
+      "name": "Riba-roja d'Ebre",
+      "maximumC": 41.2
+    },
+    {
+      "name": "Tivissa",
+      "maximumC": 37.5
+    },
+    {
+      "name": "Vinebre",
+      "maximumC": 40.9
+    },
+    {
+      "name": "Campdevànol",
+      "maximumC": 37.0
+    },
+    {
+      "name": "Campelles",
+      "maximumC": 32.1
+    },
+    {
+      "name": "Camprodon",
+      "maximumC": 33.5
+    },
+    {
+      "name": "Gombrèn",
+      "maximumC": 35.8
+    },
+    {
+      "name": "les Llosses",
+      "maximumC": 36.3
+    },
+    {
+      "name": "Llanars",
+      "maximumC": 33.0
+    },
+    {
+      "name": "Molló",
+      "maximumC": 31.5
+    },
+    {
+      "name": "Ogassa",
+      "maximumC": 33.9
+    },
+    {
+      "name": "Pardines",
+      "maximumC": 31.9
+    },
+    {
+      "name": "Planoles",
+      "maximumC": 33.6
+    },
+    {
+      "name": "Queralbs",
+      "maximumC": 32.0
+    },
+    {
+      "name": "Ribes de Freser",
+      "maximumC": 34.7
+    },
+    {
+      "name": "Ripoll",
+      "maximumC": 37.4
+    },
+    {
+      "name": "Sant Joan de les Abadesses",
+      "maximumC": 35.9
+    },
+    {
+      "name": "Sant Pau de Segúries",
+      "maximumC": 34.0
+    },
+    {
+      "name": "Setcases",
+      "maximumC": 30.4
+    },
+    {
+      "name": "Toses",
+      "maximumC": 30.6
+    },
+    {
+      "name": "Vallfogona de Ripollès",
+      "maximumC": 34.4
+    },
+    {
+      "name": "Vilallonga de Ter",
+      "maximumC": 32.3
+    },
+    {
+      "name": "Cervera",
+      "maximumC": 38.3
+    },
+    {
+      "name": "els Plans de Sió",
+      "maximumC": 39.5
+    },
+    {
+      "name": "Estaràs",
+      "maximumC": 37.5
+    },
+    {
+      "name": "Granyanella",
+      "maximumC": 38.4
+    },
+    {
+      "name": "Granyena de Segarra",
+      "maximumC": 37.4
+    },
+    {
+      "name": "Guissona",
+      "maximumC": 39.1
+    },
+    {
+      "name": "Ivorra",
+      "maximumC": 38.4
+    },
+    {
+      "name": "les Oluges",
+      "maximumC": 38.2
+    },
+    {
+      "name": "Massoteres",
+      "maximumC": 39.1
+    },
+    {
+      "name": "Montoliu de Segarra",
+      "maximumC": 36.5
+    },
+    {
+      "name": "Montornès de Segarra",
+      "maximumC": 37.3
+    },
+    {
+      "name": "Ribera d'Ondara",
+      "maximumC": 37.9
+    },
+    {
+      "name": "Sanaüja",
+      "maximumC": 39.8
+    },
+    {
+      "name": "Sant Guim de Freixenet",
+      "maximumC": 36.4
+    },
+    {
+      "name": "Sant Guim de la Plana",
+      "maximumC": 38.4
+    },
+    {
+      "name": "Sant Ramon",
+      "maximumC": 37.6
+    },
+    {
+      "name": "Talavera",
+      "maximumC": 35.8
+    },
+    {
+      "name": "Tarroja de Segarra",
+      "maximumC": 39.0
+    },
+    {
+      "name": "Torrefeta i Florejacs",
+      "maximumC": 39.0
+    },
+    {
+      "name": "Aitona",
+      "maximumC": 40.5
+    },
+    {
+      "name": "Albatàrrec",
+      "maximumC": 40.1
+    },
+    {
+      "name": "Alcanó",
+      "maximumC": 39.7
+    },
+    {
+      "name": "Alcarràs",
+      "maximumC": 40.2
+    },
+    {
+      "name": "Alcoletge",
+      "maximumC": 40.1
+    },
+    {
+      "name": "Alfarràs",
+      "maximumC": 39.5
+    },
+    {
+      "name": "Alfés",
+      "maximumC": 39.9
+    },
+    {
+      "name": "Alguaire",
+      "maximumC": 39.3
+    },
+    {
+      "name": "Almacelles",
+      "maximumC": 39.6
+    },
+    {
+      "name": "Almatret",
+      "maximumC": 38.0
+    },
+    {
+      "name": "Almenar",
+      "maximumC": 39.3
+    },
+    {
+      "name": "Alpicat",
+      "maximumC": 39.4
+    },
+    {
+      "name": "Artesa de Lleida",
+      "maximumC": 39.6
+    },
+    {
+      "name": "Aspa",
+      "maximumC": 39.3
+    },
+    {
+      "name": "Benavent de Segrià",
+      "maximumC": 39.6
+    },
+    {
+      "name": "Corbins",
+      "maximumC": 39.7
+    },
+    {
+      "name": "els Alamús",
+      "maximumC": 39.8
+    },
+    {
+      "name": "Gimenells i el Pla de la Font",
+      "maximumC": 39.5
+    },
+    {
+      "name": "la Granja d'Escarp",
+      "maximumC": 41.2
+    },
+    {
+      "name": "la Portella",
+      "maximumC": 39.5
+    },
+    {
+      "name": "Llardecans",
+      "maximumC": 38.5
+    },
+    {
+      "name": "Lleida",
+      "maximumC": 40.1
+    },
+    {
+      "name": "Maials",
+      "maximumC": 38.9
+    },
+    {
+      "name": "Massalcoreig",
+      "maximumC": 40.9
+    },
+    {
+      "name": "Montoliu de Lleida",
+      "maximumC": 40.1
+    },
+    {
+      "name": "Puigverd de Lleida",
+      "maximumC": 39.4
+    },
+    {
+      "name": "Rosselló",
+      "maximumC": 39.5
+    },
+    {
+      "name": "Sarroca de Lleida",
+      "maximumC": 39.9
+    },
+    {
+      "name": "Seròs",
+      "maximumC": 40.4
+    },
+    {
+      "name": "Soses",
+      "maximumC": 40.5
+    },
+    {
+      "name": "Sudanell",
+      "maximumC": 40.1
+    },
+    {
+      "name": "Sunyer",
+      "maximumC": 40.4
+    },
+    {
+      "name": "Torrebesses",
+      "maximumC": 39.3
+    },
+    {
+      "name": "Torrefarrera",
+      "maximumC": 39.8
+    },
+    {
+      "name": "Torres de Segre",
+      "maximumC": 40.6
+    },
+    {
+      "name": "Torre-serona",
+      "maximumC": 39.9
+    },
+    {
+      "name": "Vilanova de la Barca",
+      "maximumC": 39.9
+    },
+    {
+      "name": "Vilanova de Segrià",
+      "maximumC": 39.5
+    },
+    {
+      "name": "Amer",
+      "maximumC": 39.1
+    },
+    {
+      "name": "Anglès",
+      "maximumC": 38.7
+    },
+    {
+      "name": "Arbúcies",
+      "maximumC": 38.1
+    },
+    {
+      "name": "Blanes",
+      "maximumC": 34.5
+    },
+    {
+      "name": "Breda",
+      "maximumC": 37.5
+    },
+    {
+      "name": "Brunyola i Sant Martí Sapresa",
+      "maximumC": 37.7
+    },
+    {
+      "name": "Caldes de Malavella",
+      "maximumC": 37.4
+    },
+    {
+      "name": "Fogars de la Selva",
+      "maximumC": 36.0
+    },
+    {
+      "name": "Hostalric",
+      "maximumC": 36.7
+    },
+    {
+      "name": "la Cellera de Ter",
+      "maximumC": 38.8
+    },
+    {
+      "name": "Lloret de Mar",
+      "maximumC": 34.9
+    },
+    {
+      "name": "Maçanet de la Selva",
+      "maximumC": 36.9
+    },
+    {
+      "name": "Massanes",
+      "maximumC": 36.4
+    },
+    {
+      "name": "Osor",
+      "maximumC": 37.9
+    },
+    {
+      "name": "Riells i Viabrea",
+      "maximumC": 37.8
+    },
+    {
+      "name": "Riudarenes",
+      "maximumC": 37.9
+    },
+    {
+      "name": "Riudellots de la Selva",
+      "maximumC": 38.0
+    },
+    {
+      "name": "Sant Feliu de Buixalleu",
+      "maximumC": 37.3
+    },
+    {
+      "name": "Sant Hilari Sacalm",
+      "maximumC": 34.5
+    },
+    {
+      "name": "Sant Julià del Llor i Bonmatí",
+      "maximumC": 38.9
+    },
+    {
+      "name": "Santa Coloma de Farners",
+      "maximumC": 38.4
+    },
+    {
+      "name": "Sils",
+      "maximumC": 37.9
+    },
+    {
+      "name": "Susqueda",
+      "maximumC": 34.5
+    },
+    {
+      "name": "Tossa de Mar",
+      "maximumC": 35.5
+    },
+    {
+      "name": "Vidreres",
+      "maximumC": 37.0
+    },
+    {
+      "name": "Vilobí d'Onyar",
+      "maximumC": 38.1
+    },
+    {
+      "name": "Biosca",
+      "maximumC": 39.5
+    },
+    {
+      "name": "Castellar de la Ribera",
+      "maximumC": 38.6
+    },
+    {
+      "name": "Clariana de Cardener",
+      "maximumC": 39.0
+    },
+    {
+      "name": "Guixers",
+      "maximumC": 36.0
+    },
+    {
+      "name": "la Coma i la Pedra",
+      "maximumC": 33.9
+    },
+    {
+      "name": "la Molsosa",
+      "maximumC": 37.6
+    },
+    {
+      "name": "Lladurs",
+      "maximumC": 36.9
+    },
+    {
+      "name": "Llobera",
+      "maximumC": 37.1
+    },
+    {
+      "name": "Navès",
+      "maximumC": 38.2
+    },
+    {
+      "name": "Odèn",
+      "maximumC": 34.5
+    },
+    {
+      "name": "Olius",
+      "maximumC": 38.1
+    },
+    {
+      "name": "Pinell de Solsonès",
+      "maximumC": 37.4
+    },
+    {
+      "name": "Pinós",
+      "maximumC": 36.5
+    },
+    {
+      "name": "Riner",
+      "maximumC": 36.9
+    },
+    {
+      "name": "Sant Llorenç de Morunys",
+      "maximumC": 34.8
+    },
+    {
+      "name": "Solsona",
+      "maximumC": 39.2
+    },
+    {
+      "name": "Torà",
+      "maximumC": 39.9
+    },
+    {
+      "name": "Altafulla",
+      "maximumC": 32.6
+    },
+    {
+      "name": "Constantí",
+      "maximumC": 34.7
+    },
+    {
+      "name": "Creixell",
+      "maximumC": 33.1
+    },
+    {
+      "name": "el Catllar",
+      "maximumC": 34.6
+    },
+    {
+      "name": "el Morell",
+      "maximumC": 35.3
+    },
+    {
+      "name": "els Pallaresos",
+      "maximumC": 34.6
+    },
+    {
+      "name": "la Canonja",
+      "maximumC": 34.5
+    },
+    {
+      "name": "la Nou de Gaià",
+      "maximumC": 33.8
+    },
+    {
+      "name": "la Pobla de Mafumet",
+      "maximumC": 35.2
+    },
+    {
+      "name": "la Pobla de Montornès",
+      "maximumC": 33.4
+    },
+    {
+      "name": "la Riera de Gaià",
+      "maximumC": 33.6
+    },
+    {
+      "name": "la Secuita",
+      "maximumC": 35.3
+    },
+    {
+      "name": "Perafort",
+      "maximumC": 35.2
+    },
+    {
+      "name": "Renau",
+      "maximumC": 36.4
+    },
+    {
+      "name": "Roda de Berà",
+      "maximumC": 34.2
+    },
+    {
+      "name": "Salomó",
+      "maximumC": 35.4
+    },
+    {
+      "name": "Salou",
+      "maximumC": 34.9
+    },
+    {
+      "name": "Tarragona",
+      "maximumC": 34.2
+    },
+    {
+      "name": "Torredembarra",
+      "maximumC": 32.8
+    },
+    {
+      "name": "Vespella de Gaià",
+      "maximumC": 34.6
+    },
+    {
+      "name": "Vilallonga del Camp",
+      "maximumC": 35.6
+    },
+    {
+      "name": "Vila-seca",
+      "maximumC": 34.9
+    },
+    {
+      "name": "Arnes",
+      "maximumC": 37.8
+    },
+    {
+      "name": "Batea",
+      "maximumC": 38.5
+    },
+    {
+      "name": "Bot",
+      "maximumC": 38.9
+    },
+    {
+      "name": "Caseres",
+      "maximumC": 39.1
+    },
+    {
+      "name": "Corbera d'Ebre",
+      "maximumC": 38.9
+    },
+    {
+      "name": "el Pinell de Brai",
+      "maximumC": 39.4
+    },
+    {
+      "name": "Gandesa",
+      "maximumC": 38.4
+    },
+    {
+      "name": "Horta de Sant Joan",
+      "maximumC": 37.9
+    },
+    {
+      "name": "la Fatarella",
+      "maximumC": 37.5
+    },
+    {
+      "name": "la Pobla de Massaluca",
+      "maximumC": 38.9
+    },
+    {
+      "name": "Prat de Comte",
+      "maximumC": 38.2
+    },
+    {
+      "name": "Vilalba dels Arcs",
+      "maximumC": 38.0
+    },
+    {
+      "name": "Agramunt",
+      "maximumC": 39.8
+    },
+    {
+      "name": "Anglesola",
+      "maximumC": 38.8
+    },
+    {
+      "name": "Belianes",
+      "maximumC": 38.3
+    },
+    {
+      "name": "Bellpuig",
+      "maximumC": 38.9
+    },
+    {
+      "name": "Castellserà",
+      "maximumC": 39.7
+    },
+    {
+      "name": "Ciutadilla",
+      "maximumC": 37.6
+    },
+    {
+      "name": "els Omells de na Gaia",
+      "maximumC": 36.6
+    },
+    {
+      "name": "Guimerà",
+      "maximumC": 37.5
+    },
+    {
+      "name": "la Fuliola",
+      "maximumC": 39.3
+    },
+    {
+      "name": "Maldà",
+      "maximumC": 38.1
+    },
+    {
+      "name": "Nalec",
+      "maximumC": 37.6
+    },
+    {
+      "name": "Ossó de Sió",
+      "maximumC": 39.6
+    },
+    {
+      "name": "Preixana",
+      "maximumC": 38.7
+    },
+    {
+      "name": "Puigverd d'Agramunt",
+      "maximumC": 39.6
+    },
+    {
+      "name": "Sant Martí de Riucorb",
+      "maximumC": 38.2
+    },
+    {
+      "name": "Tàrrega",
+      "maximumC": 39.3
+    },
+    {
+      "name": "Tornabous",
+      "maximumC": 38.7
+    },
+    {
+      "name": "Vallbona de les Monges",
+      "maximumC": 37.5
+    },
+    {
+      "name": "Verdú",
+      "maximumC": 38.4
+    },
+    {
+      "name": "Vilagrassa",
+      "maximumC": 39.0
+    },
+    {
+      "name": "Arres",
+      "maximumC": 31.8
+    },
+    {
+      "name": "Bausen",
+      "maximumC": 34.5
+    },
+    {
+      "name": "Bossòst",
+      "maximumC": 36.1
+    },
+    {
+      "name": "Canejan",
+      "maximumC": 35.0
+    },
+    {
+      "name": "Es Bòrdes",
+      "maximumC": 35.2
+    },
+    {
+      "name": "Les",
+      "maximumC": 36.6
+    },
+    {
+      "name": "Naut Aran",
+      "maximumC": 32.3
+    },
+    {
+      "name": "Vielha e Mijaran",
+      "maximumC": 35.9
+    },
+    {
+      "name": "Vilamòs",
+      "maximumC": 31.5
+    },
+    {
+      "name": "Badia del Vallès",
+      "maximumC": 37.2
+    },
+    {
+      "name": "Barberà del Vallès",
+      "maximumC": 37.0
+    },
+    {
+      "name": "Castellar del Vallès",
+      "maximumC": 37.0
+    },
+    {
+      "name": "Castellbisbal",
+      "maximumC": 38.0
+    },
+    {
+      "name": "Cerdanyola del Vallès",
+      "maximumC": 36.8
+    },
+    {
+      "name": "Gallifa",
+      "maximumC": 35.8
+    },
+    {
+      "name": "Matadepera",
+      "maximumC": 36.0
+    },
+    {
+      "name": "Montcada i Reixac",
+      "maximumC": 35.6
+    },
+    {
+      "name": "Palau-solità i Plegamans",
+      "maximumC": 37.4
+    },
+    {
+      "name": "Polinyà",
+      "maximumC": 37.2
+    },
+    {
+      "name": "Rellinars",
+      "maximumC": 38.1
+    },
+    {
+      "name": "Ripollet",
+      "maximumC": 36.7
+    },
+    {
+      "name": "Rubí",
+      "maximumC": 37.9
+    },
+    {
+      "name": "Sabadell",
+      "maximumC": 37.0
+    },
+    {
+      "name": "Sant Cugat del Vallès",
+      "maximumC": 37.5
+    },
+    {
+      "name": "Sant Llorenç Savall",
+      "maximumC": 36.0
+    },
+    {
+      "name": "Sant Quirze del Vallès",
+      "maximumC": 37.2
+    },
+    {
+      "name": "Santa Perpètua de Mogoda",
+      "maximumC": 36.8
+    },
+    {
+      "name": "Sentmenat",
+      "maximumC": 37.3
+    },
+    {
+      "name": "Terrassa",
+      "maximumC": 36.8
+    },
+    {
+      "name": "Ullastrell",
+      "maximumC": 37.1
+    },
+    {
+      "name": "Vacarisses",
+      "maximumC": 36.7
+    },
+    {
+      "name": "Viladecavalls",
+      "maximumC": 37.4
+    },
+    {
+      "name": "Bigues i Riells del Fai",
+      "maximumC": 37.7
+    },
+    {
+      "name": "Caldes de Montbui",
+      "maximumC": 37.3
+    },
+    {
+      "name": "Campins",
+      "maximumC": 37.4
+    },
+    {
+      "name": "Canovelles",
+      "maximumC": 36.6
+    },
+    {
+      "name": "Cànoves i Samalús",
+      "maximumC": 36.5
+    },
+    {
+      "name": "Cardedeu",
+      "maximumC": 35.7
+    },
+    {
+      "name": "Figaró-Montmany",
+      "maximumC": 38.3
+    },
+    {
+      "name": "Fogars de Montclús",
+      "maximumC": 36.7
+    },
+    {
+      "name": "Granollers",
+      "maximumC": 36.8
+    },
+    {
+      "name": "Gualba",
+      "maximumC": 38.2
+    },
+    {
+      "name": "la Garriga",
+      "maximumC": 37.8
+    },
+    {
+      "name": "la Llagosta",
+      "maximumC": 36.2
+    },
+    {
+      "name": "la Roca del Vallès",
+      "maximumC": 36.0
+    },
+    {
+      "name": "l'Ametlla del Vallès",
+      "maximumC": 36.9
+    },
+    {
+      "name": "les Franqueses del Vallès",
+      "maximumC": 36.5
+    },
+    {
+      "name": "Lliçà d'Amunt",
+      "maximumC": 37.0
+    },
+    {
+      "name": "Lliçà de Vall",
+      "maximumC": 37.0
+    },
+    {
+      "name": "Llinars del Vallès",
+      "maximumC": 35.4
+    },
+    {
+      "name": "Martorelles",
+      "maximumC": 35.5
+    },
+    {
+      "name": "Mollet del Vallès",
+      "maximumC": 36.7
+    },
+    {
+      "name": "Montmeló",
+      "maximumC": 36.8
+    },
+    {
+      "name": "Montornès del Vallès",
+      "maximumC": 36.4
+    },
+    {
+      "name": "Montseny",
+      "maximumC": 36.7
+    },
+    {
+      "name": "Parets del Vallès",
+      "maximumC": 37.3
+    },
+    {
+      "name": "Sant Antoni de Vilamajor",
+      "maximumC": 35.8
+    },
+    {
+      "name": "Sant Celoni",
+      "maximumC": 37.3
+    },
+    {
+      "name": "Sant Esteve de Palautordera",
+      "maximumC": 37.3
+    },
+    {
+      "name": "Sant Feliu de Codines",
+      "maximumC": 35.9
+    },
+    {
+      "name": "Sant Fost de Campsentelles",
+      "maximumC": 35.4
+    },
+    {
+      "name": "Sant Pere de Vilamajor",
+      "maximumC": 36.2
+    },
+    {
+      "name": "Santa Eulàlia de Ronçana",
+      "maximumC": 37.3
+    },
+    {
+      "name": "Santa Maria de Martorelles",
+      "maximumC": 34.6
+    },
+    {
+      "name": "Santa Maria de Palautordera",
+      "maximumC": 37.1
+    },
+    {
+      "name": "Tagamanent",
+      "maximumC": 38.2
+    },
+    {
+      "name": "Vallgorguina",
+      "maximumC": 34.2
+    },
+    {
+      "name": "Vallromanes",
+      "maximumC": 36.0
+    },
+    {
+      "name": "Vilalba Sasserra",
+      "maximumC": 35.3
+    },
+    {
+      "name": "Vilanova del Vallès",
+      "maximumC": 36.9
+    }
+  ]
+}

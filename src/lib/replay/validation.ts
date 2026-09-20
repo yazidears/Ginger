@@ -41,7 +41,7 @@ export function validateReplayCase(input:unknown):ReplayCase {
   if(!Array.isArray(l.weather)||l.weather.length<2||l.weather.length>12||!Array.isArray(l.sources)||!Array.isArray(l.warnings)||l.warnings.length>50||l.warnings.some(w=>typeof w!=='string'||w.length>1000))throw Error('Supply bounded hourly weather and source records, with text warnings.');
   for(let i=0;i<l.weather.length;i++){
     const w=l.weather[i];
-    if(!timestamp(w.time)||i>0&&Date.parse(w.time)-Date.parse(l.weather[i-1].time)!==3600000||![w.temperatureC,w.humidityPct,w.windKmh,w.windFromDegrees,w.directNormalWm2,w.diffuseWm2,w.precipitationMm].every(Number.isFinite)||w.humidityPct<0||w.humidityPct>100||w.windKmh<0||w.windKmh>200||w.windFromDegrees<0||w.windFromDegrees>360||w.precipitationMm<0||w.directNormalWm2<0||w.diffuseWm2<0)throw Error('Weather must be finite, valid, contiguous hourly frames.');
+    if(!timestamp(w.time)||i>0&&Date.parse(w.time)-Date.parse(l.weather[i-1].time)!==3600000||![w.temperatureC,w.humidityPct,w.windKmh,w.windFromDegrees,w.directNormalWm2,w.diffuseWm2,w.precipitationMm].every(Number.isFinite)||w.humidityPct<0||w.humidityPct>100||w.windKmh<0||w.windKmh>200||w.windFromDegrees<0||w.windFromDegrees>360||w.precipitationMm<0||w.directNormalWm2===null||w.diffuseWm2===null||w.directNormalWm2<0||w.diffuseWm2<0)throw Error('Weather must be finite, valid, contiguous hourly frames.');
   }
   if(Date.parse(l.weather[0].time)>origin||Date.parse(l.weather.at(-1)!.time)+3600000<=origin+r.horizonMinutes*60000)throw Error('Weather must cover the whole horizon, including its endpoint.');
   return c;

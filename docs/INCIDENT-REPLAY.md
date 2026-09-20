@@ -1,6 +1,10 @@
 # Incident replay and sequential evaluation
 
-Open `/replay` or choose **Replay** in the main workspace. Run the synthetic example, import a case JSON, scrub through observation times, inspect forecast errors/member agreement, and export the complete result. Saved jobs remain available for seven days.
+Open `/replay` or choose **Replay** in the main workspace to browse past incidents. The default library includes the real Dixie Fire (2021) and Camp Fire (2018), with dates, locations, burned acreage and containment sourced from CAL FIRE. Select a fire, play its archived milestones, or scrub to an individual report. Every milestone links to its source. These curated records ship with the app and do not require an import or expire with evaluation jobs.
+
+The archive contains selected reports, not a complete incident feed. Dixie has five milestones; Camp currently has its start and containment records. Missing values remain unreported. No fire boundaries or intermediate values are invented. The map locates the incident; the timeline replays reported facts rather than animated spread. Source records were checked on 19 September 2026. Deep links use `/replay?incident=dixie-2021&step=2`.
+
+Choose **Model evaluation** for the existing case-import and forecast-scoring workflow. Saved evaluation links (`?run=…`) still open directly, and **Past incidents** returns to the archive. Evaluation jobs remain available for seven days.
 
 ## Implemented computation
 
@@ -37,4 +41,4 @@ npm run backtest:replay -- cases.json report.json
 
 The offline suite prevents incident IDs crossing splits, preserves failed cases, and aggregates event means separately by synthetic/historical kind, split and weather type. It performs no tuning and makes no calibrated probability claim. The integration tests exercise actual physical computation; numerical tests cover distance metrics, non-arrivals, normalization, input validation, delayed availability and target/future leakage.
 
-No independently sourced historical incident package was added in this change. Historical accuracy requires complete archived case inputs and later reference perimeters; the existing CSIRO grass-speed benchmark is not a substitute for those observations.
+The historical library is sourced incident reporting, not a solver-ready historical validation package. Historical forecast accuracy still requires complete archived case inputs and later reference perimeters; the archive milestones and existing CSIRO grass-speed benchmark are not substitutes for those observations.

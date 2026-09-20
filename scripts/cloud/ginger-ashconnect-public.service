@@ -1,0 +1,20 @@
+[Unit]
+Description=Ginger restricted AshConnect resident proxy
+After=network.target ginger-web.service
+Wants=ginger-web.service
+
+[Service]
+Type=simple
+User=yazidears
+Group=yazidears
+ExecStart=/usr/local/bin/node /opt/ginger/shared/tools/ashconnect-public-proxy.cjs
+Restart=on-failure
+RestartSec=5
+NoNewPrivileges=true
+PrivateTmp=true
+ProtectSystem=strict
+ProtectHome=read-only
+UMask=0077
+
+[Install]
+WantedBy=multi-user.target

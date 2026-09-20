@@ -1,5 +1,5 @@
 import {NextResponse} from 'next/server';
-import {BusyError,startRun,listRuns} from '@/lib/sage/jobs';
+import {BusyError,ScenarioInputError,startRun,listRuns} from '@/lib/sage/jobs';
 import {validateRunRequest} from '@/lib/sage/validation';
 export const runtime='nodejs';
 export async function GET(){
@@ -16,5 +16,5 @@ export async function POST(request:Request){
     input=validateRunRequest(JSON.parse(Buffer.concat(chunks).toString('utf8')));
   }catch(e){return NextResponse.json({error:e instanceof Error?e.message:'Invalid request'},{status:400});}
   try{return NextResponse.json(await startRun(input),{status:202,headers:{'Cache-Control':'no-store'}});}
-  catch(e){return NextResponse.json({error:e instanceof BusyError?e.message:'Unable to start simulation'},{status:e instanceof BusyError?409:503});}
+  catch(e){return NextResponse.json({error:e instanceof BusyError||e instanceof ScenarioInputError?e.message:'Unable to start simulation'},{status:e instanceof BusyError?409:e instanceof ScenarioInputError?422:503});}
 }

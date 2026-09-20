@@ -33,6 +33,17 @@ assert.equal(store.getSnapshot()?.hotspotKind,undefined);
 assert.equal(store.getSnapshot()?.focusKey,2);
 store.remove(prevent);
 assert.equal(store.getSnapshot()?.focusKey,2);
+assert.equal(store.getSnapshot()?.simulation,undefined);
+assert.equal(store.getSnapshot()?.receptivity,undefined);
+assert.equal(store.getSnapshot()?.selectedRadiusM,0);
+assert.deepEqual(store.getSnapshot()?.hotspots,empty);
+assert.notEqual(store.getSnapshot()?.onSelectPoint,props.onSelectPoint);
+// An equal-priority background publisher must not trigger the active camera.
+const tied=createMapStore();
+tied.set(prevent,{priority:0,props});
+tied.set(satellite,{priority:0,props});
+tied.set(satellite,{priority:0,props:{...props,focusKey:1}});
+assert.equal(tied.getSnapshot()?.focusKey,0);
 unsubscribe();
 const before=notifications;
 store.set(prevent,{priority:0,props});

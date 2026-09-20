@@ -1,0 +1,62 @@
+/* Scoped Sage scene. The shared product shell owns navigation. */
+.sage-lab.ginger-o2-workspace.sage-cinematic{position:absolute;inset:0;min-height:0;height:100%;background:transparent;pointer-events:none;color:#eff5ed}
+.sage-cinematic .sage-lab-body,.sage-cinematic .sage-map-column,.sage-cinematic .sage-map-wrap{position:absolute;inset:0;display:block!important;height:100%;min-height:0!important;background:transparent}
+.sage-cinematic button,.sage-cinematic select,.sage-cinematic input,.sage-cinematic a,.sage-cinematic aside,.sage-cinematic .sage-timeline{pointer-events:auto}
+.sage-cinematic .ginger-workspace-toolbar{position:absolute!important;top:128px!important;left:16px!important;right:auto!important;z-index:22;display:flex;flex-wrap:wrap;gap:6px;padding:0;border:0;background:none;max-width:calc(100vw - 410px)}
+.sage-cinematic .ginger-workspace-toolbar button{min-height:36px;border:1px solid #52645b;background:#152721ed;color:#eaf3e8;border-radius:9px;padding:7px 11px;font-size:12px;box-shadow:0 2px 12px #0002}
+.sage-cinematic .ginger-workspace-toolbar .primary-button{background:#eac486;color:#19251e;border-color:#eac486}
+.sage-cinematic .ginger-workspace-toolbar button[aria-pressed=true]{border-color:#d6c995;color:#f2d69c}
+.sage-cinematic .ginger-setup-toggle>span{display:none}
+.sage-cinematic .sage-config,.sage-cinematic .sage-results{position:absolute!important;left:auto!important;right:16px!important;top:128px!important;bottom:160px!important;width:350px!important;max-height:none!important;min-height:0;border:1px solid #4c6155;background:#14241ff5;border-radius:14px;box-shadow:0 18px 50px #0003;overflow:auto;z-index:25;padding:0;color:#e7eee6}
+.sage-cinematic .sage-config{padding:20px;display:none}
+.sage-cinematic.setup-open .sage-config{display:block}
+.sage-cinematic .sage-results{display:flex;flex-direction:column}
+.sage-cinematic .sage-results>.panel-tabs{padding:0 12px;gap:14px;min-height:45px;background:#13221de8;overflow:auto;justify-content:flex-start}
+.sage-cinematic .panel-tabs button{font-size:11px;flex-shrink:0;min-height:42px}
+.sage-cinematic .sage-result-scroll{overflow:auto;padding:18px;min-height:0;font-size:13px;line-height:1.55}
+.sage-cinematic .sage-result-scroll h2{font-size:21px;line-height:1.22;margin:9px 0 12px;font-weight:550;letter-spacing:-.35px}
+.sage-cinematic .sage-result-scroll details{border-top:1px solid #3a4b41;padding:12px 0;margin-top:10px;font-size:12px;color:#b7c8bb}
+.sage-cinematic .sage-result-scroll summary{color:#e3eadd;cursor:pointer;font-weight:550}
+.sage-cinematic .sage-result-scroll p{margin:10px 0}
+.sage-cinematic .small-source{font-size:12px;color:#b6c6ba;line-height:1.6}
+.sage-context-label{font-size:10px;letter-spacing:.1em;color:#d0c38c}
+.sage-conclusion{font-size:15px;line-height:1.45;color:#f1edda}
+.sage-consequence-counts{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:15px 0}
+.sage-consequence-counts>div{padding:9px 0;border-bottom:1px solid #34483c}
+.sage-consequence-counts dt{font-size:11px;color:#b5c4b8}
+.sage-consequence-counts dd{margin:4px 0 0;font-size:21px;color:#edf2e4}
+.sage-asset-list>button{display:flex;justify-content:space-between;text-align:left;gap:12px;width:100%;background:none;border:0;border-bottom:1px solid #33473b;color:#e4ecdf;padding:12px 0;font-size:12px;cursor:pointer}
+.sage-asset-list>button[aria-pressed=true]{color:#f4ce8c}
+.sage-asset-list small{display:block;font-size:10px;color:#aebfac;margin-top:4px}
+.sage-asset-list b{font-size:11px;white-space:nowrap}
+.sage-cinematic .sage-map-stats{position:absolute!important;top:auto!important;bottom:157px!important;left:50%!important;right:auto!important;transform:translateX(-50%);display:flex;gap:6px;pointer-events:none}
+.sage-cinematic .sage-map-stats>span{background:#14251edc;border:1px solid #43574a;color:#e2ebdc;font-size:11px;padding:7px 10px;backdrop-filter:none;border-radius:8px;white-space:nowrap}
+.sage-cinematic .sage-timeline{position:absolute!important;left:50%!important;right:auto!important;bottom:24px!important;top:auto!important;transform:translateX(-50%);width:min(650px,calc(100vw - 40px))!important;background:#13231ef2;border:1px solid #4d6353;border-radius:14px;padding:13px 18px 10px;z-index:27;box-shadow:0 10px 40px #0003;display:grid;grid-template-columns:1fr auto;gap:5px 12px}
+.sage-cinematic .sage-timeline>div:first-of-type{font-size:14px}
+.sage-cinematic .sage-timeline .simulation-playback{display:flex;align-items:center;gap:5px}
+.sage-cinematic .simulation-playback button,.sage-cinematic .simulation-playback select{border:1px solid #566c5c;border-radius:7px;background:#20352a;color:#eef0db;padding:7px 9px;font-size:11px;min-height:30px}
+.sage-cinematic .sage-timeline>input{height:14px;min-height:14px;margin:2px 0;accent-color:#ecc889}
+.sage-cinematic .sage-timeline>p{font-size:10px;display:flex;justify-content:center;align-items:center;gap:6px;margin:0!important;color:#b6c6b8}
+.sage-timeline-stops{grid-column:1/-1;display:flex;justify-content:space-between!important;flex-direction:row!important;gap:0!important}
+.sage-timeline-stops button{padding:2px 0;background:none;border:0;color:#cbd7c5;cursor:pointer;font-size:10px}
+.sage-legend-central,.sage-legend-sensitivity,.sage-legend-assets{display:inline-block;width:7px;height:7px;border-radius:1px;background:#f66b43}
+.sage-legend-sensitivity{background:#e6b86b;margin-left:8px}
+.sage-cinematic .sage-forest-status{position:absolute;left:16px;bottom:125px;z-index:20;border:1px solid #4b6852;border-radius:8px;background:#14271fea;color:#cbdbc9;padding:9px 12px;font-size:11px;max-width:250px;text-align:left}
+.sage-terrain-scene .map-controls{top:128px!important;right:16px!important;bottom:auto!important}
+.sage-terrain-scene .layer-menu{top:128px!important;right:64px!important;max-height:calc(100dvh - 290px);overflow:auto}
+.sage-terrain-scene .map-warning{top:auto!important;bottom:190px!important;left:16px!important;right:auto!important;max-width:320px;font-size:11px}
+.sage-cinematic .ginger-run-error{top:176px;left:16px;max-width:340px;font-size:12px}
+.sage-cinematic .sage-building-detail>.detail-grid,.sage-cinematic .sage-building-detail>.sage-exposure-extra{font-size:11px}
+@media(max-width:1050px){.sage-cinematic .ginger-workspace-toolbar{max-width:calc(100vw - 80px)}.sage-cinematic .sage-map-stats{left:20px!important;transform:none;bottom:160px!important}.sage-cinematic .sage-forest-status{bottom:200px}.sage-cinematic .sage-results,.sage-cinematic .sage-config{top:178px!important}}
+@media(max-width:650px){.sage-cinematic .ginger-workspace-toolbar{top:122px!important;left:10px!important;gap:4px;max-width:calc(100vw - 60px)}.sage-cinematic .ginger-workspace-toolbar button{font-size:10px;padding:6px 8px;min-height:32px}.sage-cinematic .sage-results,.sage-cinematic .sage-config{top:201px!important;right:10px!important;left:10px!important;width:auto!important;bottom:160px!important}.sage-cinematic .sage-timeline{bottom:15px!important;width:calc(100vw - 20px)!important;padding:10px}.sage-cinematic .sage-map-stats{bottom:155px!important;left:10px!important}.sage-cinematic .sage-forest-status{left:10px;bottom:195px}.sage-terrain-scene .map-controls{top:123px!important;right:10px!important}.sage-cinematic .sage-timeline>p{font-size:9px}.sage-cinematic .sage-timeline>div:first-of-type{font-size:12px}.sage-cinematic .simulation-playback button,.sage-cinematic .simulation-playback select{padding:5px;font-size:10px}}
+@media(prefers-reduced-motion:reduce){.sage-cinematic *{animation:none!important;scroll-behavior:auto!important}}
+.sage-specialist-forest .forest-header{padding-top:76px;height:134px;min-height:134px}
+.sage-specialist-forest .forest-body{height:calc(100dvh - 134px)}
+.sage-specialist-forest .forest-sidebar>.forest-eyebrow,.sage-specialist-forest .forest-sidebar>h1,.sage-specialist-forest .forest-intro{display:none}
+
+.sage-legend-assets{background:#78c8d0;}
+
+/* Keep map controls clear of the single selected-item drawer. */
+.product-map-host:has(.sage-results, .setup-open, .sage-context-drawer) .sage-terrain-scene .map-controls{left:16px!important;right:auto!important;top:190px!important}
+.product-map-host:has(.sage-results, .setup-open, .sage-context-drawer) .sage-terrain-scene .layer-menu{left:66px!important;right:auto!important;top:190px!important}
+.sage-cinematic .sage-back{display:block;margin-bottom:14px;color:#c5d7ad;font-size:12px;text-align:left}

@@ -37,3 +37,7 @@ output/playwright/
 __pycache__/
 *.py[cod]
 .venv*/
+
+# Local preview output and generated verification/demo artifacts.
+/Users/
+/artifacts/

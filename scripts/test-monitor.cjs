@@ -51,3 +51,6 @@ console.log(`${checks} final monitor checks passed`);
 
 test('Deepfire location query supports monitored sites outside Europe',()=>{const p=[151,-33],f={...fire([hotspot('2026-09-19T12:00Z',p)]),covered:true,source:'Deepfire satellite detections',coverage:'15 km'};assert.equal(evaluateZone({...zone,position:p},weather(true),f,now).state,'escalating');});
 test('provider switch is a coverage change rather than new fire growth',()=>{const before={...baseline,hotspots:1,detectionIds:['nasa'],evidence:{...baseline.evidence,satelliteSource:'NASA FIRMS'}};const after={...before,hotspots:2,detectionIds:['deep1','deep2'],evidence:{...before.evidence,satelliteSource:'Deepfire'}};const changes=detectChanges(before,after);assert.ok(changes.some(c=>c.title==='Satellite source changed'));assert.ok(!changes.some(c=>c.kind==='detections'));});
+
+const {weatherUnavailableReason}=require('../src/lib/monitor.ts');
+test('rate limiting is explained without exposing provider details',()=>{assert.match(weatherUnavailableReason(new Error('Upstream HTTP 429')),/temporarily limiting requests/);assert.ok(!weatherUnavailableReason(new Error('secret upstream body')).includes('secret'));});

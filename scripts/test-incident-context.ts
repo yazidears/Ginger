@@ -1,0 +1,17 @@
+import assert from 'node:assert/strict';
+import {buildIncidentScenario} from '../src/lib/incident-scenario';
+const now = new Date('2026-09-19T14:00:00Z');
+const input = {name: 'Operator exercise', source: 'Test operator reference 17', observedAt: '2026-09-19T13:50:00Z', lat: 41.43, lon: 2.11, confirmed: true};
+const scenario = buildIncidentScenario(input, now);
+assert.equal(scenario.basis, 'confirmed-incident');
+assert.equal(Date.parse(scenario.ignitionAt), Date.parse(input.observedAt));
+assert.equal(scenario.incident?.confirmationBasis.includes('not independently verified'), true);
+assert.equal(scenario.incident?.geometry?.type, 'Point');
+assert.equal(scenario.inputs.weather.length, 0);
+assert.ok(scenario.assumptions.some(s => s.includes('ignition-radius')));
+assert.throws(() => buildIncidentScenario({...input, confirmed: false}, now), /confirmation/);
+assert.throws(() => buildIncidentScenario({...input, observedAt: '2026-09-20T13:00:00Z'}, now), /future/);
+assert.throws(() => buildIncidentScenario({...input, source: ''}, now), /source/);
+assert.throws(() => buildIncidentScenario({...input, lat: null}, now), /Catalonia/);
+assert.equal(buildIncidentScenario({...input, observedAt: '2026-09-19T10:00:00Z'}, now).evidence[0].status, 'stale');
+console.log('Incident context: provenance, explicit confirmation, partial geometry, unknown weather, stale evidence and invalid inputs passed.');

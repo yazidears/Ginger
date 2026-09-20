@@ -1,0 +1,20 @@
+[Unit]
+Description=Ginger temporary AshConnect Cloudflare HTTPS tunnel
+After=network-online.target ginger-ashconnect-public.service
+Wants=network-online.target ginger-ashconnect-public.service
+
+[Service]
+Type=simple
+User=yazidears
+Group=yazidears
+ExecStart=/usr/local/bin/cloudflared tunnel --no-autoupdate --metrics 127.0.0.1:20241 --url http://127.0.0.1:4114
+Restart=on-failure
+RestartSec=10
+NoNewPrivileges=true
+PrivateTmp=true
+ProtectSystem=strict
+ProtectHome=true
+UMask=0077
+
+[Install]
+WantedBy=multi-user.target

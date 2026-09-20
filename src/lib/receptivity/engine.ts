@@ -1,4 +1,8 @@
 import {readExposureIndex} from '../exposure/store';
+import {assessPriorities} from './priority';
+import {loadHeatForecast,classifyHeatwave,HEAT_THRESHOLD_SOURCE,type HeatForecast,type Heatwave} from './heatwave';
+import {loadSatelliteEvidence,assessCellEvidence} from './satellite-evidence';
+import type {Bounds} from '../providers/deepfire';
 import {activityContext, connectedFuelAreas, scorePrevention, PREVENTION_METHOD} from './prevention';
 import {readFile,stat} from 'node:fs/promises';
 import {join} from 'node:path';
@@ -33,14 +37,20 @@ export async function computeSnapshot():Promise<Snapshot>{
  const now=Date.now(),[geo,stations,official]=await Promise.all([geography(),loadStations(),loadOfficial()]);
  const [exposure, extents] = await Promise.all([readExposureIndex().catch(() => null), Promise.resolve(connectedFuelAreas(geo.cells, geo.cellSizeM))]);
  const failures:string[]=[];
+ const satellitePromise=loadSatelliteEvidence(geo.bbox as Bounds);
+ const heatForecasts=new Map<string,HeatForecast>();
+ const temperatureHistory=new Map<string,Weather[]>();
  const results=await concurrent(stations,async station=>{
   try{const past=await loadXema(station,now);if(!past.weather.length||past.history.continuousHours<48){failures.push(`${station.name}: insufficient continuous T/RH/10 m wind/rain history`);return null;}
    let forecast:Forecast|null=null;try{forecast=await loadForecast(station,now);}catch{failures.push(`${station.name}: forecast unavailable`);}
-   const result=assimilate(station,past.weather,past.history,forecast,now);if(!result)failures.push(`${station.name}: stale observations or interrupted history`);return result;
+   const result=assimilate(station,past.weather,past.history,forecast,now);if(result)temperatureHistory.set(station.id,past.weather);if(!result)failures.push(`${station.name}: stale observations or interrupted history`);return result;
   }catch(e){failures.push(`${station.name}: ${e instanceof Error?e.message:'source failure'}`);return null;}
  },4);
  const valid=results.filter((s):s is StationResult=>s!==null);
  if(!valid.length)throw Error('No fresh XEMA station with 48 hours of continuous required weather. No current scores published.');
+ const [satellite]=await Promise.all([satellitePromise,concurrent(valid,async s=>{heatForecasts.set(s.station.id,await loadHeatForecast(s.station,now,temperatureHistory.get(s.station.id)));},4)]);
+ const heatwaves=new Map<string,Heatwave>();
+ const evidenceNow=Date.now();
  const municipalities=official.features.features.map(f=>{const coords=f.geometry.type==='Polygon'?f.geometry.coordinates.flat():f.geometry.coordinates.flat(2);const xs=coords.map(p=>p[0]),ys=coords.map(p=>p[1]);return {f,bbox:[Math.min(...xs),Math.min(...ys),Math.max(...xs),Math.max(...ys)]};});
  const cells:CellResult[]=geo.cells.map((cell:GridCell)=>{
   // Nearest station in horizontal distance. No hidden elevation correction or fabricated downscaling.
@@ -48,15 +58,22 @@ export async function computeSnapshot():Promise<Snapshot>{
   const assigned=near.d<=20;const nameFeature=municipalities.find(({bbox:b,f})=>cell.center[0]>=b[0]&&cell.center[0]<=b[2]&&cell.center[1]>=b[1]&&cell.center[1]<=b[3]&&within(cell.center,f.geometry))?.f;
   const fuelLabel=cell.fuel.type==='Tree cover'?'forest':cell.fuel.type.toLowerCase();
   const name=nameFeature?.properties?.NOMMUNI?`${nameFeature.properties.NOMMUNI} · ${fuelLabel}`:`${cell.center[1].toFixed(3)}° N, ${cell.center[0].toFixed(3)}° E · ${fuelLabel}`;
+  const municipality=String(nameFeature?.properties?.NOMMUNI||'Unknown municipality'),heatKey=(assigned?near.s.station.id:'unassigned')+':'+municipality;
+  if(!heatwaves.has(heatKey))heatwaves.set(heatKey,classifyHeatwave(assigned?near.s.station.id:'unassigned',municipality,assigned?heatForecasts.get(near.s.station.id)!:{status:'unavailable',days:[],retrievedAt:new Date(now).toISOString()},now));
+  const heat=heatwaves.get(heatKey)!;
   const rec=HORIZONS.map(h=>assigned?near.s.frames.find(f=>f.horizon===h)?.fireReceptivity??null:null),spread=HORIZONS.map(h=>assigned?near.s.frames.find(f=>f.horizon===h)?.spreadPotential??null:null);
   // Evidence completeness score, explicitly not a statistical confidence probability.
   let quality=assigned?0.7:0;quality-=Math.min(.2,near.d/100);if(cell.fuel.ndmi===undefined)quality-=.1;if(cell.terrain.slope===undefined)quality-=.1;if(Math.abs((cell.terrain.elevation??near.s.station.elevation)-near.s.station.elevation)>300)quality-=.1;
   const f3=near.s.frames.find(f=>f.horizon===3);
-  const prevention=scorePrevention({receptivity:rec,spread}, {connectedFuelHa:extents.get(cell.id)??null,...activityContext(cell,exposure,geo.cellSizeM)});
-  return {...cell,prevention,name,stationId:assigned?near.s.station.id:'',stationDistanceKm:round(near.d),confidence:round(Math.max(0,quality),2),confidenceLabel:quality>=.65?'moderate':'limited',receptivity:rec,spread,velocity:assigned?f3?.velocity??null:null,...(official.comparable&&nameFeature?{officialLevel:Number(nameFeature.properties?.PERIL_M)}:{})};
+  const exposureSummary=exposure?.summary(cell.center[0],cell.center[1],geo.cellSizeM/2,true,now);
+  const localExposure=exposureSummary?{status:exposureSummary.status,sourceDate:exposureSummary.sourceDate,counts:exposureSummary.counts,rangeM:exposureSummary.radiusM+exposureSummary.bufferM,nearestM:exposureSummary.nearby[0]?.properties.distanceM??null}:undefined;
+  const prevention=scorePrevention({receptivity:rec,spread}, {connectedFuelHa:extents.get(cell.id)??null,...activityContext(cell,exposure,geo.cellSizeM,exposureSummary)});
+  return {...cell,localExposure,evidence:assessCellEvidence(cell,rec[0],heat,satellite,evidenceNow),prevention,name,stationId:assigned?near.s.station.id:'',stationDistanceKm:round(near.d),confidence:round(Math.max(0,quality),2),confidenceLabel:quality>=.65?'moderate':'limited',receptivity:rec,spread,velocity:assigned?f3?.velocity??null:null,...(official.comparable&&nameFeature?{officialLevel:Number(nameFeature.properties?.PERIL_M)}:{})};
  });
  const times=valid.map(s=>s.frames[0].timestamp).sort();const generatedAt=new Date().toISOString();
- const snapshot:Snapshot={preventionMethod:PREVENTION_METHOD,version:MODEL_VERSION,generatedAt,nextRefreshAt:new Date(Date.now()+15*60000).toISOString(),observationRange:{oldest:times[0],newest:times.at(-1)!},region:'Barcelona metropolitan forests',areaKm2:geo.areaKm2,cellSizeM:geo.cellSizeM,bbox:geo.bbox,horizons:HORIZONS,cells,stations:valid,official,sources:[
+ const snapshot:Snapshot={heatwaves:[...heatwaves.values()],satellite,preventionMethod:PREVENTION_METHOD,version:MODEL_VERSION,generatedAt,nextRefreshAt:new Date(Date.now()+15*60000).toISOString(),observationRange:{oldest:times[0],newest:times.at(-1)!},region:'Barcelona metropolitan forests',areaKm2:geo.areaKm2,cellSizeM:geo.cellSizeM,bbox:geo.bbox,horizons:HORIZONS,cells,stations:valid,official,sources:[
+  {id:'thermal-evidence',name:satellite.source,status:satellite.status,url:'https://docs.deepfire.co/api/hotspots',retrievedAt:satellite.retrievedAt??undefined,refreshMinutes:15,detail:satellite.detail+' Thermal observations within 5 km trigger cell review; within 1 km with high receptivity trigger urgent verification. These rules are experimental, not confirmed fires.'},
+  {id:'heatwave',name:'Heatwaves · Meteocat thresholds / weather providers',status:[...heatwaves.values()].every(h=>h.status==='unavailable')?'unavailable':[...heatwaves.values()].some(h=>['unavailable','incomplete'].includes(h.status))?'stale':'live',url:HEAT_THRESHOLD_SOURCE,retrievedAt:generatedAt,refreshMinutes:60,detail:'Seven-day daily maximum forecast plus three days of modelled history in Europe/Madrid. At least three consecutive days above the municipality threshold (Meteocat edition 16 July 2026). MET Norway / XEMA sampled-temperature fallback retains partial-coverage labels. Screening, not an official warning. Missing dates break episodes; station-grid forecasts are transferred to cells.'},
   {id:'xema',name:'Meteocat · XEMA',status:'live',url:'https://www.meteo.cat/wpweb/serveis/dades-obertes/',retrievedAt:generatedAt,validAt:times[0],refreshMinutes:30,detail:`${valid.length}/${stations.length} stations have fresh observations and at least 48 uninterrupted hours. T/RH/rain/10 m wind; rolling rain up to 30 days. Observation flags may be provisional or absent.`},
   {id:'forecast',name:[...new Set(valid.map(s=>s.forecastSource).filter(Boolean))].join(' / ')||'Forecast',status:valid.some(s=>s.frames.length>1)?'live':'unavailable',url:valid.some(s=>s.forecastSource==='MET Norway')?'https://api.met.no/doc/ForecastJSON':'https://open-meteo.com/en/docs',retrievedAt:generatedAt,validAt:valid.map(s=>s.forecastIssuedAt).filter((s):s is string=>!!s).sort()[0],refreshMinutes:60,detail:valid.find(s=>s.forecastSource)?.quality[2]||'No forecast available.'},
   ...geo.sources.map((s,i)=>({id:`geography-${i}`,name:s.name,status:'reference' as const,url:s.url,retrievedAt:geo.preparedAt,detail:s.detail})),
@@ -65,10 +82,13 @@ export async function computeSnapshot():Promise<Snapshot>{
   {id:'danger',name:'Generalitat · Mapa de perill',status:'reference',url:'https://agricultura.gencat.cat/ca/ambits/medi-natural/incendis-forestals/mapes/mapa-perill-incendi/',detail:'Official daily forest-fire danger is a distinct product. No verified current machine-readable feed is used in this engine; the public Pla Alfa service is integrated separately.'}
  ],counts:{vegetated:cells.length,assessed:cells.filter(c=>c.receptivity[0]!==null).length,high:cells.filter(c=>c.receptivity[0]!==null&&c.receptivity[0]>=65&&c.receptivity[0]<80).length,veryHigh:cells.filter(c=>c.receptivity[0]!==null&&c.receptivity[0]>=80&&c.receptivity[0]<90).length,extreme:cells.filter(c=>c.receptivity[0]!==null&&c.receptivity[0]>=90).length},warnings:[
  'Experimental deterministic index; not calibrated against Catalan ignition outcomes. No ignition occurrence or probability is predicted.',
- 'Fine-fuel moisture is a litter-model estimate. Live-fuel moisture, fuel loads and canopy structure are unmeasured. Terrain and satellite moisture are contextual and do not alter FFMC/ISI.',
+ 'Fine-fuel moisture is a litter-model estimate. Live-fuel moisture, fuel loads and canopy structure are unmeasured. Heatwaves and satellite thermal/vegetation evidence drive cell review priority without changing FFMC/ISI. A negative NDMI is a spectral screening signal, not measured fuel moisture.',
  'The 200 m cells resolve mapped vegetation; environmental weather support is station-scale. Adjacent cells may share scores.',
  ...failures
  ]};
+ // Publish the same combined current review used by the map to legacy evidence consumers.
+ const reviews=assessPriorities(snapshot,0,Date.now());
+ for(const cell of cells){const review=reviews.byCell.get(cell.id);if(cell.evidence&&review)cell.evidence={...cell.evidence,priority:review.level==='verify'?'urgent':review.level==='review'||review.level==='watch'?'review':review.level==='routine'?'routine':'unknown',reasons:review.reasons};}
  await atomicJSON(join(DATA_DIR,'latest.json'),snapshot);return snapshot;
 }
 const state=globalThis as typeof globalThis & {receptivitySnapshot?:Snapshot;receptivityPending?:Promise<Snapshot>;receptivityError?:string;receptivityMtime?:number;receptivityTimer?:ReturnType<typeof setTimeout>};

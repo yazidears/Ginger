@@ -36,3 +36,7 @@ assert.equal(smokeIllustration({...turning,cells:{...turning.cells,features:turn
 const symmetric={...calm,cells:{type:'FeatureCollection' as const,features:[reached(-100,0,12),reached(100,0,12),reached(0,0,12),reached(-200,0,18),reached(200,0,18),reached(0,0,18)]}};
 assert.equal(smokeIllustration(symmetric,20,false).fireHeadingDegrees,null,'symmetric expansion has no centroid motion');
 console.log('GingerO2 smoke: direction, changing weather, experiment timing, calm diffusion, finite residence, structural timing, bounds and deterministic sampling passed.');
+
+const partialHour={...run,weather:[{...weather(0,270,1.8),validForMinutes:30},weather(0,180,5.7)]};
+assert.equal(windAt(partialHour,29)?.speedKmh,1.8);
+assert.equal(windAt(partialHour,30)?.speedKmh,5.7,"expired station interval yields to captured forecast");

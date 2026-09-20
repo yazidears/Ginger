@@ -5,6 +5,7 @@
   "scripts": {
     "start": "node --import tsx src/worker.ts",
     "test": "node --import tsx --test src/*.test.ts",
+    "evaluate": "node --import tsx scripts/evaluate.ts",
     "typecheck": "tsc --noEmit"
   },
   "engines": {

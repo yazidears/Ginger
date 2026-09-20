@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev --webpack --hostname 0.0.0.0",
+    "dev": "node --max-old-space-size=3072 node_modules/next/dist/bin/next dev --webpack --hostname 0.0.0.0",
     "build": "next build --webpack",
     "start": "next start --hostname 0.0.0.0",
     "typecheck": "tsc --noEmit",
@@ -30,6 +30,10 @@
     "backtest:replay": "tsx scripts/backtest-replay.ts",
     "imessage": "npm --prefix integrations/imessage start",
     "test:imessage": "npm --prefix integrations/imessage test",
+    "test:ashconnect": "npm run test:imessage && node scripts/test-ash-resident.cjs && python3 -m unittest discover -s scripts -p 'test_galtea_evaluate.py'",
+    "check:ashconnect": "node scripts/check-ashconnect.mjs",
+    "evaluate:ashconnect": "npm --prefix integrations/imessage run evaluate",
+    "test:home-watch": "tsx scripts/test-home-geocoding.ts && node scripts/test-watch-areas.cjs && npm run test:imessage",
     "typecheck:imessage": "npm --prefix integrations/imessage run typecheck",
     "typecheck:replay": "tsc --project tsconfig.replay.json",
     "test:satellite-lab": "tsx scripts/test-satellite-lab.ts && tsx scripts/test-satellite-spread.ts",
@@ -54,6 +58,7 @@
     "react-dom": "^19.2.0",
     "server-only": "^0.0.1",
     "suncalc": "1.9.0",
+    "three": "0.186.0",
     "tsx": "^4.20.0"
   },
   "devDependencies": {
@@ -64,6 +69,7 @@
     "@types/react": "^19.0.0",
     "@types/react-dom": "^19.0.0",
     "@types/suncalc": "^1.9.2",
+    "@types/three": "0.186.0",
     "typescript": "^5.8.0"
   }
 }

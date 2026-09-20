@@ -1,0 +1,10 @@
+import assert from 'node:assert/strict';
+import {growthSummary} from '../src/lib/sage/growth-summary';
+import type {RunResult} from '../src/lib/sage/types';
+const run=(arrivals:(number|null)[])=>({request:{horizonMinutes:120},cells:{features:arrivals.map(value=>({properties:{arrivalCentral:value,arrivalMin:value??80}}))}} as RunResult);
+assert.equal(growthSummary(run([0,0,null])).noAdditionalCentralCells,true);
+assert.equal(growthSummary(run([0,0,null])).sensitivityAdditional,1);
+assert.equal(growthSummary(run([0,80])).noAdditionalCentralCells,false);
+assert.equal(growthSummary(run([])).noAdditionalCentralCells,false);
+assert.equal(growthSummary(run([null])).noAdditionalCentralCells,false);
+console.log('PASS growth summary: distinguishes seeded extent, later central growth, sensitivity growth and missing central footprint.');

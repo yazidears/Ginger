@@ -1,0 +1,20 @@
+[Unit]
+Description=Ginger temporary Photon webhook Cloudflare HTTPS tunnel
+After=network-online.target ginger-webhook-proxy.service
+Wants=network-online.target ginger-webhook-proxy.service
+
+[Service]
+Type=simple
+User=yazidears
+Group=yazidears
+ExecStart=/usr/local/bin/cloudflared tunnel --no-autoupdate --metrics 127.0.0.1:20242 --url http://127.0.0.1:4113
+Restart=on-failure
+RestartSec=10
+NoNewPrivileges=true
+PrivateTmp=true
+ProtectSystem=strict
+ProtectHome=true
+UMask=0077
+
+[Install]
+WantedBy=multi-user.target

@@ -1,6 +1,7 @@
 import type {FeatureCollection, Polygon} from 'geojson';
 import type {RunResult, XY} from './types';
 import {toLocal, toLonLat} from './geometry';
+import {weatherAt} from './scenario-context';
 
 /** Illustration only: no emissions inventory, vertical atmosphere or concentration. */
 export const SMOKE_ASSUMPTIONS = {surfaceResidenceMin:10, structuralResidenceMin:30, puffLifetimeMin:30, releaseStepMin:2, maxSources:96, diffusivityM2s:8} as const;
@@ -10,7 +11,7 @@ const finite = (n:unknown):n is number => typeof n==='number' && Number.isFinite
 export function compass(deg:number) {return ['N','NE','E','SE','S','SW','W','NW'][Math.round(degrees(deg)/45)%8];}
 export function windAt(run:RunResult, minute:number) {
   const t=Date.parse(run.forecastOrigin)+minute*60000;
-  const w=run.weather.find(w=>Date.parse(w.time)<=t && t<Date.parse(w.time)+3600000);
+  const w=weatherAt(run.weather,t);
   if(!w || !finite(w.windKmh) || !finite(w.windFromDegrees))return null;
   const e=run.request.experiment;
   const shifted=e && t>=Date.parse(e.windOrigin||run.forecastOrigin)+e.windShiftMinutes*60000;

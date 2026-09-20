@@ -1,0 +1,14 @@
+import assert from 'node:assert/strict';
+import {exposureNotice} from '../src/lib/sage/exposure-notice';
+import type {ForecastExposure} from '../src/lib/product-contracts';
+const exposure={runId:'test',status:'ready',assets:{type:'FeatureCollection',features:[{properties:{id:'road',name:'Road segment',roadIdentity:'B-24',category:'road',arrivalCentralMinutes:50,arrivalMinMinutes:35,coverage:'full'}},{properties:{id:'school',name:'School',roadIdentity:null,category:'school',arrivalCentralMinutes:null,arrivalMinMinutes:20,coverage:'full'}}]}} as ForecastExposure;
+assert.equal(exposureNotice(exposure,0)?.remaining,50);
+assert.equal(exposureNotice(exposure,30)?.remaining,20);
+assert.equal(exposureNotice(exposure,50)?.reached,true);
+assert.equal(exposureNotice(exposure,61),null);
+assert.equal(exposureNotice({...exposure,status:'unavailable'},0),null);
+assert.equal(exposureNotice({...exposure,status:'outside-coverage'},0),null);
+assert.equal(exposureNotice(exposure,NaN),null);
+assert.equal(exposureNotice({...exposure,assets:{type:'FeatureCollection',features:[exposure.assets.features[1]]}},0),null);
+assert.notEqual(exposureNotice(exposure,0)?.key,exposureNotice(exposure,50)?.key);
+console.log('PASS exposure notice: actual central arrival, selected-time countdown, reached state, expiry, unavailable coverage, and no sensitivity-only alert.');

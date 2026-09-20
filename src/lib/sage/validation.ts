@@ -3,6 +3,7 @@ import type {RunRequest} from './types';
 export function validateRunRequest(raw:unknown):RunRequest {
   if(!raw||typeof raw!=='object'||Array.isArray(raw))throw Error('Provide a simulation request');
   const v=raw as Record<string,unknown>;
+  if(v.scenarioId!==undefined&&(typeof v.scenarioId!=='string'||!/^[-a-zA-Z0-9_]{1,100}$/.test(v.scenarioId)))throw Error('Invalid scenario identity');
   const number=(name:string,min:number,max:number)=>{const n=v[name];if(typeof n!=='number'||!Number.isFinite(n)||n<min||n>max)throw Error(`${name} must be between ${min} and ${max}`);return n;};
   const lat=number('lat',40.53,42.86),lon=number('lon',.16,3.30);
   const horizonMinutes=number('horizonMinutes',60,240);if(![60,120,240].includes(horizonMinutes))throw Error('Select a 60, 120 or 240 minute forecast');
@@ -18,5 +19,5 @@ export function validateRunRequest(raw:unknown):RunRequest {
     if(typeof p.maxGapM!=='number'||!Number.isFinite(p.maxGapM)||p.maxGapM<0||p.maxGapM>50||typeof p.transferMinutes!=='number'||!Number.isFinite(p.transferMinutes)||p.transferMinutes<1||p.transferMinutes>120)throw Error('Structural scenario requires a 0–50 m gap and 1–120 minute transfer delay');
     structural={maxGapM:p.maxGapM,transferMinutes:p.transferMinutes};
   }
-  return {...(v.grassModel!==undefined?{grassModel:v.grassModel}:{}),...(structural?{structural}:{}),...(v.experiment ? {experiment:validateExperiment(v.experiment)} : {}),lat,lon,horizonMinutes:horizonMinutes as RunRequest['horizonMinutes'],mode:v.mode,confirmation:v.confirmation.trim(),solarDrying:v.solarDrying,ignitionRadiusM:number('ignitionRadiusM',25,200),deadMoisturePct:number('deadMoisturePct',1,60),liveMoisturePct:number('liveMoisturePct',30,300),windAdjustment:number('windAdjustment',.1,1)};
+  return {...(v.scenarioId?{scenarioId:v.scenarioId as string}:{}),...(v.grassModel!==undefined?{grassModel:v.grassModel}:{}),...(structural?{structural}:{}),...(v.experiment ? {experiment:validateExperiment(v.experiment)} : {}),lat,lon,horizonMinutes:horizonMinutes as RunRequest['horizonMinutes'],mode:v.mode,confirmation:v.confirmation.trim(),solarDrying:v.solarDrying,ignitionRadiusM:number('ignitionRadiusM',25,200),deadMoisturePct:number('deadMoisturePct',1,60),liveMoisturePct:number('liveMoisturePct',30,300),windAdjustment:number('windAdjustment',.1,1)};
 }

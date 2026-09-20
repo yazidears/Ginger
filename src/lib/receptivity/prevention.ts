@@ -1,5 +1,6 @@
 import type {CellResult, GridCell} from './types';
 import type {ExposureIndex} from '../exposure/model';
+import type {ExposureSummary} from '../exposure/types';
 
 export const PREVENTION_VERSION = 'prevention-priority-1';
 /** Planning assumptions, not measured team performance or dispatch authority. */
@@ -118,8 +119,8 @@ export function connectedFuelAreas(cells: GridCell[], cellSizeM: number): Map<st
   return result;
 }
 
-export function activityContext(cell: GridCell, index: ExposureIndex | null, cellSizeM: number): Pick<PreventionContext, 'humanActivity' | 'humanActivitySource'> {
-  const exposure = index?.summary(cell.center[0], cell.center[1], cellSizeM / 2, true);
+export function activityContext(cell: GridCell, index: ExposureIndex | null, cellSizeM: number, summary?: ExposureSummary): Pick<PreventionContext, 'humanActivity' | 'humanActivitySource'> {
+  const exposure = summary ?? index?.summary(cell.center[0], cell.center[1], cellSizeM / 2, true);
   if (!exposure || exposure.status !== 'ready' || !exposure.counts)
     return {humanActivity: null, humanActivitySource: 'unavailable'};
   // Distance-weighted road, residential/work and gathering-place contributions.

@@ -1,4 +1,7 @@
 import type {PreventionScore, PREVENTION_METHOD} from './prevention';
+import type {Heatwave} from './heatwave';
+import type {CellEvidence,SatelliteEvidence} from './satellite-evidence';
+import type {LocalExposure} from './priority';
 export const HORIZONS = [0, 1, 3, 6, 12, 24] as const;
 export type Horizon = typeof HORIZONS[number];
 export type Fuel = {type:string;burnableFraction:number;continuity:number;fractions:Record<string,number>;source:string;epoch:string;ndvi?:number;ndmi?:number;satelliteAt?:string;satelliteCoverage?:number};
@@ -10,7 +13,7 @@ export type Station = {id:string;name:string;center:[number,number];elevation:nu
 export type History = {rain1h?:number;rain24h?:number;rain3d?:number;rain7d?:number;rain30d?:number;humidityMean24h?:number;humidityMin24h?:number;temperatureMean24h?:number;et0_24h?:number;continuousHours:number};
 export type Assessment = {horizon:Horizon;timestamp:string;fireReceptivity:number;spreadPotential:number;ffmc:number;fineFuelMoisture:number;isi:number;classification:string;conditions:Weather;velocity:number|null};
 export type StationResult = {station:Station;frames:Assessment[];history:History;forecastSource:string|null;forecastIssuedAt:string|null;quality:string[]};
-export type CellResult = GridCell & {prevention?:PreventionScore;name:string;stationId:string;stationDistanceKm:number;confidence:number;confidenceLabel:string;receptivity:(number|null)[];spread:(number|null)[];velocity:number|null;officialLevel?:number};
+export type CellResult = GridCell & {localExposure?:LocalExposure;evidence?:CellEvidence;prevention?:PreventionScore;name:string;stationId:string;stationDistanceKm:number;confidence:number;confidenceLabel:string;receptivity:(number|null)[];spread:(number|null)[];velocity:number|null;officialLevel?:number};
 export type SourceStatus = {id:string;name:string;status:'live'|'stale'|'unavailable'|'reference';url:string;detail:string;retrievedAt?:string;validAt?:string;refreshMinutes?:number};
 export type Official = {status:SourceStatus;features:GeoJSON.FeatureCollection<GeoJSON.Polygon|GeoJSON.MultiPolygon>;comparable:boolean};
-export type Snapshot = {preventionMethod?:typeof PREVENTION_METHOD;version:string;generatedAt:string;nextRefreshAt:string;observationRange:{oldest:string;newest:string}|null;region:string;areaKm2:number;cellSizeM:number;bbox:number[];horizons:readonly number[];cells:CellResult[];stations:StationResult[];sources:SourceStatus[];official:Official;counts:{vegetated:number;assessed:number;high:number;veryHigh:number;extreme:number};warnings:string[]};
+export type Snapshot = {heatwaves?:Heatwave[];satellite?:SatelliteEvidence;preventionMethod?:typeof PREVENTION_METHOD;version:string;generatedAt:string;nextRefreshAt:string;observationRange:{oldest:string;newest:string}|null;region:string;areaKm2:number;cellSizeM:number;bbox:number[];horizons:readonly number[];cells:CellResult[];stations:StationResult[];sources:SourceStatus[];official:Official;counts:{vegetated:number;assessed:number;high:number;veryHigh:number;extreme:number};warnings:string[]};

@@ -95,6 +95,7 @@
 /* One renderer sits above route boundaries; only the surrounding panels mount. */
 .workspace-map-host[hidden] {display:none}
 .workspace-map-host > .app-shell {background:transparent;pointer-events:none;isolation:auto}
+.workspace-map-host > .app-shell .topbar,
 .workspace-map-host > .app-shell .navrail,
 .workspace-map-host > .app-shell .modal-backdrop,
 .workspace-map-host > .app-shell .monitor-announcement {pointer-events:auto}
@@ -126,3 +127,9 @@
  .workspace-map-host.receptivity-map-host .maplibregl-ctrl-bottom-left {bottom:180px!important}
 }
 .workspace-map-host .modal {pointer-events:auto}
+
+.navrail .workspace-home-link{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:7px;color:inherit;text-decoration:none;font-size:9px;padding:12px 5px;border-radius:8px}
+.navrail .workspace-home-link:hover{background:#334532}.navrail .workspace-home-link:focus-visible{outline:2px solid #c4d9a9}
+.workspace-map-host.receptivity-map-host .shared-map-surface .map-controls{top:274px}
+.workspace-map-host.receptivity-map-host .shared-map-surface .layer-menu{top:274px}
+@media(max-width:759px){.workspace-map-host.receptivity-map-host .shared-map-surface .map-controls,.workspace-map-host.receptivity-map-host .shared-map-surface .layer-menu{top:273px}}
